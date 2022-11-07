@@ -1,1 +1,14 @@
+Shoot them-up:
 
+Possibilité de choisir le personnage parmi plusieurs, différence de statistiques/gameplay
+Le personnage se déplace et peut tirer
+Les enemis descendent l'écrant et peuvent aussi tirer
+Le joueur peut esquiver les monstres ou les éliminer en leur tirant dessus
+Si eliminés, les monstres donnent des points et peuvent lâcher des bonus
+Les bonus peuvent augmenter les dégats des projectiles, ainsi que leur taille, modifier leur trajectoire...
+Le fond se déroule pour donner un effet de déplacement continu
+Présence de Boss qui apparaissent à certaines étapes et sont les seuls enemis tant que pas vaincus.
+Les Boss tirent des projectilles selon un paterne défini
+Certains ennemis (dont les boss) peuvent avancer, reculer et se déplacer lateralement
+
+Pas besoin d'un écrant très large pour le jeu, donc on peut le séparer en deux et afficher un menu avec le score et les PV notament. 
