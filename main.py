@@ -27,18 +27,19 @@ pygame.display.set_caption("Game")
 class MenuGauche(pygame.sprite.Sprite): #Pas terminé, faut créer le sprite
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("Player.png") #Faire image menu
+        self.image = pygame.image.load("temp.png") #Faire image menu
         self.rect = self.image.get_rect()
         self.rect.center = (ZONE_MORTE//2, (SCREEN_HEIGHT//2))
 
-    #def update(self):
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
 
 class Enemy(pygame.sprite.Sprite):
       def __init__(self):
         super().__init__()
         self.image = pygame.image.load("Enemy.png")
         self.rect = self.image.get_rect()
-        self.rect.center=(random.randint(MENU_SIZE + 50,SCREEN_WIDTH-50),0)
+        self.rect.center=(random.randint(ZONE_MORTE + 50,SCREEN_WIDTH-50),0)
 
       def move(self):#au lieu de le faire repasser en haut si il touche le bas, le faire disparaitre.
         self.rect.move_ip(0,10)
@@ -77,7 +78,7 @@ class Player(pygame.sprite.Sprite):
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-
+MG = MenuGauche()
 P1 = Player()
 E1 = Enemy()
 
@@ -90,8 +91,9 @@ while True:
     E1.move()
 
     DISPLAYSURF.fill(WHITE)
-    P1.draw(DISPLAYSURF)    
+    P1.draw(DISPLAYSURF)
     E1.draw(DISPLAYSURF)
+    MG.draw(DISPLAYSURF)
 
     pygame.display.update()
     FramePerSec.tick(FPS)
