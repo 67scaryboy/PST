@@ -1,7 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 import random
-import Personnages
+import personnages
 pygame.init()
 
 FPS = 60
