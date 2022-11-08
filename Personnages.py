@@ -22,7 +22,7 @@ pygame.display.set_caption("Game")
 class MenuGauche(pygame.sprite.Sprite): #Pas terminé, faut créer le sprite
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("temp.png") #Faire image menu
+        self.image = pygame.image.load("Menu_Gauche.png") #Faire image menu
         self.rect = self.image.get_rect()
         self.rect.center = (ZONE_MORTE//2, (SCREEN_HEIGHT//2))
 
