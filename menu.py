@@ -19,13 +19,15 @@ class Arrièreplan(pygame.sprite.Sprite):
         self.image = pygame.image.load("temp.png") 
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT//2))
+        self.rect.bottom = const.SCREEN_HEIGHT
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
     def move(self):#au lieu de le faire repasser en haut si il touche le bas, le faire disparaitre.
-        self.rect.move_ip(0,5)
-        if (self.rect.top > self.rect.top/3):
-            self.rect.top = 0
+        self.rect.move_ip(0,1)
+        if (self.rect.bottom > const.SCREEN_HEIGHT+512):
             self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT//2))
+            self.rect.bottom = const.SCREEN_HEIGHT
+            
             
