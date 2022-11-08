@@ -1,86 +1,16 @@
 import pygame, sys
 from pygame.locals import *
 import random
-
+import Personnages
 pygame.init()
 
 FPS = 60
 FramePerSec = pygame.time.Clock()
 
-# Predefined some colors
-BLUE  = (0, 0, 255)
-RED   = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
 
-# Screen information
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 800
-ZONE_MORTE = 100 #Zone morte qui constitue le menu à gauche
-
-DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-DISPLAYSURF.fill(WHITE)
-pygame.display.set_caption("Game")
-
-
-class MenuGauche(pygame.sprite.Sprite): #Pas terminé, faut créer le sprite
-    def __init__(self):
-        super().__init__()
-        self.image = pygame.image.load("temp.png") #Faire image menu
-        self.rect = self.image.get_rect()
-        self.rect.center = (ZONE_MORTE//2, (SCREEN_HEIGHT//2))
-
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
-
-class Enemy(pygame.sprite.Sprite):
-      def __init__(self):
-        super().__init__()
-        self.image = pygame.image.load("Enemy.png")
-        self.rect = self.image.get_rect()
-        self.rect.center=(random.randint(ZONE_MORTE + 50,SCREEN_WIDTH-50),0)
-
-      def move(self):#au lieu de le faire repasser en haut si il touche le bas, le faire disparaitre.
-        self.rect.move_ip(0,10)
-        if (self.rect.bottom > SCREEN_HEIGHT):
-            self.rect.top = 0
-            self.rect.center = (random.randint(ZONE_MORTE, SCREEN_WIDTH), 0)
-
-      def draw(self, surface):
-        surface.blit(self.image, self.rect)
-
-
-class Player(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.image = pygame.image.load("Player.png")
-        self.rect = self.image.get_rect()
-        self.rect.center = (SCREEN_WIDTH//2, (SCREEN_HEIGHT - 50))
-
-    def update(self):
-        pressed_keys = pygame.key.get_pressed()
-        if self.rect.top > 0:
-            if pressed_keys[K_UP]:
-                self.rect.move_ip(0, -5)
-
-        if (self.rect.bottom < SCREEN_HEIGHT):
-            if pressed_keys[K_DOWN]:
-                self.rect.move_ip(0,5)
-
-        if self.rect.left > ZONE_MORTE:
-              if pressed_keys[K_LEFT]:
-                  self.rect.move_ip(-5, 0)
-        if self.rect.right < SCREEN_WIDTH:
-              if pressed_keys[K_RIGHT]:
-                  self.rect.move_ip(5, 0)
-
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
-
-MG = MenuGauche()
-P1 = Player()
-E1 = Enemy()
+MG = Personnages.MenuGauche()
+P1 = Personnages.Player()
+E1 = Personnages.Enemy()
 
 while True:
     for event in pygame.event.get():
@@ -90,10 +20,10 @@ while True:
     P1.update()
     E1.move()
 
-    DISPLAYSURF.fill(WHITE)
-    P1.draw(DISPLAYSURF)    
-    E1.draw(DISPLAYSURF)
-    MG.draw(DISPLAYSURF)
+    Personnages.DISPLAYSURF.fill(Personnages.WHITE)
+    P1.draw(Personnages.DISPLAYSURF)    
+    E1.draw(Personnages.DISPLAYSURF)
+    MG.draw(Personnages.DISPLAYSURF)
 
     pygame.display.update()
     FramePerSec.tick(FPS)
