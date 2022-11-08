@@ -38,7 +38,7 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("Enemy.png")
         self.rect = self.image.get_rect()
-        self.rect.center=(random.randint(50,SCREEN_WIDTH-50),0)
+        self.rect.center=(random.randint(MENU_SIZE + 50,SCREEN_WIDTH-50),0)
 
       def move(self):#au lieu de le faire repasser en haut si il touche le bas, le faire disparaitre.
         self.rect.move_ip(0,10)
@@ -90,7 +90,7 @@ while True:
     E1.move()
 
     DISPLAYSURF.fill(WHITE)
-    P1.draw(DISPLAYSURF)
+    P1.draw(DISPLAYSURF)    
     E1.draw(DISPLAYSURF)
 
     pygame.display.update()
