@@ -1,16 +1,17 @@
 import pygame, sys
 from pygame.locals import *
-import random
-import personnages
+import random, personnages, menu
+import constantes as const
+
 pygame.init()
 
-FPS = 60
+
 FramePerSec = pygame.time.Clock()
 
 
-MG = Personnages.MenuGauche()
-P1 = Personnages.Player()
-E1 = Personnages.Enemy()
+MG = menu.MenuGauche()
+P1 = personnages.Player()
+E1 = personnages.Enemy()
 
 while True:
     for event in pygame.event.get():
@@ -20,10 +21,10 @@ while True:
     P1.update()
     E1.move()
 
-    Personnages.DISPLAYSURF.fill(Personnages.WHITE)
-    P1.draw(Personnages.DISPLAYSURF)    
-    E1.draw(Personnages.DISPLAYSURF)
-    MG.draw(Personnages.DISPLAYSURF)
+    personnages.DISPLAYSURF.fill(const.WHITE)
+    E1.draw(personnages.DISPLAYSURF)
+    P1.draw(personnages.DISPLAYSURF)    
+    MG.draw(personnages.DISPLAYSURF)
 
     pygame.display.update()
-    FramePerSec.tick(FPS)
+    FramePerSec.tick(const.FPS)
