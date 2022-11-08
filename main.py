@@ -15,8 +15,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 # Screen information
-SCREEN_WIDTH = 500
-SCREEN_HEIGHT = 700
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 800
 
 DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 DISPLAYSURF.fill(WHITE)
@@ -28,13 +28,13 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("Enemy.png")
         self.rect = self.image.get_rect()
-        self.rect.center=(random.randint(40,SCREEN_WIDTH-40),0)
+        self.rect.center=(random.randint(50,SCREEN_WIDTH-50),0)
 
       def move(self):#au lieu de le faire repasser en haut si il touche le bas, le faire disparaitre
         self.rect.move_ip(0,10)
         if (self.rect.bottom > SCREEN_HEIGHT):
             self.rect.top = 0
-            self.rect.center = (random.randint(30, SCREEN_WIDTH-30), 0)
+            self.rect.center = (random.randint(100, SCREEN_WIDTH), 0)
 
       def draw(self, surface):
         surface.blit(self.image, self.rect)
@@ -57,7 +57,7 @@ class Player(pygame.sprite.Sprite):
             if pressed_keys[K_DOWN]:
                 self.rect.move_ip(0,5)
 
-        if self.rect.left > 0:
+        if self.rect.left > 100:
               if pressed_keys[K_LEFT]:
                   self.rect.move_ip(-5, 0)
         if self.rect.right < SCREEN_WIDTH:
