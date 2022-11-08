@@ -16,9 +16,9 @@ WHITE = (255, 255, 255)
 
 # Screen information
 SCREEN_WIDTH = 400
-SCREEN_HEIGHT = 600
+SCREEN_HEIGHT = 800
 
-DISPLAYSURF = pygame.display.set_mode((400,600))
+DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption("Game")
 
@@ -34,7 +34,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.move_ip(0,10)
         if (self.rect.bottom > SCREEN_HEIGHT):
             self.rect.top = 0
-            self.rect.center = (random.randint(30, 370), 0)
+            self.rect.center = (random.randint(30, SCREEN_WIDTH-30), 0)
 
       def draw(self, surface):
         surface.blit(self.image, self.rect)
