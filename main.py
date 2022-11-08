@@ -17,11 +17,21 @@ WHITE = (255, 255, 255)
 # Screen information
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
+ZONE_MORTE = 100 #Zone morte qui constitue le menu à gauche
 
 DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption("Game")
 
+
+class MenuGauche(pygame.sprite.Sprite): #Pas terminé, faut créer le sprite
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("Player.png") #Faire image menu
+        self.rect = self.image.get_rect()
+        self.rect.center = (ZONE_MORTE//2, (SCREEN_HEIGHT//2))
+
+    #def update(self):
 
 class Enemy(pygame.sprite.Sprite):
       def __init__(self):
@@ -34,7 +44,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.move_ip(0,10)
         if (self.rect.bottom > SCREEN_HEIGHT):
             self.rect.top = 0
-            self.rect.center = (random.randint(100, SCREEN_WIDTH), 0)
+            self.rect.center = (random.randint(ZONE_MORTE, SCREEN_WIDTH), 0)
 
       def draw(self, surface):
         surface.blit(self.image, self.rect)
@@ -57,7 +67,7 @@ class Player(pygame.sprite.Sprite):
             if pressed_keys[K_DOWN]:
                 self.rect.move_ip(0,5)
 
-        if self.rect.left > 100:
+        if self.rect.left > ZONE_MORTE:
               if pressed_keys[K_LEFT]:
                   self.rect.move_ip(-5, 0)
         if self.rect.right < SCREEN_WIDTH:
