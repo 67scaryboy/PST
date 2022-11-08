@@ -91,7 +91,7 @@ while True:
     E1.move()
 
     DISPLAYSURF.fill(WHITE)
-    P1.draw(DISPLAYSURF)
+    P1.draw(DISPLAYSURF)    
     E1.draw(DISPLAYSURF)
     MG.draw(DISPLAYSURF)
 
