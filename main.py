@@ -15,10 +15,10 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 # Screen information
-SCREEN_WIDTH = 400
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 500
+SCREEN_HEIGHT = 700
 
-DISPLAYSURF = pygame.display.set_mode((400,600))
+DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption("Game")
 
@@ -45,7 +45,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("Player.png")
         self.rect = self.image.get_rect()
-        self.rect.center = (160, 520)
+        self.rect.center = (SCREEN_WIDTH//2, (SCREEN_HEIGHT - 50))
 
     def update(self):
         pressed_keys = pygame.key.get_pressed()
