@@ -14,8 +14,8 @@ P1 = personnages.Player(1)
 E1 = personnages.Enemy(1)
 CP = personnages.Compagon(P1)
 
-enemies = pygame.sprite.Group()
-enemies.add(E1)
+enemies = [] 
+enemies.append(E1)
 
 while True:
     for event in pygame.event.get():
@@ -29,8 +29,8 @@ while True:
         if entity.active == 1:
             personnages.DISPLAYSURF.blit(entity.image, entity.rect)
             entity.move()
-        else:
-            entity.kill()
+            if entity.rect.bottom > const.SCREEN_HEIGHT:
+                enemies.remove(entity)
     AP.move()
 
     personnages.DISPLAYSURF.fill(const.WHITE)
