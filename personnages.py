@@ -16,7 +16,7 @@ class Enemy(pygame.sprite.Sprite):
         self.ATK = ATK
         
         self.active = 1
-        self.image = pygame.image.load("e1.png")
+        self.image = pygame.image.load("e3.png")
         self.rect = self.image.get_rect()
         self.rect.center=(random.randint(const.ZONE_MORTE + 50,const.SCREEN_WIDTH-50),0)
 
@@ -32,7 +32,7 @@ class Enemy(pygame.sprite.Sprite):
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("Player.png")
+        self.image = pygame.image.load("p3.png")
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT - 50))
 
@@ -59,7 +59,7 @@ class Player(pygame.sprite.Sprite):
 class Compagon(pygame.sprite.Sprite):
     def __init__(self,perso):
         super().__init__()
-        self.image = pygame.image.load("e1.png")
+        self.image = pygame.image.load("e3.png")
         self.rect = self.image.get_rect()
         self.rect.center = perso.rect.center
         self.rect.right = perso.rect.left-10
