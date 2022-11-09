@@ -30,7 +30,9 @@ while True:
 
     personnages.DISPLAYSURF.fill(const.WHITE)
     AP.draw(personnages.DISPLAYSURF)
-    E1.draw(personnages.DISPLAYSURF)
+    for entity in enemies:
+        personnages.DISPLAYSURF.blit(entity.image, entity.rect)
+        entity.draw(personnages.DISPLAYSURF)
     P1.draw(personnages.DISPLAYSURF)    
     MG.draw(personnages.DISPLAYSURF)
     
