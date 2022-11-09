@@ -19,7 +19,7 @@ class Projectile(pygame.sprite.Sprite):
       def __init__(self, tireur):
         super().__init__()
         self.damage = tireur.ATK
-        self.direction = [0,-3]#a modifier pour adapter en fonction de tireur
+        self.direction = [0,3]#a modifier pour adapter en fonction de tireur
         self.image = pygame.image.load("tir.png")
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center
