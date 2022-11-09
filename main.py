@@ -12,6 +12,7 @@ AP = menu.Arrièreplan()
 MG = menu.MenuGauche()
 P1 = personnages.Player()
 E1 = personnages.Enemy()
+CP = personnages.Compagon(P1)
 
 enemies = pygame.sprite.Group()
 enemies.add(E1)
@@ -23,6 +24,7 @@ while True:
             sys.exit()
     
     P1.update()
+    CP.update(P1)
     for entity in enemies:
         if entity.active == 1:
             personnages.DISPLAYSURF.blit(entity.image, entity.rect)
@@ -38,6 +40,7 @@ while True:
             personnages.DISPLAYSURF.blit(entity.image, entity.rect)
             entity.draw(personnages.DISPLAYSURF)
     P1.draw(personnages.DISPLAYSURF)    
+    CP.draw(personnages.DISPLAYSURF)
     MG.draw(personnages.DISPLAYSURF)
     
 
