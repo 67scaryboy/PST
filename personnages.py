@@ -10,8 +10,11 @@ DISPLAYSURF.fill(const.WHITE)
 pygame.display.set_caption("Game")
 
 class Enemy(pygame.sprite.Sprite):
-      def __init__(self):
+      def __init__(self, PV, ATK):
         super().__init__()
+        self.PV = PV
+        self.ATK = ATK
+        
         self.active = 1
         self.image = pygame.image.load("e1.png")
         self.rect = self.image.get_rect()
