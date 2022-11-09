@@ -10,8 +10,8 @@ FramePerSec = pygame.time.Clock()
 
 AP = menu.Arrièreplan()
 MG = menu.MenuGauche()
-P1 = personnages.Player()
-E1 = personnages.Enemy(100,10)
+P1 = personnages.Player(1)
+E1 = personnages.Enemy(1)
 CP = personnages.Compagon(P1)
 
 enemies = pygame.sprite.Group()

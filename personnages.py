@@ -10,13 +10,21 @@ DISPLAYSURF.fill(const.WHITE)
 pygame.display.set_caption("Game")
 
 class Enemy(pygame.sprite.Sprite):
-      def __init__(self, PV, ATK):
+      def __init__(self, id):
         super().__init__()
-        self.PV = PV
-        self.ATK = ATK
-        
         self.active = 1
-        self.image = pygame.image.load("e3.png")
+        if id == 1:
+            self.image = pygame.image.load("e1.png")
+            self.PV = 100
+            self.ATK = 10
+        elif id == 2:
+            self.image = pygame.image.load("e2.png")
+            self.PV = 150
+            self.ATK = 30
+        elif id == 3:
+            self.image = pygame.image.load("e3.png")
+            self.PV = 200
+            self.ATK = 50
         self.rect = self.image.get_rect()
         self.rect.center=(random.randint(const.ZONE_MORTE + 50,const.SCREEN_WIDTH-50),0)
 
@@ -30,9 +38,15 @@ class Enemy(pygame.sprite.Sprite):
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, id):
         super().__init__()
-        self.image = pygame.image.load("p3.png")
+
+        if id == 1:
+            self.image = pygame.image.load("p1.png")
+        elif id == 2:
+            self.image = pygame.image.load("p2.png")
+        elif id == 3:
+            self.image = pygame.image.load("p3.png")
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT - 50))
 
