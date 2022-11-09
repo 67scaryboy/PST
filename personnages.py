@@ -56,9 +56,10 @@ class Player(pygame.sprite.Sprite):
 class Compagon(pygame.sprite.Sprite):
     def __init__(self,perso):
         super().__init__()
-        self.image = pygame.image.load("Player.png")
+        self.image = pygame.image.load("Enemy.png")
         self.rect = self.image.get_rect()
         self.rect.center = perso.rect.center
+        self.rect.right = perso.rect.left-10
 
     def update(self,perso):
         pressed_keys = pygame.key.get_pressed()
@@ -76,11 +77,15 @@ class Compagon(pygame.sprite.Sprite):
         if self.rect.right < const.SCREEN_WIDTH:
               if pressed_keys[K_RIGHT]:
                   self.rect.move_ip(7.5, 0)
-        deplacementX= random.randint(-5,5)
-        deplacementY= random.randint(-5,5)
-        if ((self.rect.top+deplacementY-perso.rect.top<20 or perso.rect.top-self.rect.top<20) and self.rect.bottom<const.SCREEN_HEIGHT and self.rect.bottom >0):
-            self.rect.top = self.rect.top+deplacementY
-        if ((self.rect.right+deplacementX-perso.rect.right<20 or perso.rect.right-self.rect.right<20) and self.rect.right<const.SCREEN_WIDTH and self.rect.left >0):
-            self.rect.right = self.rect.right+deplacementX
+
+        if (random.randint(0,1)==1):
+            deplacementX= random.randint(-2,2)
+            if ((self.rect.right+deplacementX-perso.rect.right<20 or perso.rect.right-self.rect.right<20) and self.rect.right<const.SCREEN_WIDTH and self.rect.left >0):
+                self.rect.right = self.rect.right+deplacementX
+        else:
+            deplacementY= random.randint(-2,2)
+            if ((self.rect.top+deplacementY-perso.rect.top<20 or perso.rect.top-self.rect.top<20) and self.rect.bottom<const.SCREEN_HEIGHT and self.rect.bottom >0):
+                self.rect.top = self.rect.top+deplacementY
+        
     def draw(self, surface):
         surface.blit(self.image, self.rect)
