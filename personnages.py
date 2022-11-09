@@ -11,6 +11,7 @@ pygame.display.set_caption("Game")
 class Enemy(pygame.sprite.Sprite):
       def __init__(self):
         super().__init__()
+        self.active = 1
         self.image = pygame.image.load("Enemy.png")
         self.rect = self.image.get_rect()
         self.rect.center=(random.randint(const.ZONE_MORTE + 50,const.SCREEN_WIDTH-50),0)
@@ -18,8 +19,7 @@ class Enemy(pygame.sprite.Sprite):
       def move(self):#au lieu de le faire repasser en haut si il touche le bas, le faire disparaitre.
         self.rect.move_ip(0,3)
         if (self.rect.bottom > const.SCREEN_HEIGHT):
-            self.rect.top = 0
-            self.rect.center = (random.randint(const.ZONE_MORTE+30, const.SCREEN_WIDTH), 0)
+            self.kill()
 
       def draw(self, surface):
         surface.blit(self.image, self.rect)

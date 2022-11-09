@@ -24,15 +24,19 @@ while True:
     
     P1.update()
     for entity in enemies:
-        personnages.DISPLAYSURF.blit(entity.image, entity.rect)
-        entity.move()
+        if entity.active == 1:
+            personnages.DISPLAYSURF.blit(entity.image, entity.rect)
+            entity.move()
+        else:
+            entity.kill()
     AP.move()
 
     personnages.DISPLAYSURF.fill(const.WHITE)
     AP.draw(personnages.DISPLAYSURF)
     for entity in enemies:
-        personnages.DISPLAYSURF.blit(entity.image, entity.rect)
-        entity.draw(personnages.DISPLAYSURF)
+        if entity.active == 1:
+            personnages.DISPLAYSURF.blit(entity.image, entity.rect)
+            entity.draw(personnages.DISPLAYSURF)
     P1.draw(personnages.DISPLAYSURF)    
     MG.draw(personnages.DISPLAYSURF)
     
