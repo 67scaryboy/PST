@@ -27,7 +27,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center=(random.randint(const.ZONE_MORTE + 50,const.SCREEN_WIDTH-50),0)
 
-      def move(self):#au lieu de le faire repasser en haut si il touche le bas, le faire disparaitre.
+      def move(self):
         self.rect.move_ip(0,3)
         if (self.rect.bottom > const.SCREEN_HEIGHT):
             self.kill()

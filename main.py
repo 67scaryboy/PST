@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-import random, personnages, menu
+import random, personnages, menu, fight
 import constantes as const
 
 pygame.init()
@@ -10,7 +10,8 @@ FramePerSec = pygame.time.Clock()
 
 AP = menu.Arrièreplan()
 MG = menu.MenuGauche()
-P1 = personnages.Player(menu.ChoixPerso())
+#P1 = personnages.Player(menu.ChoixPerso())
+P1 = personnages.Player(1)
 E1 = personnages.Enemy(1)
 CP = personnages.Compagon(P1)
 
@@ -32,6 +33,8 @@ while True:
             if entity.rect.bottom > const.SCREEN_HEIGHT:
                 enemies.remove(entity)
     AP.move()
+
+    fight.Spawn(enemies,2)
 
     personnages.DISPLAYSURF.fill(const.WHITE)
     AP.draw(personnages.DISPLAYSURF)
