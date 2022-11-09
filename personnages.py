@@ -2,7 +2,6 @@ import pygame, sys
 from pygame.locals import *
 import random
 import constantes as const
-import personnages
 
 
 DISPLAYSURF = pygame.display.set_mode((const.SCREEN_WIDTH,const.SCREEN_HEIGHT))

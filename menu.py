@@ -34,6 +34,7 @@ class Arrièreplan(pygame.sprite.Sprite):
 
 def ChoixPerso():
     #Choix perso
+    FramePerSec.tick(const.FPS)
     E1 = personnages.Player(1)
     personnages.DISPLAYSURF.fill(const.WHITE)
     E1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT//2)
@@ -46,16 +47,14 @@ def ChoixPerso():
     E1.draw(personnages.DISPLAYSURF)
     pygame.display.update()
     while True:
-        FramePerSec.tick(const.FPS)
         pressed_keys = pygame.key.get_pressed()
         if pressed_keys[K_a]:
             personnages.DISPLAYSURF.fill(const.WHITE)
             return 1
-        if pressed_keys[K_b]:
+        elif pressed_keys[K_b]:
             personnages.DISPLAYSURF.fill(const.WHITE)
             return 2
-        if pressed_keys[K_c]:
+        elif pressed_keys[K_c]:
             personnages.DISPLAYSURF.fill(const.WHITE)
             return 3
-        pygame.display.update()
-        FramePerSec.tick(const.FPS)
+        
