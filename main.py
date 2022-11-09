@@ -13,7 +13,8 @@ MG = menu.MenuGauche()
 P1 = personnages.Player()
 E1 = personnages.Enemy()
 
-
+enemies = pygame.sprite.Group()
+enemies.add(E1)
 
 while True:
     for event in pygame.event.get():
@@ -22,7 +23,9 @@ while True:
             sys.exit()
     
     P1.update()
-    E1.move()
+    for entity in enemies:
+        personnages.DISPLAYSURF.blit(entity.image, entity.rect)
+        entity.move()
     AP.move()
 
     personnages.DISPLAYSURF.fill(const.WHITE)
