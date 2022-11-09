@@ -19,14 +19,14 @@ class Projectile(pygame.sprite.Sprite):
       def __init__(self, tireur):
         super().__init__()
         self.damage = tireur.ATK
-        self.direction = [0,1,0,0]#a modifier pour adapter en fonction de tireur
+        self.direction = [0,-3]#a modifier pour adapter en fonction de tireur
         self.image = pygame.image.load("tir.png")
         self.rect = self.image.get_rect()
-        self.rect.center=(random.randint(const.ZONE_MORTE + 50,const.SCREEN_WIDTH-50),0)
+        self.rect.center = tireur.rect.center
 
       def move(self):
-        self.rect.move_ip(0,3)
-        if (self.rect.bottom > const.SCREEN_HEIGHT):
+        self.rect.move_ip(self.direction[0],self.direction[1])
+        if ((self.rect.bottom > const.SCREEN_HEIGHT) or (self.rect.top < 0)):
             self.kill()
 
       def draw(self, surface):

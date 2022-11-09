@@ -30,6 +30,8 @@ while True:
         if entity.active == 1:
             personnages.DISPLAYSURF.blit(entity.image, entity.rect)
             entity.move()
+            #ici pour décider si il tire
+
             if entity.rect.bottom > const.SCREEN_HEIGHT:
                 enemies.remove(entity)
     AP.move()
