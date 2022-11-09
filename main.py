@@ -22,7 +22,7 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    
+
     P1.update()
     CP.update(P1)
     for entity in enemies:
@@ -39,10 +39,10 @@ while True:
         if entity.active == 1:
             personnages.DISPLAYSURF.blit(entity.image, entity.rect)
             entity.draw(personnages.DISPLAYSURF)
-    P1.draw(personnages.DISPLAYSURF)    
+    P1.draw(personnages.DISPLAYSURF)
     CP.draw(personnages.DISPLAYSURF)
     MG.draw(personnages.DISPLAYSURF)
-    
+
 
     pygame.display.update()
     FramePerSec.tick(const.FPS)
