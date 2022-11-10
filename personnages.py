@@ -54,7 +54,7 @@ class Player(pygame.sprite.Sprite):
         
         self.PV = 100 #a modifier en fonction de perso
         self.ATK = 100
-        self.cooldown = 60
+        self.cooldown = 20
 
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT - 50))

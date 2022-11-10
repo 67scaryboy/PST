@@ -24,6 +24,8 @@ def Arcade():
     E1 = personnages.Enemy(1)
     CP = personnages.Compagon(P1)
 
+    cooldown = P1.cooldown
+
     enemies = [] 
     enemies.append(E1)
     tirs = []
@@ -50,7 +52,7 @@ def Arcade():
         if P1.cooldown == 0:
             shoot = Projectile(P1)
             tirs.append(shoot)
-            P1.cooldown = 60 #trouver un moyen pour récupérer la valeur initiale
+            P1.cooldown = cooldown
         else:
             P1.cooldown += -1
     
@@ -60,6 +62,8 @@ def Arcade():
                     tirs.remove(shoot)
     
         AP.move()
+
+        Colision(tirs,P1,enemies)
 
         Spawn(enemies,2)
 
@@ -119,3 +123,17 @@ class Projectile(pygame.sprite.Sprite):
 
       def draw(self, surface):
         surface.blit(self.image, self.rect)
+
+def Colision(p_tirs,p_P1,p_enemies):
+    for shoot in p_tirs:
+        if shoot.team == 0:#si tir enemi
+            if pygame.sprite.collide_rect(shoot,p_P1):
+                #ajouter subir dégats, test mort et fonction pour gerer mort
+                p_tirs.remove(shoot)
+        else:    
+            for enemy in p_enemies:
+                if pygame.sprite.collide_rect(shoot,enemy):
+                    enemy.PV -=  shoot.damage
+                    if enemy.PV <= 0:
+                        p_enemies.remove(enemy)#creer fonction pour les drop, score...
+                    p_tirs.remove(shoot)
