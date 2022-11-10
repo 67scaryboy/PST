@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         if id == 1:
-            self.image = pygame.image.load("p1.png")
+            self.image = pygame.image.load("b2.png")
         elif id == 2:
             self.image = pygame.image.load("p2.png")
         elif id == 3:
