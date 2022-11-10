@@ -37,6 +37,14 @@ while True:
                 tirs.append(shoot)
             if entity.rect.bottom > const.SCREEN_HEIGHT:
                 enemies.remove(entity)
+    
+    if P1.cooldown == 0:
+        shoot = fight.Projectile(P1)
+        tirs.append(shoot)
+        P1.cooldown = 60 #trouver un moyen pour récupérer la valeur initiale
+    else:
+        P1.cooldown += -1
+    
     for shoot in tirs:
         shoot.move()
         if shoot.rect.bottom > const.SCREEN_HEIGHT:
