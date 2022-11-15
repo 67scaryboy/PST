@@ -20,7 +20,7 @@ def Arcade():
 
     AP = menu.Arrièreplan()
     MG = menu.MenuGauche()
-    P1 = personnages.Player(1)
+    P1 = personnages.Player(menu.ChoixPerso())
     E1 = personnages.Enemy(1)
     CP = personnages.Compagon(P1)
 

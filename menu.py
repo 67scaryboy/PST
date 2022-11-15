@@ -35,26 +35,31 @@ class Arrièreplan(pygame.sprite.Sprite):
 def ChoixPerso():
     #Choix perso
     FramePerSec.tick(const.FPS)
-    E1 = personnages.Player(1)
-    personnages.DISPLAYSURF.fill(const.WHITE)
-    E1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT//2)
-    E1.draw(personnages.DISPLAYSURF)
-    E1 = personnages.Player(2)
-    E1.rect.center = (const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2)
-    E1.draw(personnages.DISPLAYSURF)
-    E1 = personnages.Player(3)
-    E1.rect.center = ((const.SCREEN_WIDTH//2)+200,const.SCREEN_HEIGHT//2)
-    E1.draw(personnages.DISPLAYSURF)
-    pygame.display.update()
+    Joueur = personnages.Player(1)
     while True:
-        pressed_keys = pygame.key.get_pressed()
-        if pressed_keys[K_a]:
-            personnages.DISPLAYSURF.fill(const.WHITE)
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        V1 = personnages.Player(1)
+        personnages.DISPLAYSURF.fill(const.WHITE)
+        V1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT//2)
+        V1.draw(personnages.DISPLAYSURF)
+        V2 = personnages.Player(2)
+        V2.rect.center = (const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2)
+        V2.draw(personnages.DISPLAYSURF)
+        V3 = personnages.Player(3)
+        V3.rect.center = ((const.SCREEN_WIDTH//2)+200,const.SCREEN_HEIGHT//2)
+        V3.draw(personnages.DISPLAYSURF)
+        Joueur.update()
+        Joueur.draw(personnages.DISPLAYSURF)
+        if pygame.sprite.collide_rect(Joueur,V1):
             return 1
-        elif pressed_keys[K_b]:
-            personnages.DISPLAYSURF.fill(const.WHITE)
+        elif pygame.sprite.collide_rect(Joueur,V2):
             return 2
-        elif pressed_keys[K_c]:
-            personnages.DISPLAYSURF.fill(const.WHITE)
+        elif pygame.sprite.collide_rect(Joueur,V3):
             return 3
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
+    
         
