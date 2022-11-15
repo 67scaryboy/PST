@@ -36,6 +36,7 @@ def ChoixPerso():
     #Choix perso
     FramePerSec.tick(const.FPS)
     Joueur = personnages.Player(1)
+    AP=Arrièreplan()
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -43,6 +44,8 @@ def ChoixPerso():
                 sys.exit()
         V1 = personnages.Player(1)
         personnages.DISPLAYSURF.fill(const.WHITE)
+        AP.move()
+        AP.draw(personnages.DISPLAYSURF)
         V1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT//2)
         V1.draw(personnages.DISPLAYSURF)
         V2 = personnages.Player(2)
