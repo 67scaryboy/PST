@@ -45,16 +45,21 @@ class Player(pygame.sprite.Sprite):
         if id == 1:
             self.image = pygame.image.load("p1.png")
             self.id = 'p1'
+            self.PV = 100 #a modifier en fonction de perso
+            self.ATK = 70
+            self.cooldown = 10
         elif id == 2:
             self.image = pygame.image.load("p2.png")
             self.id = 'p2'
+            self.PV = 130 #a modifier en fonction de perso
+            self.ATK = 100
+            self.cooldown = 20
         elif id == 3:
             self.image = pygame.image.load("p3.png")
             self.id = 'p3'
-        
-        self.PV = 100 #a modifier en fonction de perso
-        self.ATK = 100
-        self.cooldown = 20
+            self.PV = 150 #a modifier en fonction de perso
+            self.ATK = 150
+            self.cooldown = 30
 
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT - 50))
