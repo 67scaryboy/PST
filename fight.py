@@ -128,7 +128,7 @@ class Projectile(pygame.sprite.Sprite):
       def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-def Colision(p_tirs,p_P1,p_enemies):
+def Colision(p_tirs,p_P1,p_enemies):#problème, on retire des élements d'une liste que l'on parcours
     for shoot in p_tirs:
         if shoot.team == 0:#si tir enemi
             if pygame.sprite.collide_rect(shoot,p_P1):
@@ -138,6 +138,7 @@ def Colision(p_tirs,p_P1,p_enemies):
             for enemy in p_enemies:
                 if pygame.sprite.collide_rect(shoot,enemy):
                     enemy.PV -=  shoot.damage
+                    p_tirs.remove(shoot)
                     if enemy.PV <= 0:
                         p_enemies.remove(enemy)#creer fonction pour les drop, score...
-                    p_tirs.remove(shoot)
+                    
