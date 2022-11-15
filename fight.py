@@ -38,6 +38,7 @@ def Arcade():
 
         P1.update()
         CP.update(P1)
+        #mouvelents ennemis
         for entity in enemies:
             if entity.active == 1:
                 entity.move()
@@ -46,16 +47,19 @@ def Arcade():
                 if p < 1:
                     shoot = Projectile(entity)
                     tirs.append(shoot)
+                #supprimer les tirs qui sortent de l'écrant
                 if entity.rect.bottom > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
-    
+
+        #tir automatique
         if P1.cooldown == 0:
             shoot = Projectile(P1)
             tirs.append(shoot)
             P1.cooldown = cooldown
         else:
             P1.cooldown += -1
-    
+
+        #faire avance les tirs
         for shoot in tirs:
             shoot.move()
             if shoot.rect.bottom > const.SCREEN_HEIGHT:
@@ -70,6 +74,7 @@ def Arcade():
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
 
+        
         for shoot in tirs:
             personnages.DISPLAYSURF.blit(entity.image, entity.rect)
             shoot.draw(personnages.DISPLAYSURF)
