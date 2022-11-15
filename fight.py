@@ -84,6 +84,7 @@ def Arcade():
         P1.draw(personnages.DISPLAYSURF)
         CP.draw(personnages.DISPLAYSURF)
         MG.draw(personnages.DISPLAYSURF)
+        menu.AfficheScore(0)
 
 
         pygame.display.update()

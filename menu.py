@@ -65,4 +65,9 @@ def ChoixPerso():
         pygame.display.update()
         FramePerSec.tick(const.FPS)
     
-        
+def AfficheScore(valeur):
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    Score=font.render(str(valeur), True, const.GREEN, const.GRIS)
+    scorerect=Score.get_rect()
+    scorerect.center=(const.ZONE_MORTE//2,const.SCREEN_HEIGHT-125)
+    personnages.DISPLAYSURF.blit(Score,scorerect)
