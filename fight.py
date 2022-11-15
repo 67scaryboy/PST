@@ -38,7 +38,7 @@ def Arcade():
 
         P1.update()
         CP.update(P1)
-        #mouvelents ennemis
+        #mouvements ennemis
         for entity in enemies:
             if entity.active == 1:
                 entity.move()
@@ -76,12 +76,10 @@ def Arcade():
 
         
         for shoot in tirs:
-            personnages.DISPLAYSURF.blit(entity.image, entity.rect)
             shoot.draw(personnages.DISPLAYSURF)
 
         for entity in enemies:
             if entity.active == 1:
-                personnages.DISPLAYSURF.blit(entity.image, entity.rect)
                 entity.draw(personnages.DISPLAYSURF)
         P1.draw(personnages.DISPLAYSURF)
         CP.draw(personnages.DISPLAYSURF)
