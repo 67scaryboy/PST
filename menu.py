@@ -35,24 +35,29 @@ class Arrièreplan(pygame.sprite.Sprite):
 def ChoixPerso():
     #Choix perso
     FramePerSec.tick(const.FPS)
-    Joueur = personnages.Player(1)
+    Joueur = personnages.Player(0)
+
+    V1 = personnages.Player(1)
+    V1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT//2)
+
+    V2 = personnages.Player(2)
+    V2.rect.center = (const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2)
+
+    V3 = personnages.Player(3)
+    V3.rect.center = ((const.SCREEN_WIDTH//2)+200,const.SCREEN_HEIGHT//2)
+
     AP=Arrièreplan()
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-        V1 = personnages.Player(1)
+       
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.move()
         AP.draw(personnages.DISPLAYSURF)
-        V1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT//2)
         V1.draw(personnages.DISPLAYSURF)
-        V2 = personnages.Player(2)
-        V2.rect.center = (const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2)
         V2.draw(personnages.DISPLAYSURF)
-        V3 = personnages.Player(3)
-        V3.rect.center = ((const.SCREEN_WIDTH//2)+200,const.SCREEN_HEIGHT//2)
         V3.draw(personnages.DISPLAYSURF)
         Joueur.update()
         Joueur.draw(personnages.DISPLAYSURF)
@@ -75,9 +80,9 @@ def AfficheScore(valeur):
 def ChoixMode():
     #Choix du mode de jeu
     FramePerSec.tick(const.FPS)
-    Joueur = personnages.Player(1)
+    Joueur = personnages.Player(0)
+
     V1 = personnages.Player(1)
-    
     V1.rect.center = ((const.SCREEN_WIDTH//2)-150,const.SCREEN_HEIGHT//2)
     
     V2 = personnages.Player(2)
