@@ -18,6 +18,7 @@ def Spawn(enemies,q):#random, pour le mode arcade
 def Arcade():
     FramePerSec = pygame.time.Clock()
     scoreArcade = 0
+    alive = True
 
     AP = menu.Arrièreplan()
     MG = menu.MenuGauche()
@@ -31,7 +32,7 @@ def Arcade():
     enemies.append(E1)
     tirs = []
 
-    while True:
+    while alive:
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -68,7 +69,7 @@ def Arcade():
     
         AP.move()
 
-        scoreArcade=Colision(tirs,P1,enemies,scoreArcade)
+        scoreArcade,alive=Colision(tirs,P1,enemies,scoreArcade,alive)
 
         Spawn(enemies,2)
 
@@ -90,6 +91,7 @@ def Arcade():
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
+    return (scoreArcade)
 
 
 class Projectile(pygame.sprite.Sprite):
@@ -131,12 +133,14 @@ class Projectile(pygame.sprite.Sprite):
       def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-def Colision(p_tirs,p_P1,p_enemies,tempscore):#problème, on retire des élements d'une liste que l'on parcours
+def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):#problème, on retire des élements d'une liste que l'on parcours
     for shoot in p_tirs:
         if shoot.team == 0:#si tir enemi
             if pygame.sprite.collide_rect(shoot,p_P1):
-                #ajouter subir dégats, test mort et fonction pour gerer mort
+                p_P1.PV -= shoot.damage
                 p_tirs.remove(shoot)
+                if p_P1.PV <= 0:
+                    p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
         else:    
             for enemy in p_enemies:
                 if pygame.sprite.collide_rect(shoot,enemy):
@@ -145,6 +149,11 @@ def Colision(p_tirs,p_P1,p_enemies,tempscore):#problème, on retire des élement
                     if enemy.PV <= 0:
                         tempscore+=enemy.score
                         p_enemies.remove(enemy)#creer fonction pour les drop, score...
-    return (tempscore)
+    return (tempscore,p_alive)
     
-                    
+def Mort(p_score,p_tirs,p_P1,p_enemies):
+    for shoot in p_tirs:
+        p_tirs.remove(shoot)
+    for enemy in p_enemies:
+        p_enemies.remove(enemy)
+    return False
