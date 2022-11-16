@@ -20,7 +20,9 @@ def Arcade():
     scoreArcade = 0
     alive = True
 
-    AP = menu.Arrièreplan()
+    AP = menu.Arrièreplan(1)# 1 a 3 pour le fond
+    AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
+    AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
     MG = menu.MenuGauche()
     P1 = personnages.Player(menu.ChoixPerso())
     E1 = personnages.Enemy(1)
@@ -67,7 +69,9 @@ def Arcade():
             if shoot.rect.bottom > const.SCREEN_HEIGHT:
                     tirs.remove(shoot)
     
-        AP.move()
+        AP3.move(3)#vitesse de déplacement des couches
+        AP2.move(2)
+        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
 
         scoreArcade,alive=Colision(tirs,P1,enemies,scoreArcade,alive)
 
@@ -75,6 +79,8 @@ def Arcade():
 
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
+        AP2.draw(personnages.DISPLAYSURF)
+        AP3.draw(personnages.DISPLAYSURF)
 
         
         for shoot in tirs:

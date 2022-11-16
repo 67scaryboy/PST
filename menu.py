@@ -15,9 +15,22 @@ class MenuGauche(pygame.sprite.Sprite):
         surface.blit(self.image, self.rect)
 
 class Arrièreplan(pygame.sprite.Sprite): 
-    def __init__(self):
+    def __init__(self,n):
         super().__init__()
-        self.image = pygame.image.load("sprites/temp.png") 
+        if (n==1):
+            self.image = pygame.image.load("sprites_paralax/Blue.png").convert_alpha()
+        elif (n==2):
+            self.image = pygame.image.load("sprites_paralax/red.png").convert_alpha()
+        elif (n==3):
+            self.image = pygame.image.load("sprites_paralax/Aqua.png").convert_alpha()
+        elif (n==4):
+            self.image = pygame.image.load("sprites_paralax/big1.png").convert_alpha()
+        elif (n==5):
+            self.image = pygame.image.load("sprites_paralax/big2.png").convert_alpha()
+        elif (n==6):
+            self.image = pygame.image.load("sprites_paralax/small1.png").convert_alpha()
+        elif (n==7):
+            self.image = pygame.image.load("sprites_paralax/small2.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT//2))
         self.rect.bottom = const.SCREEN_HEIGHT
@@ -25,10 +38,10 @@ class Arrièreplan(pygame.sprite.Sprite):
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-    def move(self):
-        self.rect.move_ip(0,1)
-        if (self.rect.bottom > const.SCREEN_HEIGHT+512):
-            self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT//2))
+    def move(self,v):
+        self.rect.move_ip(0,v)
+        if (self.rect.bottom > const.SCREEN_HEIGHT+800):
+            self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT))
             self.rect.bottom = const.SCREEN_HEIGHT
             
 
@@ -46,7 +59,9 @@ def ChoixPerso():
     V3 = personnages.Player(3)
     V3.rect.center = ((const.SCREEN_WIDTH//2)+200,const.SCREEN_HEIGHT//2)
 
-    AP=Arrièreplan()
+    AP=Arrièreplan(1)
+    AP2=Arrièreplan(5)# 4 ou 5 pour le paralax profond
+    AP3=Arrièreplan(6)# 6 ou 7 pour le paralax superieur
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -54,8 +69,12 @@ def ChoixPerso():
                 sys.exit()
        
         personnages.DISPLAYSURF.fill(const.WHITE)
-        AP.move()
+        AP.move(1)
+        AP2.move(2)
+        AP3.move(3)
         AP.draw(personnages.DISPLAYSURF)
+        AP2.draw(personnages.DISPLAYSURF)
+        AP3.draw(personnages.DISPLAYSURF)
         V1.draw(personnages.DISPLAYSURF)
         V2.draw(personnages.DISPLAYSURF)
         V3.draw(personnages.DISPLAYSURF)
