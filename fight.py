@@ -116,12 +116,14 @@ class Projectile(pygame.sprite.Sprite):
         elif tireur.id == 'c1':
             self.direction = [0,-3]
             self.team = 1
+        self.time = 0
         self.image = pygame.image.load("sprites/tir.png")#à modifier en fonction du perso/ATK
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center
 
       def move(self):
         self.rect.move_ip(self.direction[0],self.direction[1])
+        self.time += 1
         if ((self.rect.bottom > const.SCREEN_HEIGHT) or (self.rect.top < 0)):
             self.kill()
 
@@ -141,4 +143,3 @@ def Colision(p_tirs,p_P1,p_enemies):#problème, on retire des élements d'une li
                     p_tirs.remove(shoot)
                     if enemy.PV <= 0:
                         p_enemies.remove(enemy)#creer fonction pour les drop, score...
-                    
