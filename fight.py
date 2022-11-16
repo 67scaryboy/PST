@@ -20,7 +20,7 @@ def Arcade():
     scoreArcade = 0
     alive = True
 
-    AP = menu.Arrièreplan(1)# 1 a 3 pour le fond
+    AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
     AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
     MG = menu.MenuGauche()
