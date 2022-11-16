@@ -12,4 +12,8 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    scoretotal += fight.Arcade()
+    
+    option = menu.ChoixMode()
+
+    if option == 1:
+        scoretotal += fight.Arcade()

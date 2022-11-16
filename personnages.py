@@ -45,6 +45,12 @@ class Enemy(pygame.sprite.Sprite):
 class Player(pygame.sprite.Sprite):
     def __init__(self, id):
         super().__init__()
+        if id == 0:#selecteur de perso
+            self.image = pygame.image.load("sprites/souris.png")
+            self.id = 'N/A'
+            self.PV = 10
+            self.ATK = 0
+            self.cooldown = 100
         if id == 1:
             self.image = pygame.image.load("sprites/p1.png")
             self.id = 'p1'
