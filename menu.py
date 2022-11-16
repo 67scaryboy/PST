@@ -71,3 +71,34 @@ def AfficheScore(valeur):
     scorerect=Score.get_rect()
     scorerect.center=(const.ZONE_MORTE//2,const.SCREEN_HEIGHT-125)
     personnages.DISPLAYSURF.blit(Score,scorerect)
+
+def ChoixMode():
+    #Choix du mode de jeu
+    FramePerSec.tick(const.FPS)
+    Joueur = personnages.Player(1)
+    V1 = personnages.Player(1)
+    
+    V1.rect.center = ((const.SCREEN_WIDTH//2)-150,const.SCREEN_HEIGHT//2)
+    
+    V2 = personnages.Player(2)
+    V2.rect.center = ((const.SCREEN_WIDTH//2)+150,const.SCREEN_HEIGHT//2)
+    
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        personnages.DISPLAYSURF.fill(const.WHITE)
+        V1.draw(personnages.DISPLAYSURF)
+        V2.draw(personnages.DISPLAYSURF)
+        Joueur.update()
+        Joueur.draw(personnages.DISPLAYSURF)
+
+        if pygame.sprite.collide_rect(Joueur,V1):
+            return 1
+        elif pygame.sprite.collide_rect(Joueur,V2):
+            return 2
+       
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
