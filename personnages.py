@@ -13,17 +13,17 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         self.active = 1
         if id == 1:
-            self.image = pygame.image.load("e1.png")
+            self.image = pygame.image.load("sprites/e1.png")
             self.PV = 100
             self.ATK = 10
             self.id = 'e1'
         elif id == 2:
-            self.image = pygame.image.load("e2.png")
+            self.image = pygame.image.load("sprites/e2.png")
             self.PV = 150
             self.ATK = 30
             self.id = 'e2'
         elif id == 3:
-            self.image = pygame.image.load("e3.png")
+            self.image = pygame.image.load("sprites/e3.png")
             self.PV = 200
             self.ATK = 50
             self.id = 'e3'
@@ -43,19 +43,19 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, id):
         super().__init__()
         if id == 1:
-            self.image = pygame.image.load("p1.png")
+            self.image = pygame.image.load("sprites/p1.png")
             self.id = 'p1'
             self.PV = 100 #a modifier en fonction de perso
             self.ATK = 70
             self.cooldown = 10
         elif id == 2:
-            self.image = pygame.image.load("p2.png")
+            self.image = pygame.image.load("sprites/p2.png")
             self.id = 'p2'
             self.PV = 130 #a modifier en fonction de perso
             self.ATK = 100
             self.cooldown = 20
         elif id == 3:
-            self.image = pygame.image.load("p3.png")
+            self.image = pygame.image.load("sprites/p3.png")
             self.id = 'p3'
             self.PV = 150 #a modifier en fonction de perso
             self.ATK = 150
@@ -87,7 +87,7 @@ class Player(pygame.sprite.Sprite):
 class Compagon(pygame.sprite.Sprite):
     def __init__(self,perso):
         super().__init__()
-        self.image = pygame.image.load("e3.png")
+        self.image = pygame.image.load("sprites/e3.png")
         self.rect = self.image.get_rect()
         self.rect.center = perso.rect.center
         self.rect.right = perso.rect.left-10

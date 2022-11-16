@@ -7,7 +7,7 @@ FramePerSec = pygame.time.Clock()
 class MenuGauche(pygame.sprite.Sprite): 
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("Menu_Gauche.png") 
+        self.image = pygame.image.load("sprites/Menu_Gauche.png") 
         self.rect = self.image.get_rect()
         self.rect.center = (const.ZONE_MORTE//2, (const.SCREEN_HEIGHT//2))
 
@@ -17,7 +17,7 @@ class MenuGauche(pygame.sprite.Sprite):
 class Arrièreplan(pygame.sprite.Sprite): 
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("temp.png") 
+        self.image = pygame.image.load("sprites/temp.png") 
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT//2))
         self.rect.bottom = const.SCREEN_HEIGHT

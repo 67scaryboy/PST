@@ -116,7 +116,7 @@ class Projectile(pygame.sprite.Sprite):
         elif tireur.id == 'c1':
             self.direction = [0,-3]
             self.team = 1
-        self.image = pygame.image.load("tir.png")#à modifier en fonction du perso/ATK
+        self.image = pygame.image.load("sprites/tir.png")#à modifier en fonction du perso/ATK
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center
 
