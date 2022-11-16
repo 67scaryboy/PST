@@ -14,18 +14,21 @@ class Enemy(pygame.sprite.Sprite):
         self.active = 1
         if id == 1:
             self.image = pygame.image.load("sprites/e1.png")
-            self.PV = 100
-            self.ATK = 10
-            self.id = 'e1'
+            self.PV = 100 #PV de ce type d'adversaire
+            self.ATK = 10 #Attaque de ce type d'adversaire
+            self.score = 10 #Score crédité en cas de kill
+            self.id = 'e1' #ID de ce type
         elif id == 2:
             self.image = pygame.image.load("sprites/e2.png")
             self.PV = 150
             self.ATK = 30
+            self.score = 50
             self.id = 'e2'
         elif id == 3:
             self.image = pygame.image.load("sprites/e3.png")
             self.PV = 200
             self.ATK = 50
+            self.score = 100
             self.id = 'e3'
         self.rect = self.image.get_rect()
         self.rect.center=(random.randint(const.ZONE_MORTE + 50,const.SCREEN_WIDTH-50),0)
