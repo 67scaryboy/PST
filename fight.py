@@ -20,7 +20,7 @@ def Arcade():
     scoreArcade = 0
     alive = True
 
-    AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
+    AP = menu.Arrièreplan(2)# 1 a 3 pour le fond
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
     AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
     MG = menu.MenuGauche()
@@ -105,15 +105,15 @@ class Projectile(pygame.sprite.Sprite):
         super().__init__()
         self.damage = tireur.ATK
         if tireur.id == 'e1':
-            self.direction = [0,3]
+            self.direction = [0,4]
             self.image = pygame.image.load("sprites/tir.png")
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
         elif tireur.id == 'e2':
-            self.direction = [0,3]
+            self.direction = [0,4]
             self.image = pygame.image.load("sprites/tir.png")
             self.team = 0
         elif tireur.id == 'e3':
-            self.direction = [0,3]
+            self.direction = [0,4]
             self.image = pygame.image.load("sprites/tir.png")
             self.team = 0
         elif tireur.id == 'p1':
