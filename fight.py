@@ -17,6 +17,7 @@ def Spawn(enemies,q):#random, pour le mode arcade
 
 def Arcade():
     FramePerSec = pygame.time.Clock()
+    scoreArcade = 0
 
     AP = menu.Arrièreplan()
     MG = menu.MenuGauche()
@@ -67,7 +68,7 @@ def Arcade():
     
         AP.move()
 
-        Colision(tirs,P1,enemies)
+        scoreArcade=Colision(tirs,P1,enemies,scoreArcade)
 
         Spawn(enemies,2)
 
@@ -84,7 +85,7 @@ def Arcade():
         P1.draw(personnages.DISPLAYSURF)
         CP.draw(personnages.DISPLAYSURF)
         MG.draw(personnages.DISPLAYSURF)
-        menu.AfficheScore(0)
+        menu.AfficheScore(scoreArcade) #Affichage score
 
 
         pygame.display.update()
@@ -128,7 +129,7 @@ class Projectile(pygame.sprite.Sprite):
       def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-def Colision(p_tirs,p_P1,p_enemies):#problème, on retire des élements d'une liste que l'on parcours
+def Colision(p_tirs,p_P1,p_enemies,tempscore):#problème, on retire des élements d'une liste que l'on parcours
     for shoot in p_tirs:
         if shoot.team == 0:#si tir enemi
             if pygame.sprite.collide_rect(shoot,p_P1):
@@ -140,5 +141,8 @@ def Colision(p_tirs,p_P1,p_enemies):#problème, on retire des élements d'une li
                     enemy.PV -=  shoot.damage
                     p_tirs.remove(shoot)
                     if enemy.PV <= 0:
+                        tempscore+=enemy.score
                         p_enemies.remove(enemy)#creer fonction pour les drop, score...
+    return (tempscore)
+    
                     
