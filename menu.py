@@ -47,6 +47,7 @@ class Arrièreplan(pygame.sprite.Sprite):
 
 def ChoixPerso():
     #Choix perso
+    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
     FramePerSec.tick(const.FPS)
     Joueur = personnages.Player(0)
 
@@ -78,8 +79,7 @@ def ChoixPerso():
         V1.draw(personnages.DISPLAYSURF)
         V2.draw(personnages.DISPLAYSURF)
         V3.draw(personnages.DISPLAYSURF)
-        Joueur.update()
-        Joueur.draw(personnages.DISPLAYSURF)
+        Joueur.souris(personnages.DISPLAYSURF)
         if pygame.sprite.collide_rect(Joueur,V1):
             return 1
         elif pygame.sprite.collide_rect(Joueur,V2):
@@ -98,6 +98,7 @@ def AfficheScore(valeur):
 
 def ChoixMode():
     #Choix du mode de jeu
+    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
     FramePerSec.tick(const.FPS)
     Joueur = personnages.Player(0)
 
@@ -116,8 +117,7 @@ def ChoixMode():
         personnages.DISPLAYSURF.fill(const.WHITE)
         V1.draw(personnages.DISPLAYSURF)
         V2.draw(personnages.DISPLAYSURF)
-        Joueur.update()
-        Joueur.draw(personnages.DISPLAYSURF)
+        Joueur.souris(personnages.DISPLAYSURF)
 
         if pygame.sprite.collide_rect(Joueur,V1):
             return 1

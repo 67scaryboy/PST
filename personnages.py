@@ -92,6 +92,10 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
+    
+    def souris(self,surface):
+        self.rect.center = pygame.mouse.get_pos()
+        self.draw(surface)
 
 class Compagon(pygame.sprite.Sprite):
     def __init__(self,perso):

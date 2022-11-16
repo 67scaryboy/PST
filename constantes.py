@@ -12,3 +12,7 @@ GRIS = (128,128,128)
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
 ZONE_MORTE = 100 #Zone morte qui constitue le menu à gauche
+
+#Joueur
+Xvaisseaux= 68
+Yvaisseaux= 80

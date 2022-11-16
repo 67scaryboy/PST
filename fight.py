@@ -20,13 +20,14 @@ def Arcade():
     scoreArcade = 0
     alive = True
 
-    AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
+    AP = menu.Arrièreplan(2)# 1 a 3 pour le fond
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
     AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
     MG = menu.MenuGauche()
     P1 = personnages.Player(menu.ChoixPerso())
     E1 = personnages.Enemy(1)
     CP = personnages.Compagon(P1)
+    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
 
     cooldown = P1.cooldown
 
@@ -40,7 +41,10 @@ def Arcade():
                 pygame.quit()
                 sys.exit()
 
-        P1.update()
+        #Dès que le système de déplacement du joueur avec la souris est ok, retirer les 3 lignes en dessous
+        #P1.update()
+        #print(pygame.mouse.get_pos())
+        #P1.rect.center(pygame.mouse.get_pos())
         CP.update(P1)
         #mouvements ennemis
         for entity in enemies:
@@ -89,7 +93,7 @@ def Arcade():
         for entity in enemies:
             if entity.active == 1:
                 entity.draw(personnages.DISPLAYSURF)
-        P1.draw(personnages.DISPLAYSURF)
+        P1.souris(personnages.DISPLAYSURF)
         CP.draw(personnages.DISPLAYSURF)
         MG.draw(personnages.DISPLAYSURF)
         menu.AfficheScore(scoreArcade) #Affichage score

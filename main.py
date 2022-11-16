@@ -6,7 +6,7 @@ import constantes as const
 pygame.init()
 
 scoretotal = 0
-
+pygame.mouse.set_visible(False)
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
