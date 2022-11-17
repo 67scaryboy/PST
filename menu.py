@@ -14,6 +14,19 @@ class MenuGauche(pygame.sprite.Sprite):
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
+class Affichage(pygame.sprite.Sprite):
+    def __init__(self, chemin, posX, posY): #chemin=chemin d'accès a l'image a draw
+        super().__init__()
+        self.image = pygame.image.load(chemin)
+        self.rect = self.image.get_rect()
+        self.rect.center = (posX, posY)
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+    
+    def deplacement(self,posX,posY):
+        self.rect.center = (posX, posY)
+
 class Arrièreplan(pygame.sprite.Sprite): 
     def __init__(self,n):
         super().__init__()
