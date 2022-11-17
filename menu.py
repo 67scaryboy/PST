@@ -119,10 +119,7 @@ def ChoixMode():
     Joueur = personnages.Player(0)
 
     Barcade=Affichage("sprites/NArcade.png",const.SCREEN_WIDTH//2-150,const.SCREEN_HEIGHT//2) #Bouton arcade
-
-    V2 = personnages.Player(2) #A modif quand on a la texture
-    V2.rect.center = ((const.SCREEN_WIDTH//2)+150,const.SCREEN_HEIGHT//2)
-    
+    Bhistoire=Affichage("sprites/NHistoire.png",const.SCREEN_WIDTH//2+150,const.SCREEN_HEIGHT//2) #Bouton historie
     
     while True:
         for event in pygame.event.get():
@@ -132,7 +129,8 @@ def ChoixMode():
         personnages.DISPLAYSURF.fill(const.WHITE)
         Barcade.modif("sprites/NArcade.png")
         Barcade.draw(personnages.DISPLAYSURF)
-        V2.draw(personnages.DISPLAYSURF)
+        Barcade.modif("sprites/NHistoire.png")
+        Bhistoire.draw(personnages.DISPLAYSURF)
         Joueur.souris(personnages.DISPLAYSURF)
         if pygame.sprite.collide_rect(Joueur,Barcade):
             Barcade.modif("sprites/HArcade.png")
@@ -141,8 +139,13 @@ def ChoixMode():
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
                     return 1
-        elif pygame.sprite.collide_rect(Joueur,V2):
-            return 2
+        elif pygame.sprite.collide_rect(Joueur,Bhistoire):
+            Bhistoire.modif("sprites/HHistoire.png")
+            Bhistoire.draw(personnages.DISPLAYSURF)
+            Joueur.souris(personnages.DISPLAYSURF)
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    return 2
        
         pygame.display.update()
         FramePerSec.tick(const.FPS)
