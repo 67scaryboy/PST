@@ -41,10 +41,6 @@ def Arcade():
                 pygame.quit()
                 sys.exit()
 
-        #Dès que le système de déplacement du joueur avec la souris est ok, retirer les 3 lignes en dessous
-        #P1.update()
-        #print(pygame.mouse.get_pos())
-        #P1.rect.center(pygame.mouse.get_pos())
         CP.update(P1)
         #mouvements ennemis
         for entity in enemies:
@@ -93,9 +89,9 @@ def Arcade():
         for entity in enemies:
             if entity.active == 1:
                 entity.draw(personnages.DISPLAYSURF)
-        P1.souris(personnages.DISPLAYSURF)
-        CP.draw(personnages.DISPLAYSURF)
-        MG.draw(personnages.DISPLAYSURF)
+        P1.souris(personnages.DISPLAYSURF)#Affichage joueur
+        CP.draw(personnages.DISPLAYSURF)#Affichage Compagnon
+        MG.draw(personnages.DISPLAYSURF)#Affichage menu gauche
         menu.AfficheScore(scoreArcade) #Affichage score
 
 
@@ -108,7 +104,7 @@ class Projectile(pygame.sprite.Sprite):
       def __init__(self, tireur):
         super().__init__()
         self.damage = tireur.ATK
-        if tireur.id == 'e1':
+        if tireur.id == 'e1': #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
             self.direction = [0,4]
             self.image = pygame.image.load("sprites/tir.png")
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
@@ -159,8 +155,9 @@ def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):#problème, on retire des 
                     p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
         else:    
             for enemy in p_enemies:
-                if pygame.sprite.collide_rect(p_P1,enemy):
+                if pygame.sprite.collide_rect(p_P1,enemy):#Attnetion ici, a modif, si on collide un boss, on le tue direct du coup !
                     p_P1.PV -= enemy.ATK
+                    tempscore+=enemy.score
                     p_enemies.remove(enemy)#creer fonction pour les drop, score...
                     if p_P1.PV <= 0:
                         p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
