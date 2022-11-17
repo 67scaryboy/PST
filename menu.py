@@ -129,7 +129,7 @@ def ChoixMode():
         personnages.DISPLAYSURF.fill(const.WHITE)
         Barcade.modif("sprites/NArcade.png")
         Barcade.draw(personnages.DISPLAYSURF)
-        Barcade.modif("sprites/NHistoire.png")
+        Bhistoire.modif("sprites/NHistoire.png")
         Bhistoire.draw(personnages.DISPLAYSURF)
         Joueur.souris(personnages.DISPLAYSURF)
         if pygame.sprite.collide_rect(Joueur,Barcade):
