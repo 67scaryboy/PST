@@ -58,7 +58,9 @@ def Arcade():
         #tir automatique
         if P1.cooldown == 0:
             shoot = Projectile(P1)
+            shootf= Projectile(CP)
             tirs.append(shoot)
+            tirs.append(shootf)
             P1.cooldown = cooldown
         else:
             P1.cooldown += -1

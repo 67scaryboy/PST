@@ -101,6 +101,7 @@ class Compagon(pygame.sprite.Sprite):
     def __init__(self,perso):
         super().__init__()
         self.image = pygame.image.load("sprites/e3.png")
+        self.ATK = 10
         self.rect = self.image.get_rect()
         self.rect.center = perso.rect.center
         self.rect.right = perso.rect.left-10
