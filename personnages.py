@@ -101,36 +101,25 @@ class Compagon(pygame.sprite.Sprite):
     def __init__(self,perso):
         super().__init__()
         self.image = pygame.image.load("sprites/e3.png")
+        self.ATK = 10
         self.rect = self.image.get_rect()
         self.rect.center = perso.rect.center
         self.rect.right = perso.rect.left-10
+        self.deplacementX =0
+        self.deplacementY =0
         self.id = 'c1'
 
     def update(self,perso):
-        pressed_keys = pygame.key.get_pressed()
-        if self.rect.top > 0:
-            if pressed_keys[K_UP]:
-                self.rect.move_ip(0, -7)
-
-        if (self.rect.bottom < const.SCREEN_HEIGHT):
-            if pressed_keys[K_DOWN]:
-                self.rect.move_ip(0,7)
-
-        if self.rect.left > const.ZONE_MORTE:
-              if pressed_keys[K_LEFT]:
-                  self.rect.move_ip(-7, 0)
-        if self.rect.right < const.SCREEN_WIDTH:
-              if pressed_keys[K_RIGHT]:
-                  self.rect.move_ip(7, 0)
-
-        if (random.randint(0,1)==1):
-            deplacementX= random.randint(-2,2)
-            if ((self.rect.right+deplacementX-perso.rect.right<20 or perso.rect.right-self.rect.right<20) and self.rect.right<const.SCREEN_WIDTH and self.rect.left >0):
-                self.rect.right = self.rect.right+deplacementX
-        else:
-            deplacementY= random.randint(-2,2)
-            if ((self.rect.top+deplacementY-perso.rect.top<20 or perso.rect.top-self.rect.top<20) and self.rect.bottom<const.SCREEN_HEIGHT and self.rect.bottom >0):
-                self.rect.top = self.rect.top+deplacementY
+        
+        self.rect.center= (perso.rect.right+self.deplacementX,perso.rect.top+ self.deplacementY)
+        #if (random.randint(0,1)==1): #Léger déplacement aléatoire du compagnon, a modif pr eviter l'épilepsie
+        self.deplacementX+=random.randint(-1,1)
+        if ((self.rect.right+self.deplacementX-perso.rect.right<20 or perso.rect.right-self.rect.right<20) and self.rect.right<const.SCREEN_WIDTH and self.rect.left >0):
+            self.rect.right = self.rect.right+self.deplacementX
+        #else:
+        self.deplacementY+= random.randint(-1,1)
+        if ((self.rect.top+self.deplacementY-perso.rect.top<10 or perso.rect.top-self.rect.top<10) and self.rect.bottom<const.SCREEN_HEIGHT and self.rect.bottom >0):
+            self.rect.bottom = self.rect.top+self.deplacementY
         
     def draw(self, surface):
         surface.blit(self.image, self.rect)
