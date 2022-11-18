@@ -154,7 +154,8 @@ def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):#problème, on retire des 
         if shoot.team == 0:#si tir enemi
             if pygame.sprite.collide_rect(shoot,p_P1):
                 p_P1.PV -= shoot.damage
-                p_tirs.remove(shoot)
+                if shoot in p_tirs:
+                    p_tirs.remove(shoot)
                 if p_P1.PV <= 0:
                     p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
         else:    
@@ -166,7 +167,8 @@ def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):#problème, on retire des 
                         p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
                 elif pygame.sprite.collide_rect(shoot,enemy):
                     enemy.PV -=  shoot.damage
-                    p_tirs.remove(shoot)
+                    if shoot in p_tirs:
+                        p_tirs.remove(shoot)
                     if enemy.PV <= 0:
                         tempscore+=enemy.score
                         p_enemies.remove(enemy)#creer fonction pour les drop, score...
