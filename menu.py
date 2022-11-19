@@ -4,16 +4,6 @@ import constantes as const
 
 FramePerSec = pygame.time.Clock()
 
-class MenuGauche(pygame.sprite.Sprite): 
-    def __init__(self):
-        super().__init__()
-        self.image = pygame.image.load("sprites/Menu_Gauche.png") 
-        self.rect = self.image.get_rect()
-        self.rect.center = (const.ZONE_MORTE//2, (const.SCREEN_HEIGHT//2))
-
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
-
 class Affichage(pygame.sprite.Sprite): #Permet l'affichage d'un simple sprite
     def __init__(self, chemin, posX, posY): #chemin=chemin d'accès a l'image a draw
         super().__init__()
@@ -107,9 +97,9 @@ def ChoixPerso():
     
 def AfficheScore(valeur):
     font = pygame.font.Font('freesansbold.ttf', 32)
-    Score=font.render(str(valeur), True, const.GREEN, const.GRIS)
+    Score=font.render(str(valeur), True, const.GREEN)#, const.BLACK)
     scorerect=Score.get_rect()
-    scorerect.center=(const.ZONE_MORTE//2,const.SCREEN_HEIGHT-125)
+    scorerect.center=(100,const.SCREEN_HEIGHT-12)
     personnages.DISPLAYSURF.blit(Score,scorerect)
 
 def ChoixMode():
