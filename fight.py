@@ -20,10 +20,10 @@ def Arcade():
     scoreArcade = 0
     alive = True
 
-    AP = menu.Arrièreplan(2)# 1 a 3 pour le fond
+    AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
     AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
-    MG = menu.MenuGauche()
+    MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)
     P1 = personnages.Player(menu.ChoixPerso())
     E1 = personnages.Enemy(1)
     CP = personnages.Compagon(P1)
@@ -93,7 +93,7 @@ def Arcade():
                 entity.draw(personnages.DISPLAYSURF)
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
         CP.draw(personnages.DISPLAYSURF)#Affichage Compagnon
-        MG.draw(personnages.DISPLAYSURF)#Affichage menu gauche
+        MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
         menu.AfficheScore(scoreArcade) #Affichage score
 
 
