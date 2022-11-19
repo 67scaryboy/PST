@@ -4,6 +4,14 @@ import constantes as const
 
 FramePerSec = pygame.time.Clock()
 
+def draw_health_bar(surf, pos, size, borderC, backC, healthC, progress):
+    pygame.draw.rect(surf, backC, (*pos, *size))
+    pygame.draw.rect(surf, borderC, (*pos, *size), 1)
+    innerPos  = (pos[0]+1, pos[1]+1)
+    innerSize = ((size[0]-2) * progress, size[1]-2)
+    rect = (round(innerPos[0]), round(innerPos[1]), round(innerSize[0]), round(innerSize[1]))
+    pygame.draw.rect(surf, healthC, rect)
+
 class Affichage(pygame.sprite.Sprite): #Permet l'affichage d'un simple sprite
     def __init__(self, chemin, posX, posY): #chemin=chemin d'accès a l'image a draw
         super().__init__()
