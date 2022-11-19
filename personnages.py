@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-import random
+import random, menu
 import constantes as const
 
 
@@ -49,29 +49,39 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.image.load("sprites/souris.png")
             self.id = 'N/A'
             self.PV = 10
+            self.MAXPV=self.PV
             self.ATK = 0
             self.cooldown = 100
         if id == 1:
             self.image = pygame.image.load("sprites/p1.png")
             self.id = 'p1'
             self.PV = 100 #a modifier en fonction de perso
+            self.MAXPV=self.PV
             self.ATK = 70
             self.cooldown = 10
         elif id == 2:
             self.image = pygame.image.load("sprites/p2.png")
             self.id = 'p2'
             self.PV = 130 #a modifier en fonction de perso
+            self.MAXPV=self.PV
             self.ATK = 100
             self.cooldown = 20
         elif id == 3:
             self.image = pygame.image.load("sprites/p3.png")
             self.id = 'p3'
             self.PV = 150 #a modifier en fonction de perso
+            self.MAXPV=self.PV
             self.ATK = 150
             self.cooldown = 30
 
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT - 50))
+    
+    def draw_health(self, surf):
+        health_rect = pygame.Rect(0, 0, self.image.get_width(), 7)
+        health_rect.midbottom = self.rect.centerx, self.rect.bottom
+        menu.draw_health_bar(surf, health_rect.bottomleft, health_rect.size, 
+                (0, 0, 0), (255, 0, 0), (0, 255, 0), self.PV/self.MAXPV)
 
     def update(self):
         pressed_keys = pygame.key.get_pressed()
