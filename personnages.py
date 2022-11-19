@@ -31,7 +31,7 @@ class Enemy(pygame.sprite.Sprite):
             self.score = 100
             self.id = 'e3'
         self.rect = self.image.get_rect()
-        self.rect.center=(random.randint(const.ZONE_MORTE + 50,const.SCREEN_WIDTH-50),0)
+        self.rect.center=(random.randint(50,const.SCREEN_WIDTH-50),0)
 
       def move(self):
         self.rect.move_ip(0,2)
