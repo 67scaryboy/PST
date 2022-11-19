@@ -92,6 +92,7 @@ def Arcade():
             if entity.active == 1:
                 entity.draw(personnages.DISPLAYSURF)
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
+        P1.draw_health(personnages.DISPLAYSURF)
         CP.draw(personnages.DISPLAYSURF)#Affichage Compagnon
         MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
         menu.AfficheScore(scoreArcade) #Affichage score
