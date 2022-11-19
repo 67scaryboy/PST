@@ -15,18 +15,21 @@ class Enemy(pygame.sprite.Sprite):
         if id == 1:
             self.image = pygame.image.load("sprites/e1.png")
             self.PV = 100 #PV de ce type d'adversaire
+            self.MAXPV = self.PV
             self.ATK = 10 #Attaque de ce type d'adversaire
             self.score = 10 #Score crédité en cas de kill
             self.id = 'e1' #ID de ce type
         elif id == 2:
             self.image = pygame.image.load("sprites/e2.png")
             self.PV = 150
+            self.MAXPV = self.PV
             self.ATK = 30
             self.score = 50
             self.id = 'e2'
         elif id == 3:
             self.image = pygame.image.load("sprites/e3.png")
             self.PV = 200
+            self.MAXPV = self.PV
             self.ATK = 50
             self.score = 100
             self.id = 'e3'
@@ -40,6 +43,13 @@ class Enemy(pygame.sprite.Sprite):
 
       def draw(self, surface):
         surface.blit(self.image, self.rect)
+        self.draw_health(DISPLAYSURF)
+
+      def draw_health(self, surf):
+        if self.PV != self.MAXPV:
+            health_rect = pygame.Rect(0, 0, self.image.get_width(), 7)
+            health_rect.midbottom = self.rect.centerx, self.rect.bottom
+            menu.draw_health_bar(surf, health_rect.bottomleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0), self.PV/self.MAXPV)
 
 
 class Player(pygame.sprite.Sprite):
