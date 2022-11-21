@@ -63,6 +63,8 @@ class Player(pygame.sprite.Sprite):
             self.MAXPV=self.PV
             self.ATK = 0
             self.cooldown = 100
+            self.Ulti = 0
+            self.MAXUlti = 1
         if id == 1:
             self.image = pygame.image.load("sprites/p1.png")
             self.id = 'p1'
@@ -70,6 +72,8 @@ class Player(pygame.sprite.Sprite):
             self.MAXPV=self.PV
             self.ATK = 70
             self.cooldown = 10
+            self.Ulti = 0
+            self.MAXUlti = 100
         elif id == 2:
             self.image = pygame.image.load("sprites/p2.png")
             self.id = 'p2'
@@ -77,6 +81,8 @@ class Player(pygame.sprite.Sprite):
             self.MAXPV=self.PV
             self.ATK = 100
             self.cooldown = 20
+            self.Ulti = 0
+            self.MAXUlti = 100
         elif id == 3:
             self.image = pygame.image.load("sprites/p3.png")
             self.id = 'p3'
@@ -84,6 +90,8 @@ class Player(pygame.sprite.Sprite):
             self.MAXPV=self.PV
             self.ATK = 150
             self.cooldown = 30
+            self.Ulti = 0
+            self.MAXUlti = 100
 
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT - 50))
