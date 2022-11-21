@@ -3,6 +3,18 @@ from pygame.locals import *
 import random, personnages, menu, fight
 import constantes as const
 
+class shield():
+    def __init__(self,origine,PV):
+        super().__init__()
+        self.PV = PV
+        self.image = pygame.image.load("sprites/tir.png")#à modifier
+        self.rect = self.image.get_rect()
+        self.rect.center = origine.rect.center
+        self.mask = pygame.mask.from_surface(self.image)
+    
+    def move(origine):
+        self.rect.center = origine.rect.center
+
 class booster():
     def __init__(self,origine,value,catégorie):
         super().__init__()
@@ -11,6 +23,8 @@ class booster():
         if catégorie == 0:#boost ATK
             self.image = pygame.image.load("sprites/ATK_temp.png")#modifier l'image
         elif catégorie == 1:#boost PV
+            self.image = pygame.image.load("sprites/heal_temp.png")#modifier l'image
+        elif catégorie == 2:#shield
             self.image = pygame.image.load("sprites/heal_temp.png")#modifier l'image
         self.rect = self.image.get_rect()
         self.rect.center = origine.rect.center
@@ -31,6 +45,7 @@ class booster():
             p_P1.PV += self.boost
             if p_P1.PV > p_P1.MAXPV:
                 p_P1.PV = p_P1.MAXPV
+
 
 def dropBooster(liste_boosts,origine):#faire l'équilibrage plus tard
     p = random.randint(0, 100)
