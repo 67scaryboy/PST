@@ -9,9 +9,9 @@ class booster(pygame.sprite.Sprite):
         self.boost = value
         self.type = catégorie
         if catégorie == 0:#boost ATK
-            self.image = pygame.image.load("sprites/ATK_temp.png")#modifier l'image
+            self.image = pygame.image.load("sprites/bonusatk.png")#modifier l'image
         elif catégorie == 1:#boost PV
-            self.image = pygame.image.load("sprites/heal_temp.png")#modifier l'image
+            self.image = pygame.image.load("sprites/bonusvie.png")#modifier l'image
         self.rect = self.image.get_rect()
         self.rect.center = origine.rect.center
         self.mask = pygame.mask.from_surface(self.image)
@@ -44,6 +44,6 @@ def dropBooster(liste_boosts,origine):#faire l'équilibrage plus tard
 
 def AttraperBoost(liste_boosts,p_P1):
     for boost in liste_boosts:
-        if pygame.sprite.collide_mask(boost,p_P1):
+        if pygame.sprite.collide_mask(p_P1,boost):
             boost.useBooster(p_P1)
             liste_boosts.remove(boost)
