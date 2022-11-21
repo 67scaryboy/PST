@@ -4,6 +4,15 @@ import constantes as const
 
 FramePerSec = pygame.time.Clock()
 
+def Animation(listeA, classe):  #Animation d'un objet liée a une classe
+                                # ListeA: [a1,a2,a3,...,an,status animation en cours(int)]
+    classe.image = pygame.image.load(listeA[len(listeA-1)])
+    if listeA[len(listeA-1)]<len(listeA-2):
+        listeA[len(listeA)]+=1
+    else:
+        listeA[len(listeA-1)]=0
+
+
 def draw_health_bar(surf, pos, size, borderC, backC, healthC, progress):
     pygame.draw.rect(surf, backC, (*pos, *size))
     pygame.draw.rect(surf, borderC, (*pos, *size), 1)

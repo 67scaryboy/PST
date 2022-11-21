@@ -16,3 +16,6 @@ ZONE_MORTE = 00 #Zone morte qui constitue le menu à gauche (plus utile)
 #Joueur
 Xvaisseaux= 68
 Yvaisseaux= 80
+
+#Listes animations
+tirtemp=["sprites/t1.png","sprites/t2.png",0]
