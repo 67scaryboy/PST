@@ -11,7 +11,7 @@ class booster():
         if catégorie == 0:#boost ATK
             self.image = pygame.image.load("sprites/tir.png")#modifier l'image
         elif catégorie == 1:#boost PV
-            self.image = pygame.image.load("sprites/tir.png")#modifier l'image
+            self.image = pygame.image.load("sprites/heal_temp.png")#modifier l'image
         self.rect = self.image.get_rect()
         self.rect.center = origine.rect.center
         self.mask = pygame.mask.from_surface(self.image)
