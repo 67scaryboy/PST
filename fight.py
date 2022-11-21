@@ -49,7 +49,7 @@ def Arcade():
                 #ici pour décider si il tire
                 p = random.randint(0,100)
                 if p < 1:
-                    shoot = Projectile(entity,1)# remettre 0
+                    shoot = Projectile(entity,3)# remettre 0
                     tirs.append(shoot)
                 #supprimer les tirs qui sortent de l'écrant
                 if entity.rect.bottom > const.SCREEN_HEIGHT:
