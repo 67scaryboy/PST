@@ -3,12 +3,15 @@ from pygame.locals import *
 import random, personnages, menu, fight
 import constantes as const
 
-class boost_ATK():
+class booster():
     def __init__(self,origine,value,catégorie):
         super().__init__()
         self.boost = value
         self.type = catégorie
-        self.image = pygame.image.load("sprites/tir.png")#modifier l'image
+        if catégorie == 0:#boost ATK
+            self.image = pygame.image.load("sprites/tir.png")#modifier l'image
+        elif catégorie == 1:#boost PV
+            self.image = pygame.image.load("sprites/tir.png")#modifier l'image
         self.rect = self.image.get_rect()
         self.rect.center = origine.rect.center
         self.mask = pygame.mask.from_surface(self.image)
@@ -21,8 +24,21 @@ class boost_ATK():
     def draw(self, surface):
         surface.blit(self.image, self.rect)
     
-    def boost(self,p_P1):
-        p_P1.ATK += self.boost
-    
-    def heal(self,p_P1):
-        p_P1.PV += self.boost
+    def useBooster(self,p_P1):
+        if self.type == 0: 
+            p_P1.ATK += self.boost
+        elif self.type == 1:
+            p_P1.PV += self.boost
+            if p_P1.PV > p_P1.MAXPV:
+                p_P1.PV = p_P1.MAXPV
+
+def dropBooster(liste_boosts,origine):
+    p = random.randint(0, 100)
+    if p <= 20:
+        liste_boosts.append(booster(origine,25,1))#à modifier et randomiser plus tard
+
+def AttraperBoost(liste_boosts,p_P1):
+    for boost in liste_boosts:
+        if pygame.sprite.collide_mask(boost,p_P1):
+            boost.useBooster(p_P1)
+            liste_boosts.remove(boost)

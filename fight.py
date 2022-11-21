@@ -1,6 +1,6 @@
 import pygame, sys, math
 from pygame.locals import *
-import random, personnages, menu
+import random, personnages, menu, bonus
 import constantes as const
 
 def Spawn(enemies,q):#random, pour le mode arcade
@@ -35,6 +35,7 @@ def Arcade():
     enemies.append(E1)
     tirs = []
     explo = []
+    boosts = []
 
     while alive:
         for event in pygame.event.get():
@@ -71,12 +72,19 @@ def Arcade():
             shoot.move()
             if shoot.rect.bottom > const.SCREEN_HEIGHT:
                     tirs.remove(shoot)
+        
+        for boost in boosts:
+            boost.move()
+            if boost.rect.bottom > const.SCREEN_HEIGHT:
+                    boosts.remove(boost)
     
         AP3.move(3)#vitesse de déplacement des couches
         AP2.move(2)
         AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
 
-        scoreArcade,alive=Colision(tirs,P1,enemies,explo,scoreArcade,alive)
+        scoreArcade,alive=Colision(tirs,P1,enemies,explo,boosts,scoreArcade,alive)
+
+        bonus.AttraperBoost(boosts,P1)
 
         Spawn(enemies,2)
 
@@ -90,6 +98,9 @@ def Arcade():
             if shoot.trajectoire == 3:
                 menu.Animation(const.boules,shoot)
             shoot.draw(personnages.DISPLAYSURF)
+        
+        for boost in boosts:
+            boost.draw(personnages.DISPLAYSURF)
 
         menu.aff_explo(explo)
         for boom in explo:
@@ -174,7 +185,7 @@ class Projectile(pygame.sprite.Sprite):
       def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-def Colision(p_tirs,p_P1,p_enemies,p_explo,tempscore,p_alive):
+def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):
     for shoot in p_tirs:
         if shoot.team == 0:#si tir enemi
             if pygame.sprite.collide_mask(shoot,p_P1):
@@ -189,7 +200,8 @@ def Colision(p_tirs,p_P1,p_enemies,p_explo,tempscore,p_alive):
                     p_P1.PV -= enemy.ATK
                     tempscore+=enemy.score
                     p_explo.append(menu.explosion(enemy))
-                    p_enemies.remove(enemy)#creer fonction pour les drop, score...
+                    bonus.dropBooster(boosts,enemy)
+                    p_enemies.remove(enemy)
                     if p_P1.PV <= 0:
                         p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
                 elif pygame.sprite.collide_mask(shoot,enemy):
@@ -199,7 +211,8 @@ def Colision(p_tirs,p_P1,p_enemies,p_explo,tempscore,p_alive):
                     if enemy.PV <= 0:
                         tempscore+=enemy.score
                         p_explo.append(menu.explosion(enemy))
-                        p_enemies.remove(enemy)#creer fonction pour les drop, score...
+                        bonus.dropBooster(boosts,enemy)
+                        p_enemies.remove(enemy)
                 
     return (tempscore,p_alive)
     
