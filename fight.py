@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, math
 from pygame.locals import *
 import random, personnages, menu
 import constantes as const
@@ -111,30 +111,37 @@ class Projectile(pygame.sprite.Sprite):
             self.direction = [0,4]
             self.image = pygame.image.load("sprites/tir.png")
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
+            self.trajectoire = 0# o pour tout droit, les autres à ajouter
         elif tireur.id == 'e2':
             self.direction = [0,4]
             self.image = pygame.image.load("sprites/tir.png")
             self.team = 0
+            self.trajectoire = 0
         elif tireur.id == 'e3':
             self.direction = [0,4]
             self.image = pygame.image.load("sprites/tir.png")
             self.team = 0
+            self.trajectoire = 3#pour test
         elif tireur.id == 'p1':
             self.direction = [0,-3]
             self.image = pygame.image.load("sprites/tira.png")
             self.team = 1
+            self.trajectoire = 0
         elif tireur.id == 'p2':
             self.direction = [0,-3]
             self.image = pygame.image.load("sprites/tira.png")
             self.team = 1
+            self.trajectoire = 0
         elif tireur.id == 'p3':
             self.direction = [0,-3]
             self.image = pygame.image.load("sprites/tira.png")
             self.team = 1
+            self.trajectoire = 0
         elif tireur.id == 'c1':
             self.direction = [0,-3]
             self.image = pygame.image.load("sprites/tira.png")
             self.team = 1
+            self.trajectoire = 0
         self.time = 0
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center
@@ -142,6 +149,17 @@ class Projectile(pygame.sprite.Sprite):
 
       def move(self):
         self.rect.move_ip(self.direction[0],self.direction[1])
+
+        if self.trajectoire == 1:#logarithme droite
+            temp = 2*(math.log(self.time+61/2)-math.log(self.time+1/2))
+            self.direction = [temp,math.sqrt(9-temp)+1]
+        elif self.trajectoire == 2:#logarithme gauche
+            temp = 2*(math.log(self.time+61/2)-math.log(self.time+1/2))
+            self.direction = [-temp,math.sqrt(9-temp)+1]
+        elif self.trajectoire == 3:
+            temp = 3* math.cos(self.time/20)
+            self.direction = [temp,math.sqrt(9-temp*temp)+2]
+
         self.time += 1
         if ((self.rect.bottom > const.SCREEN_HEIGHT) or (self.rect.top < 0)):
             self.kill()
