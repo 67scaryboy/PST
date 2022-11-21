@@ -32,8 +32,6 @@ class booster():
     
     def move(self):
         self.rect.move_ip(0,3)
-        if ((self.rect.bottom > const.SCREEN_HEIGHT) or (self.rect.top < 0)):
-            self.kill()
     
     def draw(self, surface):
         surface.blit(self.image, self.rect)
