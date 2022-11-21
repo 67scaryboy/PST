@@ -6,11 +6,12 @@ FramePerSec = pygame.time.Clock()
 
 def Animation(listeA, classe):  #Animation d'un objet liée a une classe
                                 # ListeA: [a1,a2,a3,...,an,status animation en cours(int)]
-    classe.image = pygame.image.load(listeA[len(listeA-1)])
-    if listeA[len(listeA-1)]<len(listeA-2):
-        listeA[len(listeA)]+=1
+    classe.image = pygame.image.load(listeA[listeA[len(listeA)-1]])
+    classe.mask = pygame.mask.from_surface(classe.image)
+    if listeA[len(listeA)-1]<len(listeA)-2:
+        listeA[len(listeA)-1]+=1
     else:
-        listeA[len(listeA-1)]=0
+        listeA[len(listeA)-1]=0
 
 
 def draw_health_bar(surf, pos, size, borderC, backC, healthC, progress):
