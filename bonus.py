@@ -9,7 +9,7 @@ class booster():
         self.boost = value
         self.type = catégorie
         if catégorie == 0:#boost ATK
-            self.image = pygame.image.load("sprites/tir.png")#modifier l'image
+            self.image = pygame.image.load("sprites/ATK_temp.png")#modifier l'image
         elif catégorie == 1:#boost PV
             self.image = pygame.image.load("sprites/heal_temp.png")#modifier l'image
         self.rect = self.image.get_rect()
