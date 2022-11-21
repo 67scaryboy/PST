@@ -32,10 +32,14 @@ class booster():
             if p_P1.PV > p_P1.MAXPV:
                 p_P1.PV = p_P1.MAXPV
 
-def dropBooster(liste_boosts,origine):
+def dropBooster(liste_boosts,origine):#faire l'équilibrage plus tard
     p = random.randint(0, 100)
     if p <= 20:
-        liste_boosts.append(booster(origine,25,1))#à modifier et randomiser plus tard
+        q = random.randint(0, 100)
+        if q < 50:
+            liste_boosts.append(booster(origine,25,1))
+        else:
+            liste_boosts.append(booster(origine,5,0))
 
 def AttraperBoost(liste_boosts,p_P1):
     for boost in liste_boosts:
