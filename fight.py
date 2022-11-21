@@ -138,6 +138,7 @@ class Projectile(pygame.sprite.Sprite):
         self.time = 0
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center
+        self.mask = pygame.mask.from_surface(self.image)
 
       def move(self):
         self.rect.move_ip(self.direction[0],self.direction[1])
@@ -148,10 +149,10 @@ class Projectile(pygame.sprite.Sprite):
       def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):#problème, on retire des élements d'une liste que l'on parcours
+def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):
     for shoot in p_tirs:
         if shoot.team == 0:#si tir enemi
-            if pygame.sprite.collide_rect(shoot,p_P1):
+            if pygame.sprite.collide_mask(shoot,p_P1):
                 p_P1.PV -= shoot.damage
                 if shoot in p_tirs:
                     p_tirs.remove(shoot)
@@ -159,13 +160,13 @@ def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):#problème, on retire des 
                     p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
         else:    
             for enemy in p_enemies:
-                if pygame.sprite.collide_rect(p_P1,enemy):#Attnetion ici, a modif, si on collide un boss, on le tue direct du coup !
+                if pygame.sprite.collide_mask(p_P1,enemy):#Attnetion ici, a modif, si on collide un boss, on le tue direct du coup !
                     p_P1.PV -= enemy.ATK
                     tempscore+=enemy.score
                     p_enemies.remove(enemy)#creer fonction pour les drop, score...
                     if p_P1.PV <= 0:
                         p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
-                elif pygame.sprite.collide_rect(shoot,enemy):
+                elif pygame.sprite.collide_mask(shoot,enemy):
                     enemy.PV -=  shoot.damage
                     if shoot in p_tirs:
                         p_tirs.remove(shoot)

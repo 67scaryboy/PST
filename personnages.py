@@ -35,6 +35,7 @@ class Enemy(pygame.sprite.Sprite):
             self.id = 'e3'
         self.rect = self.image.get_rect()
         self.rect.center=(random.randint(50,const.SCREEN_WIDTH-50),0)
+        self.mask = pygame.mask.from_surface(self.image)
 
       def move(self):
         self.rect.move_ip(0,2)
@@ -86,6 +87,7 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT - 50))
+        self.mask = pygame.mask.from_surface(self.image)
     
     def draw_health(self, surf):
         health_rect = pygame.Rect(0, 0, self.image.get_width(), 7)
@@ -128,6 +130,7 @@ class Compagon(pygame.sprite.Sprite):
         self.deplacementX =0
         self.deplacementY =0
         self.id = 'c1'
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self,perso):
         
