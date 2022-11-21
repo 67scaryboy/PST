@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-import random, personnages, menu, fight
+import random, personnages, menu, fight, bonus
 import constantes as const
 
 pygame.init()
