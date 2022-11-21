@@ -34,6 +34,7 @@ def Arcade():
     enemies = [] 
     enemies.append(E1)
     tirs = []
+    explo = []
 
     while alive:
         for event in pygame.event.get():
@@ -75,7 +76,7 @@ def Arcade():
         AP2.move(2)
         AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
 
-        scoreArcade,alive=Colision(tirs,P1,enemies,scoreArcade,alive)
+        scoreArcade,alive=Colision(tirs,P1,enemies,explo,scoreArcade,alive)
 
         Spawn(enemies,2)
 
@@ -86,10 +87,13 @@ def Arcade():
 
         
         for shoot in tirs:
-            if shoot.trajectoire == 1:
+            if shoot.trajectoire == 3:
                 menu.Animation(const.tirtemp,shoot)
             shoot.draw(personnages.DISPLAYSURF)
 
+        menu.aff_explo(explo)
+        for boom in explo:
+            menu.Animation(const.explosions,boom)
 
         for entity in enemies:
             if entity.active == 1:
@@ -170,7 +174,7 @@ class Projectile(pygame.sprite.Sprite):
       def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):
+def Colision(p_tirs,p_P1,p_enemies,p_explo,tempscore,p_alive):
     for shoot in p_tirs:
         if shoot.team == 0:#si tir enemi
             if pygame.sprite.collide_mask(shoot,p_P1):
@@ -184,6 +188,7 @@ def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):
                 if pygame.sprite.collide_mask(p_P1,enemy):#Attention ici, a modif, si on collide un boss, on le tue direct du coup !
                     p_P1.PV -= enemy.ATK
                     tempscore+=enemy.score
+                    p_explo.append(menu.explosion(enemy))
                     p_enemies.remove(enemy)#creer fonction pour les drop, score...
                     if p_P1.PV <= 0:
                         p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
@@ -193,6 +198,7 @@ def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):
                         p_tirs.remove(shoot)
                     if enemy.PV <= 0:
                         tempscore+=enemy.score
+                        p_explo.append(menu.explosion(enemy))
                         p_enemies.remove(enemy)#creer fonction pour les drop, score...
                 
     return (tempscore,p_alive)

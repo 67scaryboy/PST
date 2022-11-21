@@ -157,3 +157,22 @@ def ChoixMode():
        
         pygame.display.update()
         FramePerSec.tick(const.FPS)
+
+class explosion():
+    def __init__(self, origine):
+        super().__init__()
+        self.image = pygame.image.load("sprites/explosion1.png")#à  modifier
+        self.rect = self.image.get_rect()
+        self.rect.center=origine.rect.center
+        self.time = 0 
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+
+def aff_explo(liste_explo):
+    for boom in liste_explo:
+        boom.draw(personnages.DISPLAYSURF)
+        boom.time +=1
+        if boom.time >= 10:
+            liste_explo.remove(boom)
+        
