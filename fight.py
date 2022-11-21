@@ -49,7 +49,7 @@ def Arcade():
                 #ici pour décider si il tire
                 p = random.randint(0,100)
                 if p < 1:
-                    shoot = Projectile(entity,0)
+                    shoot = Projectile(entity,3)# remettre 0
                     tirs.append(shoot)
                 #supprimer les tirs qui sortent de l'écrant
                 if entity.rect.bottom > const.SCREEN_HEIGHT:
@@ -86,7 +86,10 @@ def Arcade():
 
         
         for shoot in tirs:
+            if shoot.trajectoire == 1:
+                menu.Animation(const.tirtemp,shoot)
             shoot.draw(personnages.DISPLAYSURF)
+
 
         for entity in enemies:
             if entity.active == 1:
