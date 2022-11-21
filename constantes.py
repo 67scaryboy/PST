@@ -20,4 +20,4 @@ Yvaisseaux= 80
 #Listes animations
 explosions=["sprites_animation/explosion1.png","sprites_animation/explosion2.png","sprites_animation/explosion3.png","sprites_animation/explosion4.png","sprites_animation/explosion5.png","sprites_animation/explosion6.png","sprites_animation/explosion7.png",0]
 boules=["sprites_animation/boule1.png","sprites_animation/boule2.png","sprites_animation/boule3.png","sprites_animation/boule4.png",0]
-tirboss=["sprites_animation/tirboss.png","sprites_animation/tirboss2.png","sprites_animation/tirboss3.png","sprites_animation/tirboss4.png","sprites_animation/tirboss5.png","sprites_animation/tirboss6.png","sprites_animation/tirboss7.png",0]
+tirboss=["sprites_animation/tirboss1.png","sprites_animation/tirboss2.png","sprites_animation/tirboss3.png","sprites_animation/tirboss4.png","sprites_animation/tirboss5.png","sprites_animation/tirboss6.png","sprites_animation/tirboss7.png",0]
