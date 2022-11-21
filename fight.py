@@ -49,7 +49,7 @@ def Arcade():
                 #ici pour décider si il tire
                 p = random.randint(0,100)
                 if p < 1:
-                    shoot = Projectile(entity)
+                    shoot = Projectile(entity,0)
                     tirs.append(shoot)
                 #supprimer les tirs qui sortent de l'écrant
                 if entity.rect.bottom > const.SCREEN_HEIGHT:
@@ -57,8 +57,8 @@ def Arcade():
 
         #tir automatique
         if P1.cooldown == 0:
-            shoot = Projectile(P1)
-            shootf= Projectile(CP)
+            shoot = Projectile(P1,0)
+            shootf= Projectile(CP,0)
             tirs.append(shoot)
             tirs.append(shootf)
             P1.cooldown = cooldown
@@ -104,44 +104,44 @@ def Arcade():
 
 
 class Projectile(pygame.sprite.Sprite):
-      def __init__(self, tireur):
+      def __init__(self, tireur,traj):
         super().__init__()
         self.damage = tireur.ATK
         if tireur.id == 'e1': #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
             self.direction = [0,4]
             self.image = pygame.image.load("sprites/tir.png")
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
-            self.trajectoire = 0# o pour tout droit, les autres à ajouter
+
         elif tireur.id == 'e2':
             self.direction = [0,4]
             self.image = pygame.image.load("sprites/tir.png")
             self.team = 0
-            self.trajectoire = 0
+            
         elif tireur.id == 'e3':
             self.direction = [0,4]
             self.image = pygame.image.load("sprites/tir.png")
             self.team = 0
-            self.trajectoire = 3#pour test
+            
         elif tireur.id == 'p1':
             self.direction = [0,-3]
             self.image = pygame.image.load("sprites/tira.png")
             self.team = 1
-            self.trajectoire = 0
+            
         elif tireur.id == 'p2':
             self.direction = [0,-3]
             self.image = pygame.image.load("sprites/tira.png")
             self.team = 1
-            self.trajectoire = 0
+            
         elif tireur.id == 'p3':
             self.direction = [0,-3]
             self.image = pygame.image.load("sprites/tira.png")
             self.team = 1
-            self.trajectoire = 0
+
         elif tireur.id == 'c1':
             self.direction = [0,-3]
             self.image = pygame.image.load("sprites/tira.png")
             self.team = 1
-            self.trajectoire = 0
+        self.trajectoire = traj 
         self.time = 0
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center
@@ -152,11 +152,11 @@ class Projectile(pygame.sprite.Sprite):
 
         if self.trajectoire == 1:#logarithme droite
             temp = 2*(math.log(self.time+61/2)-math.log(self.time+1/2))
-            self.direction = [temp,math.sqrt(9-temp)+1]
+            self.direction = [temp,math.sqrt(9-temp)+2]
         elif self.trajectoire == 2:#logarithme gauche
             temp = 2*(math.log(self.time+61/2)-math.log(self.time+1/2))
-            self.direction = [-temp,math.sqrt(9-temp)+1]
-        elif self.trajectoire == 3:
+            self.direction = [-temp,math.sqrt(9-temp)+2]
+        elif self.trajectoire == 3:#cosinus
             temp = 3* math.cos(self.time/20)
             self.direction = [temp,math.sqrt(9-temp*temp)+2]
 
@@ -178,7 +178,7 @@ def Colision(p_tirs,p_P1,p_enemies,tempscore,p_alive):
                     p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
         else:    
             for enemy in p_enemies:
-                if pygame.sprite.collide_mask(p_P1,enemy):#Attnetion ici, a modif, si on collide un boss, on le tue direct du coup !
+                if pygame.sprite.collide_mask(p_P1,enemy):#Attention ici, a modif, si on collide un boss, on le tue direct du coup !
                     p_P1.PV -= enemy.ATK
                     tempscore+=enemy.score
                     p_enemies.remove(enemy)#creer fonction pour les drop, score...
