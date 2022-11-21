@@ -88,7 +88,7 @@ def Arcade():
         
         for shoot in tirs:
             if shoot.trajectoire == 3:
-                menu.Animation(const.tirtemp,shoot)
+                menu.Animation(const.boules,shoot)
             shoot.draw(personnages.DISPLAYSURF)
 
         menu.aff_explo(explo)
