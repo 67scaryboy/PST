@@ -52,7 +52,7 @@ def dropBooster(liste_boosts,origine):#faire l'équilibrage plus tard
     if p <= 20:
         q = random.randint(0, 100)
         if q < 50:
-            liste_boosts.append(booster(origine,25,1))
+            liste_boosts.append(booster(origine,25,1))  
         else:
             liste_boosts.append(booster(origine,5,0))
 
