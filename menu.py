@@ -161,7 +161,7 @@ def ChoixMode():
 class explosion():
     def __init__(self, origine):
         super().__init__()
-        self.image = pygame.image.load("sprites/explosion1.png")#à  modifier
+        self.image = pygame.image.load("sprites_animation/explosion1.png")#à  modifier
         self.rect = self.image.get_rect()
         self.rect.center=origine.rect.center
         self.time = 0 
