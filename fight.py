@@ -51,7 +51,16 @@ def Arcade():
                 #ici pour décider si il tire
                 p = random.randint(0,100)
                 if p < 1:
-                    shoot = Projectile(entity,3)# remettre 0
+                    if (entity.id == "e1"):
+                        shoot = Projectile(entity,3)
+                    elif (entity.id == "e2"):
+                        shoot = Projectile(entity,2)
+                        tirs.append(shoot)
+                        shoot = Projectile(entity,1)
+                        tirs.append(shoot)
+                        shoot = Projectile(entity,0)
+                    else:
+                        shoot = Projectile(entity,0)
                     tirs.append(shoot)
                 #supprimer les tirs qui sortent de l'écrant
                 if entity.rect.bottom > const.SCREEN_HEIGHT:
@@ -95,7 +104,7 @@ def Arcade():
 
         
         for shoot in tirs:
-            if shoot.trajectoire == 3:
+            if shoot.trajectoire == 3 and shoot.tireur_id == "e1":
                 menu.Animation(const.boules,shoot)
             shoot.draw(personnages.DISPLAYSURF)
         
@@ -124,6 +133,7 @@ def Arcade():
 class Projectile(pygame.sprite.Sprite):
       def __init__(self, tireur,traj):
         super().__init__()
+        self.tireur_id = tireur.id
         self.damage = tireur.ATK
         if tireur.id == 'e1': #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
             self.direction = [0,4]
@@ -132,7 +142,7 @@ class Projectile(pygame.sprite.Sprite):
 
         elif tireur.id == 'e2':
             self.direction = [0,4]
-            self.image = pygame.image.load("sprites/tir.png")
+            self.image = pygame.image.load("sprites/tira2.png") #Changer la texture
             self.team = 0
             
         elif tireur.id == 'e3':
