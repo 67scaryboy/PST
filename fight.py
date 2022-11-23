@@ -179,10 +179,10 @@ class Projectile(pygame.sprite.Sprite):
         self.rect.move_ip(self.direction[0],self.direction[1])
 
         if self.trajectoire == 1:#logarithme droite
-            temp = 2*(math.log(self.time+61/2)-math.log(self.time+1/2))
+            temp = 2*(math.log(self.time+81/2)-math.log(self.time+1/2))
             self.direction = [temp,math.sqrt(9-temp)+2]
         elif self.trajectoire == 2:#logarithme gauche
-            temp = 2*(math.log(self.time+61/2)-math.log(self.time+1/2))
+            temp = 2*(math.log(self.time+81/2)-math.log(self.time+1/2))
             self.direction = [-temp,math.sqrt(9-temp)+2]
         elif self.trajectoire == 3:#cosinus
             temp = 3* math.cos(self.time/20)
