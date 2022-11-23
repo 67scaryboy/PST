@@ -177,6 +177,10 @@ class Projectile(pygame.sprite.Sprite):
         elif self.trajectoire == 3:#cosinus
             temp = 3* math.cos(self.time/20)
             self.direction = [temp,math.sqrt(9-temp*temp)+2]
+        elif self.trajectoire == 3:#diagonale droite
+            self.direction = [1,2]
+        elif self.trajectoire == 3:#diagonale gauche
+            self.direction = [-1,2]
 
         self.time += 1
         if ((self.rect.bottom > const.SCREEN_HEIGHT) or (self.rect.top < 0)):
