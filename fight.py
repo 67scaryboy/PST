@@ -142,7 +142,7 @@ class Projectile(pygame.sprite.Sprite):
 
         elif tireur.id == 'e2':
             self.direction = [0,4]
-            self.image = pygame.image.load("sprites/tira2.png") #Changer la texture
+            self.image = pygame.image.load("sprites/tir3.png") #Changer la texture
             self.team = 0
             
         elif tireur.id == 'e3':
