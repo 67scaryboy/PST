@@ -131,7 +131,7 @@ class Compagon(pygame.sprite.Sprite):
     def __init__(self,perso):
         super().__init__()
         self.image = pygame.image.load("sprites/e3.png")
-        self.ATK = 10
+        self.ATK = perso.ATK/10
         self.rect = self.image.get_rect()
         self.rect.center = perso.rect.center
         self.rect.right = perso.rect.left-10
@@ -142,7 +142,7 @@ class Compagon(pygame.sprite.Sprite):
 
     def update(self,perso):
         
-        self.rect.center= (perso.rect.right+self.deplacementX,perso.rect.top+ self.deplacementY)
+        #self.rect.center= (perso.rect.right+self.deplacementX,perso.rect.top+ self.deplacementY)
         #if (random.randint(0,1)==1): #Léger déplacement aléatoire du compagnon, a modif pr eviter l'épilepsie
         self.deplacementX+=random.randint(-1,1)
         if ((self.rect.right+self.deplacementX-perso.rect.right<20 or perso.rect.right-self.rect.right<20) and self.rect.right<const.SCREEN_WIDTH and self.rect.left >0):
@@ -151,6 +151,7 @@ class Compagon(pygame.sprite.Sprite):
         self.deplacementY+= random.randint(-1,1)
         if ((self.rect.top+self.deplacementY-perso.rect.top<10 or perso.rect.top-self.rect.top<10) and self.rect.bottom<const.SCREEN_HEIGHT and self.rect.bottom >0):
             self.rect.bottom = self.rect.top+self.deplacementY
+        self.rect.center= (perso.rect.right+self.deplacementX,perso.rect.top+ self.deplacementY)
         
     def draw(self, surface):
         surface.blit(self.image, self.rect)
