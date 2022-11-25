@@ -17,6 +17,8 @@ def MenuHistoire():
     Joueur = personnages.Player(0)
 
     AP=Affichage("sprites/AP.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) #Fond
+    #Armée de bouton pour choisir son lvl
+    B1=Affichage("sprites_menu/1.png",const.SCREEN_WIDTH//2-325,const.SCREEN_HEIGHT//2+345)
     
     while True:
         for event in pygame.event.get():
@@ -25,6 +27,7 @@ def MenuHistoire():
                 sys.exit()
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
+        B1.draw(personnages.DISPLAYSURF)
         Joueur.souris(personnages.DISPLAYSURF)
         """"
         if pygame.sprite.collide_rect(Joueur,Barcade):
