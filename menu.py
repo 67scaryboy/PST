@@ -4,6 +4,48 @@ import constantes as const
 
 FramePerSec = pygame.time.Clock()
 
+def MenuHistoire():
+    """
+    while True:
+        personnages.DISPLAYSURF.fill(const.WHITE)
+        AP=Affichage("sprites/AP.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+        AP.draw(personnages.DISPLAYSURF)
+        """
+    #Choix du scenario
+    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
+    FramePerSec.tick(const.FPS)
+    Joueur = personnages.Player(0)
+
+    AP=Affichage("sprites/AP.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) #Fond
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        personnages.DISPLAYSURF.fill(const.WHITE)
+        AP.draw(personnages.DISPLAYSURF)
+        Joueur.souris(personnages.DISPLAYSURF)
+        """"
+        if pygame.sprite.collide_rect(Joueur,Barcade):
+            Barcade.modif("sprites/HArcade.png")
+            Barcade.draw(personnages.DISPLAYSURF)
+            Joueur.souris(personnages.DISPLAYSURF)
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    return 1
+        elif pygame.sprite.collide_rect(Joueur,Bhistoire):
+            Bhistoire.modif("sprites/HHistoire.png")
+            Bhistoire.draw(personnages.DISPLAYSURF)
+            Joueur.souris(personnages.DISPLAYSURF)
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    return 2
+        """
+       
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
+
 def Animation(listeA, classe):  #Animation d'un objet liée a une classe
                                 # ListeA: [a1,a2,a3,...,an,status animation en cours(int)]
     classe.image = pygame.image.load(listeA[listeA[len(listeA)-1]])
