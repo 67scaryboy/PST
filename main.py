@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-import random, personnages, menu, fight, bonus
+import random, personnages, menu, fight, bonus, boss
 import constantes as const
 
 pygame.init()
@@ -17,5 +17,6 @@ while True:
 
     if option == 1:
         scoretotal += fight.Arcade()
-    elif option==2:
-        menu.MenuHistoire()
+    elif option == 2:
+        #menu.MenuHistoire()
+        scoretotal += boss.Bossfight()
