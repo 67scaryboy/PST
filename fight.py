@@ -62,7 +62,7 @@ def Arcade():
                     else:
                         shoot = Projectile(entity,0)
                     tirs.append(shoot)
-                #supprimer les tirs qui sortent de l'écrant
+                #supprimer les enemis qui sortent de l'écrant
                 if entity.rect.bottom > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
