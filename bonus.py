@@ -47,3 +47,5 @@ def AttraperBoost(liste_boosts,p_P1):
         if pygame.sprite.collide_mask(p_P1,boost):
             boost.useBooster(p_P1)
             liste_boosts.remove(boost)
+
+ 
