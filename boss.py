@@ -6,9 +6,9 @@ import constantes as const
 class ModularBoss_main_body(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("sprites/e2.png")
+        self.image = pygame.image.load("sprites/b2.png")
         self.rect = self.image.get_rect()
-        self.rect.center = (const.SCREEN_WIDTH//2,50)
+        self.rect.center = (const.SCREEN_WIDTH//2,80)
         self.id = "body"
         self.destination = const.SCREEN_WIDTH//2
         self.PVMAX = 1000
@@ -24,12 +24,12 @@ class ModularBoss_main_body(pygame.sprite.Sprite):
         elif position > self.destination:
             self.rect.move_ip(-1,0)
         else:
-            self.destination = random.randint(0,const.SCREEN_WIDTH)
+            self.destination = random.randint(50,const.SCREEN_WIDTH-50)
 
 class ModularBoss_destructible(pygame.sprite.Sprite):
     def __init__(self,mainbody):
         super().__init__()#bras gauche
-        self.image = pygame.image.load("sprites/e2.png")
+        self.image = pygame.image.load("sprites/b2.png")
         self.rect = self.image.get_rect()
         self.id = 'bossd'
         self.PVMAX = 1000
@@ -101,23 +101,23 @@ def Bossfight():
         AP2.draw(personnages.DISPLAYSURF)
         AP3.draw(personnages.DISPLAYSURF)
 
-        
-        for shoot in tirs:#ici pour les animations des tirs animées
-            shoot.draw(personnages.DISPLAYSURF)
-
         menu.aff_explo(explo)
         for boom in explo:
             menu.Animation(const.explosions,boom)
 
         Body.draw(personnages.DISPLAYSURF)
-        for Morceau in MorceauxBoss:
-            if Morceau.PV > 0:
-                Morceau.draw(personnages.DISPLAYSURF)
+        
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
         MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
         menu.AfficheScore(ScoreBoss) #Affichage score
 
+        for shoot in tirs:#ici pour les animations des tirs animées
+            shoot.draw(personnages.DISPLAYSURF)
+
+        for Morceau in MorceauxBoss:
+            if Morceau.PV > 0:
+                Morceau.draw(personnages.DISPLAYSURF)
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)

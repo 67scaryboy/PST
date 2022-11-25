@@ -18,4 +18,5 @@ while True:
     if option == 1:
         scoretotal += fight.Arcade()
     elif option == 2:
-        menu.MenuHistoire()
+        #menu.MenuHistoire()
+        scoretotal += boss.Bossfight()
