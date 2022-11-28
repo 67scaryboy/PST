@@ -160,11 +160,17 @@ def ChoixPerso():
         V3.draw(personnages.DISPLAYSURF)
         Joueur.souris(personnages.DISPLAYSURF)
         if pygame.sprite.collide_rect(Joueur,V1):
-            return 1
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    return 1
         elif pygame.sprite.collide_rect(Joueur,V2):
-            return 2
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    return 2
         elif pygame.sprite.collide_rect(Joueur,V3):
-            return 3
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    return 3
         pygame.display.update()
         FramePerSec.tick(const.FPS)
     
