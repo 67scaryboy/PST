@@ -4,7 +4,7 @@ import constantes as const
 
 FramePerSec = pygame.time.Clock()
 
-def MenuHistoire():
+def MenuHistoire(niveau):
     """
     while True:
         personnages.DISPLAYSURF.fill(const.WHITE)
@@ -16,14 +16,49 @@ def MenuHistoire():
     FramePerSec.tick(const.FPS)
     Joueur = personnages.Player(0)
 
+    
     AP=Affichage("sprites/AP.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) #Fond
     #Armée de bouton pour choisir son lvl
-    B1=Affichage("sprites_menu/1.png",const.SCREEN_WIDTH//2-325,const.SCREEN_HEIGHT//2+345)
-    B2=Affichage("sprites_menu/2.png",const.SCREEN_WIDTH//2-198,const.SCREEN_HEIGHT//2+230)
-    B3=Affichage("sprites_menu/3.png",const.SCREEN_WIDTH//2-90,const.SCREEN_HEIGHT//2+330)
-    B4=Affichage("sprites_menu/4.png",const.SCREEN_WIDTH//2+65,const.SCREEN_HEIGHT//2+328)
-    B5=Affichage("sprites_menu/5.png",const.SCREEN_WIDTH//2+180,const.SCREEN_HEIGHT//2+233)
-    B6=Affichage("sprites_menu/6.png",const.SCREEN_WIDTH//2+170,const.SCREEN_HEIGHT//2+75)
+    if niveau>0:
+        B1=Affichage("sprites_menu/1v.png",const.SCREEN_WIDTH//2-325,const.SCREEN_HEIGHT//2+345)
+    else:
+        B1=Affichage("sprites_menu/1.png",const.SCREEN_WIDTH//2-325,const.SCREEN_HEIGHT//2+345)
+    if niveau>2:
+        B2=Affichage("sprites_menu/2v.png",const.SCREEN_WIDTH//2-198,const.SCREEN_HEIGHT//2+230)
+    else:
+        B2=Affichage("sprites_menu/2.png",const.SCREEN_WIDTH//2-198,const.SCREEN_HEIGHT//2+230)
+    if niveau>3:
+        B3=Affichage("sprites_menu/3v.png",const.SCREEN_WIDTH//2-90,const.SCREEN_HEIGHT//2+330)
+    else:
+        B3=Affichage("sprites_menu/3.png",const.SCREEN_WIDTH//2-90,const.SCREEN_HEIGHT//2+330)
+    if niveau>4:
+        B4=Affichage("sprites_menu/4v.png",const.SCREEN_WIDTH//2+65,const.SCREEN_HEIGHT//2+328)
+    else:
+        B4=Affichage("sprites_menu/4.png",const.SCREEN_WIDTH//2+65,const.SCREEN_HEIGHT//2+328)
+    if niveau>5:
+        B5=Affichage("sprites_menu/5v.png",const.SCREEN_WIDTH//2+180,const.SCREEN_HEIGHT//2+233)
+    else:
+        B5=Affichage("sprites_menu/5.png",const.SCREEN_WIDTH//2+180,const.SCREEN_HEIGHT//2+233)
+    if niveau>7:
+        B7=Affichage("sprites_menu/7v.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2+30)
+    else:
+        B7=Affichage("sprites_menu/7.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2+30)
+    if niveau>6:
+        B6=Affichage("sprites_menu/6v.png",const.SCREEN_WIDTH//2+170,const.SCREEN_HEIGHT//2+75)
+    else:
+        B6=Affichage("sprites_menu/6.png",const.SCREEN_WIDTH//2+170,const.SCREEN_HEIGHT//2+75)
+    if niveau>8:
+        B8=Affichage("sprites_menu/8v.png",const.SCREEN_WIDTH//2-165,const.SCREEN_HEIGHT//2+30)
+    else:
+        B8=Affichage("sprites_menu/8.png",const.SCREEN_WIDTH//2-165,const.SCREEN_HEIGHT//2+30)
+    if niveau>9:
+        B9=Affichage("sprites_menu/9v.png",const.SCREEN_WIDTH//2-150,const.SCREEN_HEIGHT//2-125)
+    else:
+        B9=Affichage("sprites_menu/9.png",const.SCREEN_WIDTH//2-150,const.SCREEN_HEIGHT//2-125)
+    if niveau>10:
+        B10=Affichage("sprites_menu/10v.png",const.SCREEN_WIDTH//2-15,const.SCREEN_HEIGHT//2-240)
+    else:
+        B10=Affichage("sprites_menu/10.png",const.SCREEN_WIDTH//2-15,const.SCREEN_HEIGHT//2-240)
     
     while True:
         for event in pygame.event.get():
@@ -38,7 +73,18 @@ def MenuHistoire():
         B4.draw(personnages.DISPLAYSURF)
         B5.draw(personnages.DISPLAYSURF)
         B6.draw(personnages.DISPLAYSURF)
+        B7.draw(personnages.DISPLAYSURF)
+        B8.draw(personnages.DISPLAYSURF)    
+        B9.draw(personnages.DISPLAYSURF)  
+        B10.draw(personnages.DISPLAYSURF)
+        temp=[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10]
         Joueur.souris(personnages.DISPLAYSURF)
+        for c in range (0,10,1):
+            if pygame.sprite.collide_rect(Joueur,temp[c]):
+                for i in pygame.mouse.get_pressed():
+                    if pygame.mouse.get_pressed()[i]==True and c<niveau:
+                        return c
+                    
         """"
         if pygame.sprite.collide_rect(Joueur,Barcade):
             Barcade.modif("sprites/HArcade.png")
