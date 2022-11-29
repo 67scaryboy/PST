@@ -18,5 +18,5 @@ while True:
     if option == 1:
         scoretotal += fight.Arcade()
     elif option == 2:
-        #menu.MenuHistoire()
-        scoretotal += boss.Bossfight()
+        menu.MenuHistoire(const.Niveau) #Retourne le numero du niveau souhaité (1,2,...,9,10)
+        #scoretotal += boss.Bossfight()
