@@ -1,4 +1,4 @@
-import pygame, sys, math, fight
+import pygame, sys, math, fight, time
 from pygame.locals import *
 import personnages, menu, bonus
 import constantes as const
@@ -7,6 +7,8 @@ def LancerMission1():
     FramePerSec = pygame.time.Clock()
     scoreArcade = 0
     alive = True
+    dialogue = 0
+    
 
     AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
@@ -22,6 +24,56 @@ def LancerMission1():
     tirs = []
     explo = []
     boosts = []
+
+    while dialogue<10:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        if pygame.mouse.get_pressed() == (1, 0, 0): #Pour faire en sorte qui si on laisse le clic envoncé, ca ne skip pas le dialogue
+            dialogue+=1
+            while pygame.mouse.get_pressed() == (1, 0, 0): #A modifier, ca met le jeu en pause, c'est pas fou
+                for event in pygame.event.get():
+                    if event.type == QUIT:
+                        pygame.quit()
+                        sys.exit()
+                pygame.display.update()
+                FramePerSec.tick(const.FPS)
+        personnages.DISPLAYSURF.fill(const.WHITE)
+        AP3.move(3)#vitesse de déplacement des couches
+        AP2.move(2)
+        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
+        AP.draw(personnages.DISPLAYSURF)
+        AP2.draw(personnages.DISPLAYSURF)
+        AP3.draw(personnages.DISPLAYSURF)
+        P1.draw(personnages.DISPLAYSURF)
+        bulle = menu.Affichage("sprites/bulletexte.png",const.SCREEN_WIDTH-270,100)
+        bulle.draw(personnages.DISPLAYSURF)
+        if dialogue==1:
+            font = pygame.font.Font('freesansbold.ttf', 11)
+            texte=font.render("Salut jeune entrepreneur.Tu recherche un métier bien payé", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(460,100)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render("dans la banlieu de paris ? ", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(460,110)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+        elif dialogue==2:
+            font = pygame.font.Font('freesansbold.ttf', 11)
+            texte=font.render("N'hesite plus et rejoint Carglass", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(460,100)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render("rendez vous sur www.sida.gouv pour en savoir plus", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(460,110)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+        else:
+            break
+                
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
 
     while alive:
         for event in pygame.event.get():
