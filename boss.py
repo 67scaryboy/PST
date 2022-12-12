@@ -146,5 +146,6 @@ def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
     for morceaux in p_morceaux:
         if pygame.sprite.collide_mask(p_P1,morceaux):
             p_P1.PV = 0
+            p_alive = fight.Mort(p_tirs,p_P1,p_morceaux)
                 
     return (tempscore,p_alive)
