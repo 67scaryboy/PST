@@ -207,7 +207,7 @@ def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):
                 if shoot in p_tirs:
                     p_tirs.remove(shoot)
                 if p_P1.PV <= 0:
-                    p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
+                    p_alive = Mort(p_tirs,p_P1,p_enemies)
         else:    
             for enemy in p_enemies:
                 if pygame.sprite.collide_mask(p_P1,enemy):#Attention ici, a modif, si on collide un boss, on le tue direct du coup !
@@ -217,7 +217,7 @@ def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):
                     bonus.dropBooster(boosts,enemy)
                     p_enemies.remove(enemy)
                     if p_P1.PV <= 0:
-                        p_alive = Mort(tempscore,p_tirs,p_P1,p_enemies)
+                        p_alive = Mort(p_tirs,p_P1,p_enemies)
                 elif pygame.sprite.collide_mask(shoot,enemy):
                     enemy.PV -=  shoot.damage
                     if shoot in p_tirs:
@@ -230,7 +230,7 @@ def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):
                 
     return (tempscore,p_alive)
     
-def Mort(p_score,p_tirs,p_P1,p_enemies):
+def Mort(p_tirs,p_P1,p_enemies):
     for shoot in p_tirs:
         p_tirs.remove(shoot)
     for enemy in p_enemies:

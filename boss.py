@@ -11,20 +11,18 @@ class ModularBoss_main_body(pygame.sprite.Sprite):
         self.rect.center = (const.SCREEN_WIDTH//2,80)
         self.id = "body"
         self.destination = const.SCREEN_WIDTH//2
-        self.PVMAX = 1000
-        self.PV = self.PVMAX
     
     def draw(self, surface):
         surface.blit(self.image, self.rect)
     
-    def move(self):
-        position = self.rect.right - (self.rect.right-self.rect.left)
+    def move(self):# peut être modifier pour contrôle total sur mouvements boss
+        position = self.rect.center[0]
         if position < self.destination:
             self.rect.move_ip(1,0)
         elif position > self.destination:
             self.rect.move_ip(-1,0)
         else:
-            self.destination = random.randint(50,const.SCREEN_WIDTH-50)
+            self.destination = random.randint(70,const.SCREEN_WIDTH-70)
 
 class ModularBoss_destructible(pygame.sprite.Sprite):
     def __init__(self,mainbody):
@@ -76,7 +74,7 @@ def Bossfight():
                     Morceau.move(Body)
                 #ici pour décider si il tire
 
-        #tir automatique
+        #tir automatique du joueur
         if P1.cooldown == 0:
             shoot = fight.Projectile(P1,0)
             tirs.append(shoot)
@@ -84,7 +82,7 @@ def Bossfight():
         else:
             P1.cooldown += -1
 
-        #faire avance les tirs
+        #faire avancer les tirs
         for shoot in tirs:
             shoot.move()
             if shoot.rect.bottom > const.SCREEN_HEIGHT:
@@ -94,7 +92,7 @@ def Bossfight():
         AP2.move(2)
         AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
 
-        ScoreBoss,alive=BossColision(tirs,P1,MorceauxBoss,explo,ScoreBoss,alive)#surement devoir faire colision boss
+        ScoreBoss,alive=BossColision(tirs,P1,MorceauxBoss,explo,ScoreBoss,alive) #Colisions
 
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
@@ -121,6 +119,8 @@ def Bossfight():
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
+        if not MorceauxBoss:
+            alive = fight.Mort(tirs,P1,MorceauxBoss) #met fin au jeu si le boss est mort (ajouter différences par raport à si joueur meurt)
     return (ScoreBoss)
 
 def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
@@ -131,16 +131,21 @@ def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
                 if shoot in p_tirs:
                     p_tirs.remove(shoot)
                 if p_P1.PV <= 0:
-                    p_alive = fight.Mort(tempscore,p_tirs,p_P1,p_morceaux)
+                    p_alive = fight.Mort(p_tirs,p_P1,p_morceaux)
         else:    
             for morceaux in p_morceaux:
                 if pygame.sprite.collide_mask(shoot,morceaux):
                     morceaux.PV -=  shoot.damage
                     if shoot in p_tirs:
+                        p_explo.append(menu.explosion(shoot))
                         p_tirs.remove(shoot)
                     if morceaux.PV <= 0:
                         tempscore+=0
                         p_explo.append(menu.explosion(morceaux))
                         p_morceaux.remove(morceaux)
+    for morceaux in p_morceaux:
+        if pygame.sprite.collide_mask(p_P1,morceaux):
+            p_P1.PV = 0
+            p_alive = fight.Mort(p_tirs,p_P1,p_morceaux)
                 
     return (tempscore,p_alive)
