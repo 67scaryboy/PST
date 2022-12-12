@@ -4,6 +4,30 @@ import constantes as const
 
 FramePerSec = pygame.time.Clock()
 
+def MenuMort(score):
+    AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        personnages.DISPLAYSURF.fill(const.WHITE)
+        AP.draw(personnages.DISPLAYSURF)
+        font = pygame.font.SysFont("impact", 25)
+        texte=font.render("Score:", True, const.WHITE)
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2-30)
+        personnages.DISPLAYSURF.blit(texte,texterect)
+        texte=font.render(str(score), True, const.WHITE)
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2)
+        personnages.DISPLAYSURF.blit(texte,texterect)
+        if pygame.mouse.get_pressed() == (1, 0, 0): #Clic gauche pour quitter
+            break
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
+
+
 def MenuHistoire(niveau):
     """
     while True:
