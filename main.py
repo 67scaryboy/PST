@@ -19,8 +19,7 @@ while True:
     if option == 1:
         scoretotal += fight.Arcade()
     elif option == 2:
-        choix = menu.MenuHistoire(const.Niveau) #Retourne le numero du niveau souhaité (1,2,...,9,10) - 1
-        choix += 1
+        choix = menu.MenuHistoire(const.Niveau) #Retourne le numero du niveau souhaité (1,2,...,9,10)
         if choix == 1:
             mission1.LancerMission1()
         #scoretotal += boss.Bossfight()

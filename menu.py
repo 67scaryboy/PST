@@ -83,7 +83,7 @@ def MenuHistoire(niveau):
             if pygame.sprite.collide_rect(Joueur,temp[c]):
                 for i in pygame.mouse.get_pressed():
                     if pygame.mouse.get_pressed()[i]==True and c<niveau:
-                        return c
+                        return c+1
                     
         """"
         if pygame.sprite.collide_rect(Joueur,Barcade):
