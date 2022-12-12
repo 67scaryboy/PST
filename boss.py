@@ -6,7 +6,7 @@ import constantes as const
 class ModularBoss_main_body(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("sprites/b2.png")
+        self.image = pygame.image.load("sprites_boss/boss_damaged.png")
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2,80)
         self.id = "body"
@@ -25,9 +25,9 @@ class ModularBoss_main_body(pygame.sprite.Sprite):
             self.destination = random.randint(70,const.SCREEN_WIDTH-70)
 
 class ModularBoss_destructible(pygame.sprite.Sprite):
-    def __init__(self,mainbody):
+    def __init__(self,mainbody,adresse):
         super().__init__()#bras gauche
-        self.image = pygame.image.load("sprites/b2.png")
+        self.image = pygame.image.load(adresse)
         self.rect = self.image.get_rect()
         self.id = 'bossd'
         self.PVMAX = 1000
@@ -54,11 +54,14 @@ def Bossfight():
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
 
     Body = ModularBoss_main_body()
-    Piece1 = ModularBoss_destructible(Body)
+    Piece_a_d = ModularBoss_destructible(Body,"sprites_boss/boss_aile_d.png")
+    Piece_a_g = ModularBoss_destructible(Body,"sprites_boss/boss_aile_g.png")
+    Piece_g = ModularBoss_destructible(Body,"sprites_boss/boss_g.png")
+    Piece_d = ModularBoss_destructible(Body,"sprites_boss/boss_d.png")
 
     cooldown = P1.cooldown
 
-    MorceauxBoss = [Piece1] 
+    MorceauxBoss = [Piece_g,Piece_d,Piece_a_g,Piece_a_d] 
     tirs = []
     explo = []
 
