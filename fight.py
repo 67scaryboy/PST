@@ -139,11 +139,11 @@ class Projectile(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center
         if tireur.id in ['e1','e2','e3']: #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
-            self.direction = [0,4]  
+            self.direction = [0,4]  #Vitesse de déplacement horizontale et verticale
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
             
         elif tireur.id in ['p1','p2','p3','c1']:
-            self.direction = [0,-3]
+            self.direction = [0,-5]
             self.team = 1
             
         elif tireur.id in ['boss_g', 'boss_d', 'boss_a_g', 'boss_a_d']:
