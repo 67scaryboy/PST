@@ -74,17 +74,20 @@ def Bossfight():
                 pygame.quit()
                 sys.exit()
         #mouvements ennemis
+        
         Body.move()
         for Morceau in MorceauxBoss:
                 if Morceau.PV > 0:
                     Morceau.move(Body)
-                if Body.cooldown == 0:
-                    shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
-                    tirs.append(shoot)
-                    Body.cooldown = cooldown_boss
-                else:
-                    Body.cooldown += -1
-                #ici pour décider si il tire
+                
+        if Body.cooldown == 0:
+            for Morceau in MorceauxBoss:
+                shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
+                tirs.append(shoot)
+            Body.cooldown = cooldown_boss
+        else:
+            Body.cooldown += -1
+                
 
         #tir automatique du joueur
         if P1.cooldown == 0:

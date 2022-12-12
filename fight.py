@@ -136,6 +136,8 @@ class Projectile(pygame.sprite.Sprite):
         self.tireur_id = tireur.id
         self.damage = tireur.ATK
         self.image = pygame.image.load(adresse)
+        self.rect = self.image.get_rect()
+        self.rect.center = tireur.rect.center
         if tireur.id in ['e1','e2','e3']: #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
             self.direction = [0,4]  
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
@@ -147,11 +149,17 @@ class Projectile(pygame.sprite.Sprite):
         elif tireur.id in ['boss_g', 'boss_d', 'boss_a_g', 'boss_a_d']:
             self.direction = [0,4]
             self.team = 0
+            if tireur.id == 'boss_g':
+                self.rect.center = (self.rect.center[0]-35,self.rect.center[1])
+            elif tireur.id == 'boss_d':
+                self.rect.center = (self.rect.center[0]+35,self.rect.center[1])
+            elif tireur.id == 'boss_a_g':
+                self.rect.center = (self.rect.center[0]-140,self.rect.center[1])
+            elif tireur.id == 'boss_a_d':
+                self.rect.center = (self.rect.center[0]+140,self.rect.center[1])
 
         self.trajectoire = traj
         self.time = 0
-        self.rect = self.image.get_rect()
-        self.rect.center = tireur.rect.center
         self.mask = pygame.mask.from_surface(self.image)
 
       def move(self):
@@ -166,9 +174,9 @@ class Projectile(pygame.sprite.Sprite):
         elif self.trajectoire == 3:#cosinus
             temp = 3* math.cos(self.time/20)
             self.direction = [temp,math.sqrt(9-temp*temp)+2]
-        elif self.trajectoire == 3:#diagonale droite
+        elif self.trajectoire == 4:#diagonale droite
             self.direction = [1,2]
-        elif self.trajectoire == 3:#diagonale gauche
+        elif self.trajectoire == 5:#diagonale gauche
             self.direction = [-1,2]
 
         self.time += 1
