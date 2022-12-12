@@ -17,7 +17,7 @@ ZONE_MORTE = 00 #Zone morte qui constitue le menu à gauche (plus utile)
 Xvaisseaux= 68
 Yvaisseaux= 80
 
-#Niveau completé, sert a créer le menu histoire et a difinir les scénarios jouables
+#Niveau completé, sert a créer le menu histoire et a difinir les scénarios jouables (min 1 max 10)
 Niveau=5
 
 #Listes animations
