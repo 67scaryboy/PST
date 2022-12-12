@@ -52,15 +52,15 @@ def Arcade():
                 p = random.randint(0,100)
                 if p < 1:
                     if (entity.id == "e1"):
-                        shoot = Projectile(entity,3)
+                        shoot = Projectile(entity,3,"sprites_animation/boule1.png")
                     elif (entity.id == "e2"):
-                        shoot = Projectile(entity,2)
+                        shoot = Projectile(entity,2,"sprites/tir3.png")
                         tirs.append(shoot)
-                        shoot = Projectile(entity,1)
+                        shoot = Projectile(entity,1,"sprites/tir3.png")
                         tirs.append(shoot)
-                        shoot = Projectile(entity,0)
+                        shoot = Projectile(entity,0,"sprites/tir3.png")
                     else:
-                        shoot = Projectile(entity,0)
+                        shoot = Projectile(entity,0,"sprites/tir.png")
                     tirs.append(shoot)
                 #supprimer les enemis qui sortent de l'écrant
                 if entity.rect.bottom > const.SCREEN_HEIGHT:
@@ -68,8 +68,8 @@ def Arcade():
 
         #tir automatique
         if P1.cooldown == 0:
-            shoot = Projectile(P1,0)
-            shootf= Projectile(CP,0)
+            shoot = Projectile(P1,0,"sprites/tira.png")
+            shootf= Projectile(CP,0,"sprites/tira.png")
             tirs.append(shoot)
             tirs.append(shootf)
             P1.cooldown = cooldown
@@ -131,45 +131,24 @@ def Arcade():
 
 
 class Projectile(pygame.sprite.Sprite):
-      def __init__(self, tireur,traj):
+      def __init__(self, tireur,traj,adresse):
         super().__init__()
         self.tireur_id = tireur.id
         self.damage = tireur.ATK
-        if tireur.id == 'e1': #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
-            self.direction = [0,4]
-            self.image = pygame.image.load("sprites/tir.png")
+        self.image = pygame.image.load(adresse)
+        if tireur.id in ['e1','e2','e3']: #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
+            self.direction = [0,4]  
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
-
-        elif tireur.id == 'e2':
+            
+        elif tireur.id in ['p1','p2','p3','c1']:
+            self.direction = [0,-3]
+            self.team = 1
+            
+        elif tireur.id in ['boss_g', 'boss_d', 'boss_a_g', 'boss_a_d']:
             self.direction = [0,4]
-            self.image = pygame.image.load("sprites/tir3.png") #Changer la texture
             self.team = 0
-            
-        elif tireur.id == 'e3':
-            self.direction = [0,4]
-            self.image = pygame.image.load("sprites/tir.png")
-            self.team = 0
-            
-        elif tireur.id == 'p1':
-            self.direction = [0,-3]
-            self.image = pygame.image.load("sprites/tira.png")
-            self.team = 1
-            
-        elif tireur.id == 'p2':
-            self.direction = [0,-3]
-            self.image = pygame.image.load("sprites/tira.png")
-            self.team = 1
-            
-        elif tireur.id == 'p3':
-            self.direction = [0,-3]
-            self.image = pygame.image.load("sprites/tira.png")
-            self.team = 1
 
-        elif tireur.id == 'c1':
-            self.direction = [0,-3]
-            self.image = pygame.image.load("sprites/tira.png")
-            self.team = 1
-        self.trajectoire = traj 
+        self.trajectoire = traj
         self.time = 0
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center

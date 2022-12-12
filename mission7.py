@@ -31,8 +31,8 @@ def LancerMission7():
         
         #tir automatique
         if P1.cooldown == 0:
-            shoot = fight.Projectile(P1,0)
-            shootf= fight.Projectile(CP,0)
+            shoot = fight.Projectile(P1,0,"sprites/tira.png")
+            shootf= fight.Projectile(CP,0,"sprites/tira.png")
             tirs.append(shoot)
             tirs.append(shootf)
             P1.cooldown = cooldown

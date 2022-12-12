@@ -9,6 +9,7 @@ class ModularBoss_main_body(pygame.sprite.Sprite):
         self.image = pygame.image.load("sprites_boss/boss_damaged.png")
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2,80)
+        self.cooldown = 100
         self.id = "body"
         self.destination = const.SCREEN_WIDTH//2
     
@@ -25,13 +26,14 @@ class ModularBoss_main_body(pygame.sprite.Sprite):
             self.destination = random.randint(70,const.SCREEN_WIDTH-70)
 
 class ModularBoss_destructible(pygame.sprite.Sprite):
-    def __init__(self,mainbody,adresse):
+    def __init__(self,mainbody,adresse,id):
         super().__init__()#bras gauche
         self.image = pygame.image.load(adresse)
         self.rect = self.image.get_rect()
-        self.id = 'bossd'
-        self.PVMAX = 1000
+        self.id = id
+        self.PVMAX = 25000
         self.PV = self.PVMAX
+        self.ATK = 100
         self.rect.center = mainbody.rect.center
         self.mask = pygame.mask.from_surface(self.image)
     
@@ -54,12 +56,13 @@ def Bossfight():
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
 
     Body = ModularBoss_main_body()
-    Piece_a_d = ModularBoss_destructible(Body,"sprites_boss/boss_aile_d.png")
-    Piece_a_g = ModularBoss_destructible(Body,"sprites_boss/boss_aile_g.png")
-    Piece_g = ModularBoss_destructible(Body,"sprites_boss/boss_g.png")
-    Piece_d = ModularBoss_destructible(Body,"sprites_boss/boss_d.png")
+    Piece_a_d = ModularBoss_destructible(Body,"sprites_boss/boss_aile_d.png","boss_a_d")
+    Piece_a_g = ModularBoss_destructible(Body,"sprites_boss/boss_aile_g.png","boss_a_g")
+    Piece_g = ModularBoss_destructible(Body,"sprites_boss/boss_g.png","boss_g")
+    Piece_d = ModularBoss_destructible(Body,"sprites_boss/boss_d.png","boss_d")
 
     cooldown = P1.cooldown
+    cooldown_boss = Body.cooldown
 
     MorceauxBoss = [Piece_g,Piece_d,Piece_a_g,Piece_a_d] 
     tirs = []
@@ -75,11 +78,17 @@ def Bossfight():
         for Morceau in MorceauxBoss:
                 if Morceau.PV > 0:
                     Morceau.move(Body)
+                if Body.cooldown == 0:
+                    shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
+                    tirs.append(shoot)
+                    Body.cooldown = cooldown_boss
+                else:
+                    Body.cooldown += -1
                 #ici pour décider si il tire
 
         #tir automatique du joueur
         if P1.cooldown == 0:
-            shoot = fight.Projectile(P1,0)
+            shoot = fight.Projectile(P1,0,"sprites/tira.png")
             tirs.append(shoot)
             P1.cooldown = cooldown
         else:
