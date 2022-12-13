@@ -1,4 +1,4 @@
-import pygame, sys, math
+import pygame, sys, math, boss
 from pygame.locals import *
 import random, personnages, menu, bonus
 import constantes as const
@@ -95,7 +95,15 @@ def Arcade():
 
         bonus.AttraperBoost(boosts,P1)
 
-        Spawn(enemies,2)
+        if scoreArcade%3000<1500: #Verification du score (utile pour le spawn du boss de temps en temps)
+            Spawn(enemies,2) #Apparition aléatoire d'adversaires.
+        else:
+            if len(enemies)==0: #Si la limite de score a été atteinte et qu'il y a plus d'adversaires sur le terrain
+                temp = boss.temp(P1,scoreArcade)
+                if temp==0:
+                    break
+                else:
+                    scoreArcade=temp
 
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
