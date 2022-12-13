@@ -8,13 +8,14 @@ pygame.init()
 
 scoretotal = 0
 pygame.mouse.set_visible(False)
+menu.ChoixSauvegarde()
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
 
-    menu.ChoixSauvegarde()
+
     option = menu.ChoixMode()
 
     if option == 1:
