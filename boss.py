@@ -258,6 +258,6 @@ def temp(joueur, score):
         pygame.display.update()
         FramePerSec.tick(const.FPS)
         if not MorceauxBoss:
-            return (ScoreBoss+500)
+            return (ScoreBoss+500) #L'ajout de score doit etre supérieur ou egal à la différence entre le modulo choisi et le seuil de controle
             alive = fight.Mort(tirs,P1,MorceauxBoss) #met fin au jeu si le boss est mort (ajouter différences par raport à si joueur meurt)
     return (0)

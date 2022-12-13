@@ -96,7 +96,7 @@ def Arcade():
 
         bonus.AttraperBoost(boosts,P1)
 
-        if scoreArcade%2000<1500: #Verification du score (utile pour le spawn du boss de temps en temps)
+        if scoreArcade%2000<1500: #Verification du score (utile pour le spawn du boss de temps en temps) | 2000 correspond au modulo choisi et 1500 au seuil de controle
             Spawn(enemies,2) #Apparition aléatoire d'adversaires.
         else:
             if len(enemies)==0: #Si la limite de score a été atteinte et qu'il y a plus d'adversaires sur le terrain
@@ -152,6 +152,7 @@ def Arcade():
         with open('topscorearcade.pkl', 'wb') as f:
             pickle.dump(temp, f)       
     else:
+        # Do something if the file does not exist
         topscore = {1: scoreArcade,
         2: 0,
         3: 0,
@@ -160,8 +161,6 @@ def Arcade():
         with open('topscorearcade.pkl', 'wb') as f:
             pickle.dump(topscore, f)  
 
-        # Do something if the file does not exist
-        pass
     menu.MenuFinPartieArcade(scoreArcade)
     return (scoreArcade)
 
