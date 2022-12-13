@@ -1,5 +1,5 @@
 import pygame, sys
-import mission1, mission2, mission3, mission4, mission5, mission6, mission7, mission8, mission9, mission10 
+import mission1, mission2, mission3, mission4, mission5, mission6, mission7, mission8, mission9, mission10
 from pygame.locals import *
 import random, personnages, menu, fight, bonus, boss
 import constantes as const
@@ -14,6 +14,7 @@ while True:
             pygame.quit()
             sys.exit()
 
+    menu.ChoixSauvegarde()
     option = menu.ChoixMode()
 
     if option == 1:
@@ -41,4 +42,3 @@ while True:
             mission9.LancerMission9()
         elif choix== 10:
             mission10.LancerMission10()
-        

@@ -1,12 +1,18 @@
 import pygame, sys
 from pygame.locals import *
-import random, menu
+import random, menu, pickle
 import constantes as const
 
 
 DISPLAYSURF = pygame.display.set_mode((const.SCREEN_WIDTH,const.SCREEN_HEIGHT))
 DISPLAYSURF.fill(const.WHITE)
 pygame.display.set_caption("Game")
+
+###Stats de bases des vaisseaux joueurs###
+V1 = [True,100,0,70,0,10,0] # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
+V2 = [False,130,0,100,0,20,0] 
+V3 = [False,150,0,150,0,30,0]
+
 
 class Enemy(pygame.sprite.Sprite):
       def __init__(self, id):
@@ -53,7 +59,7 @@ class Enemy(pygame.sprite.Sprite):
             menu.draw_health_bar(surf, health_rect.bottomleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0), self.PV/self.MAXPV)
 
 
-class Player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite): #Si on
     def __init__(self, id):
         super().__init__()
         if id == 0:#selecteur de perso
@@ -66,30 +72,36 @@ class Player(pygame.sprite.Sprite):
             self.Ulti = 0
             self.MAXUlti = 1
         if id == 1:
+            with open('sauvegarde.pkl', 'rb') as f:
+                temp = pickle.load(f) # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
             self.image = pygame.image.load("sprites/p1.png")
             self.id = 'p1'
-            self.PV = 100 #a modifier en fonction de perso
+            self.PV = temp['V1'][1] #a modifier en fonction de perso
             self.MAXPV=self.PV
-            self.ATK = 70
-            self.cooldown = 10
+            self.ATK = temp['V1'][3]
+            self.cooldown = temp['V1'][5]
             self.Ulti = 0
             self.MAXUlti = 100
         elif id == 2:
+            with open('sauvegarde.pkl', 'rb') as f:
+                temp = pickle.load(f) # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
             self.image = pygame.image.load("sprites/p2.png")
             self.id = 'p2'
-            self.PV = 130 #a modifier en fonction de perso
+            self.PV = temp['V2'][1] #a modifier en fonction de perso
             self.MAXPV=self.PV
-            self.ATK = 100
-            self.cooldown = 20
+            self.ATK = temp['V2'][3]
+            self.cooldown = temp['V2'][5]
             self.Ulti = 0
             self.MAXUlti = 100
         elif id == 3:
+            with open('sauvegarde.pkl', 'rb') as f:
+                temp = pickle.load(f) # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
             self.image = pygame.image.load("sprites/p3.png")
             self.id = 'p3'
-            self.PV = 150 #a modifier en fonction de perso
+            self.PV = temp['V3'][1] #a modifier en fonction de perso
             self.MAXPV=self.PV
-            self.ATK = 150
-            self.cooldown = 30
+            self.ATK = temp['V3'][3]
+            self.cooldown = temp['V3'][5]
             self.Ulti = 0
             self.MAXUlti = 100
 
