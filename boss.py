@@ -32,7 +32,7 @@ class ModularBoss_destructible(pygame.sprite.Sprite):
         self.image = pygame.image.load(adresse)
         self.rect = self.image.get_rect()
         self.id = id
-        self.PVMAX = 25000
+        self.PVMAX = 1000
         self.PV = self.PVMAX
         self.ATK = 100
         self.rect.center = mainbody.rect.center
@@ -258,6 +258,6 @@ def temp(joueur, score):
         pygame.display.update()
         FramePerSec.tick(const.FPS)
         if not MorceauxBoss:
-            return (ScoreBoss+1000)
+            return (ScoreBoss+500)
             alive = fight.Mort(tirs,P1,MorceauxBoss) #met fin au jeu si le boss est mort (ajouter différences par raport à si joueur meurt)
     return (0)
