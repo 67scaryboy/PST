@@ -1,8 +1,58 @@
-import pygame, sys, personnages
+import pygame, sys, personnages, pickle
 from pygame.locals import *
 import constantes as const
 
 FramePerSec = pygame.time.Clock()
+
+def MenuFinPartieArcade(score): # Uniquement à appeler dans la boucle arcade, car affiche les TOPS scores :)
+    AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+            personnages.DISPLAYSURF.fill(const.WHITE)
+            AP.draw(personnages.DISPLAYSURF)
+            font = pygame.font.SysFont("impact", 25)
+            texte=font.render("Score:", True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2-30)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(score), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            with open('topscorearcade.pkl', 'rb') as f:
+                temp = pickle.load(f)
+            texte=font.render("Meilleurs scores:", True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2-30)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(temp[1]), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(temp[2]), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2+30)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(temp[3]), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2+60)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(temp[4]), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2+90)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(temp[5]), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2+120)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+        if pygame.mouse.get_pressed() == (1, 0, 0): #Clic gauche pour quitter
+            break
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
 
 def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Définit quel écran afficher
     AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)

@@ -2,6 +2,7 @@ import pygame, sys, math, boss
 from pygame.locals import *
 import random, personnages, menu, bonus
 import constantes as const
+import pickle, os
 
 def Spawn(enemies,q):#random, pour le mode arcade
     p = random.randint(0,100)
@@ -135,7 +136,33 @@ def Arcade():
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
-    menu.MenuFinPartie(scoreArcade,False)
+    
+    if os.path.exists('topscorearcade.pkl'): #Calcul des meilleurs scores
+        # Do something if the file exists
+        with open('topscorearcade.pkl', 'rb') as f:
+            temp = pickle.load(f)
+            for i in range (1,6,1):
+                if temp[i]<scoreArcade and i<5:
+                    for a in range(5,i,-1):
+                        temp[a]=temp[a-1]
+                    temp[i]=scoreArcade 
+                    break
+                elif temp[i]<scoreArcade:
+                    temp[i]=scoreArcade
+        with open('topscorearcade.pkl', 'wb') as f:
+            pickle.dump(temp, f)       
+    else:
+        topscore = {1: scoreArcade,
+        2: 0,
+        3: 0,
+        4: 0,
+        5:0}
+        with open('topscorearcade.pkl', 'wb') as f:
+            pickle.dump(topscore, f)  
+
+        # Do something if the file does not exist
+        pass
+    menu.MenuFinPartieArcade(scoreArcade)
     return (scoreArcade)
 
 
