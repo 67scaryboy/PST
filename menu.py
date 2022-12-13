@@ -169,6 +169,12 @@ def MenuHistoire(niveau):
         if niveau>1:
             Atelier=Affichage("sprites/Atelier.png",const.SCREEN_WIDTH//2+200,const.SCREEN_HEIGHT//2-100)
             Atelier.draw(personnages.DISPLAYSURF)
+            if pygame.sprite.collide_rect(Joueur,Atelier):
+                Atelier.modif("sprites/Atelier_b.png")
+                Atelier.draw(personnages.DISPLAYSURF)
+                for i in pygame.mouse.get_pressed():
+                    if pygame.mouse.get_pressed()[i]==True:
+                        print("aaaaaaaaaaa")
         listebouton=[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10]
         Joueur.souris(personnages.DISPLAYSURF)
         for c in range (0,10,1):
