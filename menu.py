@@ -336,8 +336,8 @@ def ChoixSauvegarde():
     FramePerSec.tick(const.FPS)
     Joueur = personnages.Player(0)
 
-    Barcade=Affichage("sprites/NArcade.png",const.SCREEN_WIDTH//2-150,const.SCREEN_HEIGHT//2) #Bouton arcade
-    Bhistoire=Affichage("sprites/NHistoire.png",const.SCREEN_WIDTH//2+150,const.SCREEN_HEIGHT//2) #Bouton historie
+    Bcontinuer=Affichage("sprites/NContinuer.png",const.SCREEN_WIDTH//2-150,const.SCREEN_HEIGHT//2) #Bouton arcade
+    Brecommencer=Affichage("sprites/NHistoire.png",const.SCREEN_WIDTH//2+150,const.SCREEN_HEIGHT//2) #Bouton historie
     
     while True:
         for event in pygame.event.get():
@@ -345,14 +345,19 @@ def ChoixSauvegarde():
                 pygame.quit()
                 sys.exit()
         personnages.DISPLAYSURF.fill(const.WHITE)
-        Barcade.modif("sprites/NArcade.png")
-        Barcade.draw(personnages.DISPLAYSURF)
-        Bhistoire.modif("sprites/NHistoire.png")
-        Bhistoire.draw(personnages.DISPLAYSURF)
+        Bcontinuer.modif("sprites/NContinuer.png")
+        Bcontinuer.draw(personnages.DISPLAYSURF)
+        Brecommencer.modif("sprites/NRecommencer.png")
+        Brecommencer.draw(personnages.DISPLAYSURF)
+        font = pygame.font.SysFont("arial", 25)
+        texte=font.render("Que souhaitez vous faire de votre progression ?", True, const.BLACK)
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH/2,30)
+        personnages.DISPLAYSURF.blit(texte,texterect)
         Joueur.souris(personnages.DISPLAYSURF)
-        if pygame.sprite.collide_rect(Joueur,Barcade): #Bouton chargement
-            Barcade.modif("sprites/HArcade.png")
-            Barcade.draw(personnages.DISPLAYSURF)
+        if pygame.sprite.collide_rect(Joueur,Bcontinuer): #Bouton chargement de la sauvegarde
+            Bcontinuer.modif("sprites/HArcade.png")
+            Bcontinuer.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
@@ -369,9 +374,9 @@ def ChoixSauvegarde():
                         with open('sauvegarde.pkl', 'wb') as f:
                             pickle.dump(sauvegarde, f)  
                         return  
-        elif pygame.sprite.collide_rect(Joueur,Bhistoire): #Bouton recommencer ( :< )
-            Bhistoire.modif("sprites/HHistoire.png")
-            Bhistoire.draw(personnages.DISPLAYSURF)
+        elif pygame.sprite.collide_rect(Joueur,Brecommencer): #Bouton recommencer ( :< )
+            Brecommencer.modif("sprites/HHistoire.png")
+            Brecommencer.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
