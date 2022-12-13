@@ -127,7 +127,7 @@ def Arcade():
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
-    menu.MenuMort(scoreArcade)
+    menu.MenuFinPartie(scoreArcade,False)
     return (scoreArcade)
 
 
