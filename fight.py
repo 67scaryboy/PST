@@ -1,7 +1,8 @@
-import pygame, sys, math
+import pygame, sys, math, boss
 from pygame.locals import *
 import random, personnages, menu, bonus
 import constantes as const
+import pickle, os
 
 def Spawn(enemies,q):#random, pour le mode arcade
     p = random.randint(0,100)
@@ -95,7 +96,15 @@ def Arcade():
 
         bonus.AttraperBoost(boosts,P1)
 
-        Spawn(enemies,2)
+        if scoreArcade%2000<1500: #Verification du score (utile pour le spawn du boss de temps en temps) | 2000 correspond au modulo choisi et 1500 au seuil de controle
+            Spawn(enemies,2) #Apparition aléatoire d'adversaires.
+        else:
+            if len(enemies)==0: #Si la limite de score a été atteinte et qu'il y a plus d'adversaires sur le terrain
+                temp = boss.temp(P1,scoreArcade)
+                if temp==0:
+                    break
+                else:
+                    scoreArcade=temp
 
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
@@ -127,6 +136,32 @@ def Arcade():
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
+    
+    if os.path.exists('topscorearcade.pkl'): #Calcul des meilleurs scores
+        # Do something if the file exists
+        with open('topscorearcade.pkl', 'rb') as f:
+            temp = pickle.load(f)
+            for i in range (1,6,1):
+                if temp[i]<scoreArcade and i<5:
+                    for a in range(5,i,-1):
+                        temp[a]=temp[a-1]
+                    temp[i]=scoreArcade 
+                    break
+                elif temp[i]<scoreArcade:
+                    temp[i]=scoreArcade
+        with open('topscorearcade.pkl', 'wb') as f:
+            pickle.dump(temp, f)       
+    else:
+        # Do something if the file does not exist
+        topscore = {1: scoreArcade,
+        2: 0,
+        3: 0,
+        4: 0,
+        5:0}
+        with open('topscorearcade.pkl', 'wb') as f:
+            pickle.dump(topscore, f)  
+
+    menu.MenuFinPartieArcade(scoreArcade)
     return (scoreArcade)
 
 
@@ -139,11 +174,11 @@ class Projectile(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center
         if tireur.id in ['e1','e2','e3']: #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
-            self.direction = [0,4]  
+            self.direction = [0,4]  #Vitesse de déplacement horizontale et verticale
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
             
         elif tireur.id in ['p1','p2','p3','c1']:
-            self.direction = [0,-3]
+            self.direction = [0,-5]
             self.team = 1
             
         elif tireur.id in ['boss_g', 'boss_d', 'boss_a_g', 'boss_a_d']:

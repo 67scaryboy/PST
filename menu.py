@@ -1,8 +1,97 @@
-import pygame, sys, personnages
+import pygame, sys, personnages, pickle, os
 from pygame.locals import *
 import constantes as const
 
 FramePerSec = pygame.time.Clock()
+
+def MenuFinPartieArcade(score): # Uniquement à appeler dans la boucle arcade, car affiche les TOPS scores :)
+    AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+            personnages.DISPLAYSURF.fill(const.WHITE)
+            AP.draw(personnages.DISPLAYSURF)
+            font = pygame.font.SysFont("impact", 25)
+            texte=font.render("Score:", True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2-30)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(score), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            with open('topscorearcade.pkl', 'rb') as f:
+                temp = pickle.load(f)
+            texte=font.render("Meilleurs scores:", True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2-30)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(temp[1]), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(temp[2]), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2+30)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(temp[3]), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2+60)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(temp[4]), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2+90)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(temp[5]), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2+300,const.SCREEN_HEIGHT/2+120)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+        if pygame.mouse.get_pressed() == (1, 0, 0): #Clic gauche pour quitter
+            break
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
+
+def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Définit quel écran afficher
+    AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        if victoire == False:
+            AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+            personnages.DISPLAYSURF.fill(const.WHITE)
+            AP.draw(personnages.DISPLAYSURF)
+            font = pygame.font.SysFont("impact", 25)
+            texte=font.render("Score:", True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2-30)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(score), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+        else:
+            AP=Affichage("sprites_menu/fond_victoire.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+            personnages.DISPLAYSURF.fill(const.WHITE)
+            AP.draw(personnages.DISPLAYSURF)
+            font = pygame.font.SysFont("impact", 25)
+            texte=font.render("Score:", True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2-30)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render(str(score), True, const.WHITE)
+            texterect=texte.get_rect()
+            texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+        if pygame.mouse.get_pressed() == (1, 0, 0): #Clic gauche pour quitter
+            break
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
+
 
 def MenuHistoire(niveau):
     """
@@ -77,10 +166,19 @@ def MenuHistoire(niveau):
         B8.draw(personnages.DISPLAYSURF)    
         B9.draw(personnages.DISPLAYSURF)  
         B10.draw(personnages.DISPLAYSURF)
-        temp=[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10]
+        if niveau>1:
+            Atelier=Affichage("sprites/Atelier.png",const.SCREEN_WIDTH//2+200,const.SCREEN_HEIGHT//2-100)
+            Atelier.draw(personnages.DISPLAYSURF)
+            if pygame.sprite.collide_rect(Joueur,Atelier):
+                Atelier.modif("sprites/Atelier_b.png")
+                Atelier.draw(personnages.DISPLAYSURF)
+                for i in pygame.mouse.get_pressed():
+                    if pygame.mouse.get_pressed()[i]==True:
+                        print("aaaaaaaaaaa")
+        listebouton=[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10]
         Joueur.souris(personnages.DISPLAYSURF)
         for c in range (0,10,1):
-            if pygame.sprite.collide_rect(Joueur,temp[c]):
+            if pygame.sprite.collide_rect(Joueur,listebouton[c]):
                 for i in pygame.mouse.get_pressed():
                     if pygame.mouse.get_pressed()[i]==True and c<niveau:
                         return c+1
@@ -179,6 +277,9 @@ def ChoixPerso():
     FramePerSec.tick(const.FPS)
     Joueur = personnages.Player(0)
 
+    with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+            temp = pickle.load(f)
+
     V1 = personnages.Player(1)
     V1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT//2)
 
@@ -205,18 +306,20 @@ def ChoixPerso():
         AP2.draw(personnages.DISPLAYSURF)
         AP3.draw(personnages.DISPLAYSURF)
         V1.draw(personnages.DISPLAYSURF)
-        V2.draw(personnages.DISPLAYSURF)
-        V3.draw(personnages.DISPLAYSURF)
+        if temp['V2'][0]==True:
+            V2.draw(personnages.DISPLAYSURF)
+        if temp['V3'][0]==True:
+            V3.draw(personnages.DISPLAYSURF)
         Joueur.souris(personnages.DISPLAYSURF)
         if pygame.sprite.collide_rect(Joueur,V1):
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
                     return 1
-        elif pygame.sprite.collide_rect(Joueur,V2):
+        elif pygame.sprite.collide_rect(Joueur,V2) and temp['V2'][0]==True:
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
                     return 2
-        elif pygame.sprite.collide_rect(Joueur,V3):
+        elif pygame.sprite.collide_rect(Joueur,V3) and temp['V3'][0]==True:
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
                     return 3
@@ -229,6 +332,69 @@ def AfficheScore(valeur):
     scorerect=Score.get_rect()
     scorerect.center=(100,const.SCREEN_HEIGHT-12)
     personnages.DISPLAYSURF.blit(Score,scorerect)
+
+def ChoixSauvegarde():
+    #Choisir si on charge la sauvegarde ou si on recommence
+    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
+    FramePerSec.tick(const.FPS)
+    Joueur = personnages.Player(0)
+
+    Bcontinuer=Affichage("sprites/NContinuer.png",const.SCREEN_WIDTH//2-150,const.SCREEN_HEIGHT//2) #Bouton arcade
+    Brecommencer=Affichage("sprites/NHistoire.png",const.SCREEN_WIDTH//2+150,const.SCREEN_HEIGHT//2) #Bouton historie
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        personnages.DISPLAYSURF.fill(const.WHITE)
+        Bcontinuer.modif("sprites/NContinuer.png")
+        Bcontinuer.draw(personnages.DISPLAYSURF)
+        Brecommencer.modif("sprites/NRecommencer.png")
+        Brecommencer.draw(personnages.DISPLAYSURF)
+        font = pygame.font.SysFont("arial", 25)
+        texte=font.render("Que souhaitez vous faire de votre progression ?", True, const.BLACK)
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH/2,30)
+        personnages.DISPLAYSURF.blit(texte,texterect)
+        Joueur.souris(personnages.DISPLAYSURF)
+        if pygame.sprite.collide_rect(Joueur,Bcontinuer): #Bouton chargement de la sauvegarde
+            Bcontinuer.modif("sprites/HArcade.png")
+            Bcontinuer.draw(personnages.DISPLAYSURF)
+            Joueur.souris(personnages.DISPLAYSURF)
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    if os.path.exists('sauvegarde.pkl'): #Verifie qu'un fichier sauvegarde existe
+                        # Do something if the file exists
+                        return 
+                    else:
+                        # Do something if the file does not exist
+                        sauvegarde = {'V1': personnages.V1, #[Vie,Attaque,Cooldown]
+                        'V2': personnages.V2,
+                        'V3': personnages.V3,
+                        'Argent': 0,
+                        'Histoire':1} #Attention, cela indique le niveau max auquel le joueur peut jouer. Si 0 tout cassé
+                        with open('sauvegarde.pkl', 'wb') as f:
+                            pickle.dump(sauvegarde, f)  
+                        return  
+        elif pygame.sprite.collide_rect(Joueur,Brecommencer): #Bouton recommencer ( :< )
+            Brecommencer.modif("sprites/HHistoire.png")
+            Brecommencer.draw(personnages.DISPLAYSURF)
+            Joueur.souris(personnages.DISPLAYSURF)
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    sauvegarde = {'V1': personnages.V1, #[Vie,Attaque,Cooldown]
+                    'V2': personnages.V2,
+                    'V3': personnages.V3,
+                    'Argent': 0,
+                    'Histoire':1} #Attention, cela indique le niveau max auquel le joueur peut jouer. Si 0 tout cassé
+                    with open('sauvegarde.pkl', 'wb') as f:
+                        pickle.dump(sauvegarde, f)  
+                    return 
+       
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
+
 
 def ChoixMode():
     #Choix du mode de jeu
