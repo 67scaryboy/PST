@@ -289,6 +289,9 @@ class Affichage(pygame.sprite.Sprite): #Permet l'affichage d'un simple sprite
     def deplacement(self,posX,posY): #Permet de changer sa position
         self.rect.center = (posX, posY)
     
+    def mouvement(self,x,y):
+        self.rect.move_ip(x,y)
+
     def modif(self,chemin): #Permet de modifier sa texture
         self.image = pygame.image.load(chemin)
 

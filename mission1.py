@@ -1,109 +1,44 @@
-import pygame, sys, math, fight, time
+import pygame, sys, math, fight, time, cinematiques
 from pygame.locals import *
 import personnages, menu, bonus
-import constantes as const
-
-def Cinematique():
-    FramePerSec = pygame.time.Clock()
-    montee = 0
-    deplacementlaser=0
-    AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
-    AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
-    AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
-    PNJ1 = menu.Affichage("sprites/p1.png",(const.SCREEN_WIDTH/2)-200,const.SCREEN_HEIGHT-200)
-    PNJ2 = menu.Affichage("sprites/p1.png",(const.SCREEN_WIDTH/2)-100,const.SCREEN_HEIGHT-150)
-    PNJ3 = menu.Affichage("sprites/p1.png",(const.SCREEN_WIDTH/2),const.SCREEN_HEIGHT-100)
-    PNJ4 = menu.Affichage("sprites/p1.png",(const.SCREEN_WIDTH/2)+100,const.SCREEN_HEIGHT-150)
-    PNJ5 = menu.Affichage("sprites/p1.png",(const.SCREEN_WIDTH/2)+200,const.SCREEN_HEIGHT-200)
-    Laser= menu.Affichage("sprites_animation/laser1.png",const.SCREEN_WIDTH,const.SCREEN_HEIGHT)
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-        AP3.move(3)#vitesse de déplacement des couches
-        AP2.move(2)
-        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
-        AP.draw(personnages.DISPLAYSURF)
-        AP2.draw(personnages.DISPLAYSURF)
-        AP3.draw(personnages.DISPLAYSURF)
-        PNJ1.deplacement((const.SCREEN_WIDTH/2)-200,const.SCREEN_HEIGHT+200-montee)
-        PNJ2.deplacement((const.SCREEN_WIDTH/2)-100,const.SCREEN_HEIGHT+150-montee)
-        PNJ3.deplacement((const.SCREEN_WIDTH/2),const.SCREEN_HEIGHT+100-montee)
-        PNJ4.deplacement((const.SCREEN_WIDTH/2)+100,const.SCREEN_HEIGHT+150-montee)
-        PNJ5.deplacement((const.SCREEN_WIDTH/2)+200,const.SCREEN_HEIGHT+200-montee)
-        PNJ1.draw(personnages.DISPLAYSURF)
-        PNJ2.draw(personnages.DISPLAYSURF)
-        PNJ3.draw(personnages.DISPLAYSURF)
-        PNJ4.draw(personnages.DISPLAYSURF)
-        PNJ5.draw(personnages.DISPLAYSURF)
-        if montee<const.SCREEN_HEIGHT:
-            montee+=1
-        if montee==const.SCREEN_HEIGHT-100:
-            Laser.deplacement((const.SCREEN_WIDTH/2)-150,-10)
-            Laser.draw(personnages.DISPLAYSURF)
-        elif montee>const.SCREEN_HEIGHT-100:
-            deplacementlaser+=5
-            Laser.deplacement((const.SCREEN_WIDTH/2)-150+deplacementlaser,-10)
-            Laser.draw(personnages.DISPLAYSURF)
-            menu.Animation(const.laserboss,Laser) #A partir de la marche pas, à retravailler
-            if deplacementlaser==40:
-                menu.Animation(const.explosions,PNJ2)
-                PNJ2.deplacement(const.SCREEN_WIDTH,const.SCREEN_HEIGHT)
-            elif deplacementlaser==140:
-                menu.Animation(const.explosions,PNJ3)
-                PNJ3.deplacement(const.SCREEN_WIDTH,const.SCREEN_HEIGHT)
-            elif deplacementlaser==240:
-                menu.Animation(const.explosions,PNJ4)
-                PNJ4.deplacement(const.SCREEN_WIDTH,const.SCREEN_HEIGHT)
-            elif deplacementlaser==340:
-                menu.Animation(const.explosions,PNJ5)
-                PNJ5.deplacement(const.SCREEN_WIDTH,const.SCREEN_HEIGHT)
-
-        pygame.display.update()
-        FramePerSec.tick(const.FPS)
-
-    
+import constantes as const    
 
 def LancerMission1():
+
     FramePerSec = pygame.time.Clock()
     scoreArcade = 0
     alive = True
-    dialogue = 0
-    
-
+    dialogue = 1
+    appui = False
+    valeurs_cinematique = cinematiques.Cinematique1(menu.ChoixPerso())
     AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
+    AP.rect.center = valeurs_cinematique[3]
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
+    AP2.rect.center = valeurs_cinematique[2]
     AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
+    AP3.rect.center = valeurs_cinematique[1]
     MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)
-    P1 = personnages.Player(menu.ChoixPerso())
+    P1 = personnages.Player(valeurs_cinematique[0])
     CP = personnages.Compagon(P1)
+    bulle = menu.Affichage("sprites/bulletexte.png",const.SCREEN_WIDTH-270,100)
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
-
     cooldown = P1.cooldown
+    P1.souris(personnages.DISPLAYSURF)
 
     enemies = [] 
     tirs = []
     explo = []
     boosts = []
-
-    Cinematique() #Cinématique d'introduction du jeu
-
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-        if pygame.mouse.get_pressed() == (1, 0, 0): #Pour faire en sorte qui si on laisse le clic envoncé, ca ne skip pas le dialogue
+        if pygame.mouse.get_pressed()[0] and not appui: #Pour faire en sorte qui si on laisse le clic envoncé, ca ne skip pas le dialogue
             dialogue+=1
-            while pygame.mouse.get_pressed() == (1, 0, 0): #A modifier, ca met le jeu en pause, c'est pas fou
-                for event in pygame.event.get():
-                    if event.type == QUIT:
-                        pygame.quit()
-                        sys.exit()
-                pygame.display.update()
-                FramePerSec.tick(const.FPS)
+            appui = pygame.mouse.get_pressed()[0]
+        if not pygame.mouse.get_pressed()[0]:
+            appui = pygame.mouse.get_pressed()[0]
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP3.move(3)#vitesse de déplacement des couches
         AP2.move(2)
@@ -112,7 +47,6 @@ def LancerMission1():
         AP2.draw(personnages.DISPLAYSURF)
         AP3.draw(personnages.DISPLAYSURF)
         P1.draw(personnages.DISPLAYSURF)
-        bulle = menu.Affichage("sprites/bulletexte.png",const.SCREEN_WIDTH-270,100)
         bulle.draw(personnages.DISPLAYSURF)
         if dialogue==1:
             font = pygame.font.SysFont("arial", 13)
@@ -239,7 +173,6 @@ def LancerMission1():
                 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
-
     while alive:
         for event in pygame.event.get():
             if event.type == QUIT:
