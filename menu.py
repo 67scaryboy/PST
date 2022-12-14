@@ -6,16 +6,17 @@ FramePerSec = pygame.time.Clock()
 
 def Shop():
     AP=Affichage("sprites_menu/APshop.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+    MB=Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+70)
     Joueur = personnages.Player(0)
     VaisseauModifie=1
     V1 = personnages.Player(1)
-    V1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT-70)
+    V1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT-40)
 
     V2 = personnages.Player(2)
-    V2.rect.center = (const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-70)
+    V2.rect.center = (const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-40)
 
     V3 = personnages.Player(3)
-    V3.rect.center = ((const.SCREEN_WIDTH//2)+200,const.SCREEN_HEIGHT-70)
+    V3.rect.center = ((const.SCREEN_WIDTH//2)+200,const.SCREEN_HEIGHT-40)
     with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
             temp = pickle.load(f)
 
@@ -26,6 +27,7 @@ def Shop():
                 sys.exit()
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
+        MB.draw(personnages.DISPLAYSURF)
         V1.draw(personnages.DISPLAYSURF)
         if temp['V2'][0]==True:
             V2.draw(personnages.DISPLAYSURF)
