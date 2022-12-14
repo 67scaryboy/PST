@@ -416,7 +416,7 @@ def ChoixSauvegarde():
         personnages.DISPLAYSURF.blit(texte,texterect)
         Joueur.souris(personnages.DISPLAYSURF)
         if pygame.sprite.collide_rect(Joueur,Bcontinuer): #Bouton chargement de la sauvegarde
-            Bcontinuer.modif("sprites/HArcade.png")
+            Bcontinuer.modif("sprites/HContinuer.png")
             Bcontinuer.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
             for i in pygame.mouse.get_pressed():
@@ -435,7 +435,7 @@ def ChoixSauvegarde():
                             pickle.dump(sauvegarde, f)  
                         return  
         elif pygame.sprite.collide_rect(Joueur,Brecommencer): #Bouton recommencer ( :< )
-            Brecommencer.modif("sprites/HHistoire.png")
+            Brecommencer.modif("sprites/HRecommencer.png")
             Brecommencer.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
             for i in pygame.mouse.get_pressed():
