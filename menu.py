@@ -5,8 +5,12 @@ import constantes as const
 FramePerSec = pygame.time.Clock()
 
 def Shop():
+    Bcontinuer=Affichage("sprites/NContinuer.png",const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+150)
     AP=Affichage("sprites_menu/APshop.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
     MB=Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+70)
+    CarteAttaque=Affichage("sprites_menu/Carte1.png",const.SCREEN_WIDTH/2-200,170)
+    CarteVie=Affichage("sprites_menu/Carte1.png",const.SCREEN_WIDTH/2+200,170)
+    CarteCooldown=Affichage("sprites_menu/Carte1.png",const.SCREEN_WIDTH/2-200,470)
     Joueur = personnages.Player(0)
     VaisseauModifie=1
     V1 = personnages.Player(1)
@@ -25,15 +29,33 @@ def Shop():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+        font = pygame.font.SysFont("impact", 20)
+        Bcontinuer.modif("sprites/NContinuer.png")
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
         MB.draw(personnages.DISPLAYSURF)
+        CarteAttaque.draw(personnages.DISPLAYSURF)
+        CarteCooldown.draw(personnages.DISPLAYSURF)
+        CarteVie.draw(personnages.DISPLAYSURF)
+        #Affichage argent
+        texte=font.render("Composants possédé: " + str(temp['Argent']), True, const.WHITE)#
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2)
+        personnages.DISPLAYSURF.blit(texte,texterect)
+        Bcontinuer.draw(personnages.DISPLAYSURF)
         V1.draw(personnages.DISPLAYSURF)
         if temp['V2'][0]==True:
             V2.draw(personnages.DISPLAYSURF)
         if temp['V3'][0]==True:
             V3.draw(personnages.DISPLAYSURF)
         Joueur.souris(personnages.DISPLAYSURF)
+        if pygame.sprite.collide_rect(Joueur,Bcontinuer): #Bouton chargement de la sauvegarde
+            Bcontinuer.modif("sprites/HContinuer.png")
+            Bcontinuer.draw(personnages.DISPLAYSURF)
+            Joueur.souris(personnages.DISPLAYSURF)
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    return 0
         if pygame.sprite.collide_rect(Joueur,V1):
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
