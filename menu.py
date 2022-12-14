@@ -4,6 +4,53 @@ import constantes as const
 
 FramePerSec = pygame.time.Clock()
 
+def Shop():
+    AP=Affichage("sprites_menu/APshop.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+    Joueur = personnages.Player(0)
+    VaisseauModifie=1
+    V1 = personnages.Player(1)
+    V1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT-70)
+
+    V2 = personnages.Player(2)
+    V2.rect.center = (const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-70)
+
+    V3 = personnages.Player(3)
+    V3.rect.center = ((const.SCREEN_WIDTH//2)+200,const.SCREEN_HEIGHT-70)
+    with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+            temp = pickle.load(f)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        personnages.DISPLAYSURF.fill(const.WHITE)
+        AP.draw(personnages.DISPLAYSURF)
+        V1.draw(personnages.DISPLAYSURF)
+        if temp['V2'][0]==True:
+            V2.draw(personnages.DISPLAYSURF)
+        if temp['V3'][0]==True:
+            V3.draw(personnages.DISPLAYSURF)
+        Joueur.souris(personnages.DISPLAYSURF)
+        if pygame.sprite.collide_rect(Joueur,V1):
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    VaisseauModifie = 1
+        elif pygame.sprite.collide_rect(Joueur,V2) and temp['V2'][0]==True:
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    VaisseauModifie = 2
+        elif pygame.sprite.collide_rect(Joueur,V3) and temp['V3'][0]==True:
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    VaisseauModifie = 3
+
+
+
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
+
+
 def MenuFinPartieArcade(score): # Uniquement à appeler dans la boucle arcade, car affiche les TOPS scores :)
     AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
     while True:
@@ -56,6 +103,12 @@ def MenuFinPartieArcade(score): # Uniquement à appeler dans la boucle arcade, c
 
 def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Définit quel écran afficher
     AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+    ### Ajoute le score comme argent dans la sauvegarde    
+    with open('sauvegarde.pkl', 'rb') as f: #Ouvre le fichier sauvegarde en lecture
+        sauvegarde = pickle.load(f) #Le copie dans une variable temporaire
+    sauvegarde['Argent']+=score #Ajoute à la variable temporaire le score comme argent
+    with open('sauvegarde.pkl', 'wb') as f: #Ouvre le fichier sauvegarde en écriture
+        pickle.dump(sauvegarde, f) #Pousse la sauvegarde
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -74,6 +127,7 @@ def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Défini
             texterect=texte.get_rect()
             texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2)
             personnages.DISPLAYSURF.blit(texte,texterect)
+
         else:
             AP=Affichage("sprites_menu/fond_victoire.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
             personnages.DISPLAYSURF.fill(const.WHITE)
@@ -87,6 +141,7 @@ def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Défini
             texterect=texte.get_rect()
             texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2)
             personnages.DISPLAYSURF.blit(texte,texterect)
+
         if pygame.mouse.get_pressed() == (1, 0, 0): #Clic gauche pour quitter
             break
         pygame.display.update()
@@ -174,7 +229,7 @@ def MenuHistoire(niveau):
                 Atelier.draw(personnages.DISPLAYSURF)
                 for i in pygame.mouse.get_pressed():
                     if pygame.mouse.get_pressed()[i]==True:
-                        print("aaaaaaaaaaa")
+                        Shop() #Ouvre le menu de modifications
         listebouton=[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10]
         Joueur.souris(personnages.DISPLAYSURF)
         for c in range (0,10,1):
