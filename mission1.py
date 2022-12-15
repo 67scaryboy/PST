@@ -10,7 +10,7 @@ def LancerMission1():
     alive = True
     dialogue = 1
     appui = False
-    valeurs_cinematique = cinematiques.Cinematique1(menu.ChoixPerso())
+    valeurs_cinematique = cinematiques.Cinematique1(menu.ChoixPerso()) #cinématique
     AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
     AP.rect.center = valeurs_cinematique[3]
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
@@ -173,6 +173,7 @@ def LancerMission1():
                 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
+    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
     while alive:
         for event in pygame.event.get():
             if event.type == QUIT:
