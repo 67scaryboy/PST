@@ -4,6 +4,77 @@ import constantes as const
 
 FramePerSec = pygame.time.Clock()
 
+def Shop():
+    Bcontinuer=Affichage("sprites/NContinuer.png",const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+150)
+    AP=Affichage("sprites_menu/APshop.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+    MB=Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+70)
+    CarteAttaque=Affichage("sprites_menu/Carte1.png",const.SCREEN_WIDTH/2-200,170)
+    CarteVie=Affichage("sprites_menu/Carte1.png",const.SCREEN_WIDTH/2+200,170)
+    CarteCooldown=Affichage("sprites_menu/Carte1.png",const.SCREEN_WIDTH/2-200,470)
+    Joueur = personnages.Player(0)
+    VaisseauModifie=1
+    V1 = personnages.Player(1)
+    V1.rect.center = ((const.SCREEN_WIDTH//2)-200,const.SCREEN_HEIGHT-40)
+
+    V2 = personnages.Player(2)
+    V2.rect.center = (const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-40)
+
+    V3 = personnages.Player(3)
+    V3.rect.center = ((const.SCREEN_WIDTH//2)+200,const.SCREEN_HEIGHT-40)
+    with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+            temp = pickle.load(f)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        font = pygame.font.SysFont("impact", 20)
+        Bcontinuer.modif("sprites/NContinuer.png")
+        personnages.DISPLAYSURF.fill(const.WHITE)
+        AP.draw(personnages.DISPLAYSURF)
+        MB.draw(personnages.DISPLAYSURF)
+        CarteAttaque.draw(personnages.DISPLAYSURF)
+        CarteCooldown.draw(personnages.DISPLAYSURF)
+        CarteVie.draw(personnages.DISPLAYSURF)
+        #Affichage argent
+        texte=font.render("Composants possédé: " + str(temp['Argent']), True, const.WHITE)#
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2)
+        personnages.DISPLAYSURF.blit(texte,texterect)
+        Bcontinuer.draw(personnages.DISPLAYSURF)
+        V1.draw(personnages.DISPLAYSURF)
+        if temp['V2'][0]==True:
+            V2.draw(personnages.DISPLAYSURF)
+        if temp['V3'][0]==True:
+            V3.draw(personnages.DISPLAYSURF)
+        Joueur.souris(personnages.DISPLAYSURF)
+        if pygame.sprite.collide_rect(Joueur,Bcontinuer): #Bouton chargement de la sauvegarde
+            Bcontinuer.modif("sprites/HContinuer.png")
+            Bcontinuer.draw(personnages.DISPLAYSURF)
+            Joueur.souris(personnages.DISPLAYSURF)
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    return 0
+        if pygame.sprite.collide_rect(Joueur,V1):
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    VaisseauModifie = 1
+        elif pygame.sprite.collide_rect(Joueur,V2) and temp['V2'][0]==True:
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    VaisseauModifie = 2
+        elif pygame.sprite.collide_rect(Joueur,V3) and temp['V3'][0]==True:
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    VaisseauModifie = 3
+
+
+
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
+
+
 def MenuFinPartieArcade(score): # Uniquement à appeler dans la boucle arcade, car affiche les TOPS scores :)
     AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
     while True:
@@ -56,6 +127,12 @@ def MenuFinPartieArcade(score): # Uniquement à appeler dans la boucle arcade, c
 
 def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Définit quel écran afficher
     AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
+    ### Ajoute le score comme argent dans la sauvegarde    
+    with open('sauvegarde.pkl', 'rb') as f: #Ouvre le fichier sauvegarde en lecture
+        sauvegarde = pickle.load(f) #Le copie dans une variable temporaire
+    sauvegarde['Argent']+=score #Ajoute à la variable temporaire le score comme argent
+    with open('sauvegarde.pkl', 'wb') as f: #Ouvre le fichier sauvegarde en écriture
+        pickle.dump(sauvegarde, f) #Pousse la sauvegarde
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -74,6 +151,7 @@ def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Défini
             texterect=texte.get_rect()
             texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2)
             personnages.DISPLAYSURF.blit(texte,texterect)
+
         else:
             AP=Affichage("sprites_menu/fond_victoire.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
             personnages.DISPLAYSURF.fill(const.WHITE)
@@ -87,6 +165,7 @@ def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Défini
             texterect=texte.get_rect()
             texterect.center=(const.SCREEN_WIDTH/2-300,const.SCREEN_HEIGHT/2)
             personnages.DISPLAYSURF.blit(texte,texterect)
+
         if pygame.mouse.get_pressed() == (1, 0, 0): #Clic gauche pour quitter
             break
         pygame.display.update()
@@ -174,7 +253,7 @@ def MenuHistoire(niveau):
                 Atelier.draw(personnages.DISPLAYSURF)
                 for i in pygame.mouse.get_pressed():
                     if pygame.mouse.get_pressed()[i]==True:
-                        print("aaaaaaaaaaa")
+                        Shop() #Ouvre le menu de modifications
         listebouton=[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10]
         Joueur.souris(personnages.DISPLAYSURF)
         for c in range (0,10,1):
@@ -359,7 +438,7 @@ def ChoixSauvegarde():
         personnages.DISPLAYSURF.blit(texte,texterect)
         Joueur.souris(personnages.DISPLAYSURF)
         if pygame.sprite.collide_rect(Joueur,Bcontinuer): #Bouton chargement de la sauvegarde
-            Bcontinuer.modif("sprites/HArcade.png")
+            Bcontinuer.modif("sprites/HContinuer.png")
             Bcontinuer.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
             for i in pygame.mouse.get_pressed():
@@ -378,7 +457,7 @@ def ChoixSauvegarde():
                             pickle.dump(sauvegarde, f)  
                         return  
         elif pygame.sprite.collide_rect(Joueur,Brecommencer): #Bouton recommencer ( :< )
-            Brecommencer.modif("sprites/HHistoire.png")
+            Brecommencer.modif("sprites/HRecommencer.png")
             Brecommencer.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
             for i in pygame.mouse.get_pressed():
