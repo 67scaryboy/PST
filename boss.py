@@ -166,14 +166,17 @@ def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
                 
     return (tempscore,p_alive)
 
-def temp(joueur, score):
+def temp(joueur, score, coord_AP3,coord_AP2,coord_AP):
     FramePerSec = pygame.time.Clock()
     ScoreBoss = score
     alive = True
 
-    AP = menu.Arrièreplan(2)# 1 a 3 pour le fond
+    AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
+    AP.rect.center = coord_AP
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
+    AP2.rect.center = coord_AP2
     AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
+    AP3.rect.center = coord_AP3
     MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)#menu bas
     TEST = joueur
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
@@ -258,6 +261,6 @@ def temp(joueur, score):
         pygame.display.update()
         FramePerSec.tick(const.FPS)
         if not MorceauxBoss:
-            return (ScoreBoss+500) #L'ajout de score doit etre supérieur ou egal à la différence entre le modulo choisi et le seuil de controle
+            return [(ScoreBoss+500),AP.rect.center,AP2.rect.center,AP3.rect.center] #L'ajout de score doit etre supérieur ou egal à la différence entre le modulo choisi et le seuil de controle
             alive = fight.Mort(tirs,P1,MorceauxBoss) #met fin au jeu si le boss est mort (ajouter différences par raport à si joueur meurt)
-    return (0)
+    return [0,AP.rect.center,AP2.rect.center,AP3.rect.cente]
