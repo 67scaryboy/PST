@@ -263,4 +263,4 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP):
         if not MorceauxBoss:
             return [(ScoreBoss+500),AP.rect.center,AP2.rect.center,AP3.rect.center] #L'ajout de score doit etre supérieur ou egal à la différence entre le modulo choisi et le seuil de controle
             alive = fight.Mort(tirs,P1,MorceauxBoss) #met fin au jeu si le boss est mort (ajouter différences par raport à si joueur meurt)
-    return [0,AP.rect.center,AP2.rect.center,AP3.rect.cente]
+    return [0,AP.rect.center,AP2.rect.center,AP3.rect.center]
