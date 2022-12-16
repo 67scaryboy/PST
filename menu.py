@@ -38,7 +38,7 @@ def Shop():
         CarteCooldown.draw(personnages.DISPLAYSURF)
         CarteVie.draw(personnages.DISPLAYSURF)
         #Affichage argent
-        texte=font.render("Composants possédé: " + str(temp['Argent']), True, const.WHITE)#
+        texte=font.render("Composants possédés: " + str(temp['Argent']), True, const.WHITE)#
         texterect=texte.get_rect()
         texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2)
         personnages.DISPLAYSURF.blit(texte,texterect)
