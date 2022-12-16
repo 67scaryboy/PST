@@ -23,7 +23,6 @@ def LancerMission1():
     bulle = menu.Affichage("sprites/bulletexte.png",const.SCREEN_WIDTH-270,100)
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
     cooldown = P1.cooldown
-    P1.souris(personnages.DISPLAYSURF)
 
     enemies = [] 
     tirs = []
