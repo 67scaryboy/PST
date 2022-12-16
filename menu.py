@@ -129,7 +129,7 @@ def Shop():
                 personnages.DISPLAYSURF.blit(texte,texterect)
 
             if temp['V1'][2]==0:#Vérif nombre d'amélioration vie
-                Vie = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2+200,180) #Modifier la sprite dès qu'on en a un
+                Vie = Affichage("sprites/bonusvie.png",const.SCREEN_WIDTH/2+200,180) #Modifier la sprite dès qu'on en a un
                 Vie.draw(personnages.DISPLAYSURF)
                 font = pygame.font.SysFont("impact", 15)
                 texte=font.render("Vie actuelle: " + str(temp['V1'][1]), True, const.WHITE)
@@ -145,7 +145,7 @@ def Shop():
                 texterect.center=(const.SCREEN_WIDTH/2+200,250)
                 personnages.DISPLAYSURF.blit(texte,texterect)
             elif temp['V1'][2]==1:
-                Vie = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2+200,180) #Modifier la sprite dès qu'on en a un
+                Vie = Affichage("sprites/bonusvie.png",const.SCREEN_WIDTH/2+200,180) #Modifier la sprite dès qu'on en a un
                 Vie.draw(personnages.DISPLAYSURF)
                 font = pygame.font.SysFont("impact", 15)
                 texte=font.render("Vie actuelle: " + str(temp['V1'][1]), True, const.WHITE)
@@ -161,7 +161,7 @@ def Shop():
                 texterect.center=(const.SCREEN_WIDTH/2+200,250)
                 personnages.DISPLAYSURF.blit(texte,texterect)
             else:
-                Vie = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2+200,180) #Modifier la sprite dès qu'on en a un
+                Vie = Affichage("sprites/bonusvie.png",const.SCREEN_WIDTH/2+200,180) #Modifier la sprite dès qu'on en a un
                 Vie.draw(personnages.DISPLAYSURF)
                 font = pygame.font.SysFont("impact", 15)
                 texte=font.render("Vie actuelle: " + str(temp['V1'][1]), True, const.WHITE)
