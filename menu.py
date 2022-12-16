@@ -1,4 +1,4 @@
-import pygame, sys, personnages, pickle, os
+import pygame, sys, personnages, pickle, os, time
 from pygame.locals import *
 import constantes as const
 
@@ -21,15 +21,16 @@ def Shop():
 
     V3 = personnages.Player(3)
     V3.rect.center = ((const.SCREEN_WIDTH//2)+200,const.SCREEN_HEIGHT-40)
+    time.sleep(0.2)
+
     with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
-            temp = pickle.load(f)
+        temp = pickle.load(f) #Il faut la charger à chaque boucle au cas on on fait une amélioration
 
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-        font = pygame.font.SysFont("impact", 20)
         Bcontinuer.modif("sprites/NContinuer.png")
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
@@ -37,6 +38,19 @@ def Shop():
         CarteAttaque.draw(personnages.DISPLAYSURF)
         CarteCooldown.draw(personnages.DISPLAYSURF)
         CarteVie.draw(personnages.DISPLAYSURF)
+        font = pygame.font.SysFont("impact", 25)
+        texte=font.render("Tirs", True, const.WHITE)
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH/2-200,100)
+        personnages.DISPLAYSURF.blit(texte,texterect)
+        texte=font.render("Santé", True, const.WHITE)
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH/2+200,100)
+        personnages.DISPLAYSURF.blit(texte,texterect)
+        texte=font.render("Vitesse d'attaque", True, const.WHITE)
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH/2-200,400)
+        personnages.DISPLAYSURF.blit(texte,texterect)
         #Affichage argent
         texte=font.render("Composants possédés: " + str(temp['Argent']), True, const.WHITE)#
         texterect=texte.get_rect()
@@ -68,8 +82,193 @@ def Shop():
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
                     VaisseauModifie = 3
+        if VaisseauModifie==1: #Affichage des amélioration en fonction de ce qui à été acheté pour le vaisseau de gauche
+            if temp['V1'][4]==0: #Si aucune amélioration de tir
+                Attaque = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2-200,180)
+                Attaque.draw(personnages.DISPLAYSURF)
+                font = pygame.font.SysFont("impact", 15)
+                texte=font.render("Dégats actuels: " + str(temp['V1'][3]), True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,210)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Dégats après amélioration: " + str((20+temp['V1'][3])) , True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,230)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Composants requis: 15000", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,250)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+            elif temp['V1'][4]==1: #Si aucune amélioration de tir
+                Attaque = Affichage("sprites/tira3.png",const.SCREEN_WIDTH/2-200,180)
+                Attaque.draw(personnages.DISPLAYSURF)
+                font = pygame.font.SysFont("impact", 15)
+                texte=font.render("Dégats actuels: " + str(temp['V1'][3]), True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,210)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Dégats après amélioration: " + str((30+temp['V1'][3])) , True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,230)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Composants requis: 40000", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,250)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+            else: 
+                Attaque = Affichage("sprites/tira3.png",const.SCREEN_WIDTH/2-200,180)
+                Attaque.draw(personnages.DISPLAYSURF)
+                font = pygame.font.SysFont("impact", 15)
+                texte=font.render("Dégats actuels: " + str(temp['V1'][3]), True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,210)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Amélioration des dégats maximums !", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,230)
+                personnages.DISPLAYSURF.blit(texte,texterect)
 
+            if temp['V1'][2]==0:#Vérif nombre d'amélioration vie
+                Vie = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2+200,180) #Modifier la sprite dès qu'on en a un
+                Vie.draw(personnages.DISPLAYSURF)
+                font = pygame.font.SysFont("impact", 15)
+                texte=font.render("Vie actuelle: " + str(temp['V1'][1]), True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,210)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Vie après amélioration: " + str((20+temp['V1'][1])) , True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,230)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Composants requis: 20000", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,250)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+            elif temp['V1'][2]==1:
+                Vie = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2+200,180) #Modifier la sprite dès qu'on en a un
+                Vie.draw(personnages.DISPLAYSURF)
+                font = pygame.font.SysFont("impact", 15)
+                texte=font.render("Vie actuelle: " + str(temp['V1'][1]), True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,210)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Vie après amélioration: " + str((30+temp['V1'][1])) , True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,230)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Composants requis: 60000", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,250)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+            else:
+                Vie = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2+200,180) #Modifier la sprite dès qu'on en a un
+                Vie.draw(personnages.DISPLAYSURF)
+                font = pygame.font.SysFont("impact", 15)
+                texte=font.render("Vie actuelle: " + str(temp['V1'][1]), True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,210)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Amélioration de la santé maximum !", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,230)
+                personnages.DISPLAYSURF.blit(texte,texterect)
 
+            if temp['V1'][6]==0: #Verification du nombre d'amélioration du cooldown
+                Cooldown = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2-200,470) #Modifier la sprite dès qu'on en a un
+                Cooldown.draw(personnages.DISPLAYSURF)
+                font = pygame.font.SysFont("impact", 15)
+                texte=font.render("Vitesse d'attaque actuelle (ms): " + str(temp['V1'][5]), True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,520)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Vitesse d'attaque après amélioration: " + str((temp['V1'][5]-1)) , True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,540)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Composants requis: 30000", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,560)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+            elif temp['V1'][6]==1: #Verification du nombre d'amélioration du cooldown
+                Cooldown = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2-200,470) #Modifier la sprite dès qu'on en a un
+                Cooldown.draw(personnages.DISPLAYSURF)
+                font = pygame.font.SysFont("impact", 15)
+                texte=font.render("Vitesse d'attaque actuelle (ms): " + str(temp['V1'][5]), True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,520)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Vitesse d'attaque après amélioration: " + str((temp['V1'][5]-1)) , True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,540)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Composants requis: 80000", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,560)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+            else:
+                Cooldown = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2-200,470) #Modifier la sprite dès qu'on en a un
+                Cooldown.draw(personnages.DISPLAYSURF)
+                font = pygame.font.SysFont("impact", 15)
+                texte=font.render("Vitesse d'attaque actuelle (ms): " + str(temp['V1'][5]), True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,520)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+                texte=font.render("Amélioration de la vitese d'attaque maximum !", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2-200,540)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+            
+            if pygame.sprite.collide_rect(Joueur,CarteAttaque): #Achat attaque
+                for i in pygame.mouse.get_pressed():
+                    if pygame.mouse.get_pressed()[i]==True:
+                        time.sleep(0.3)
+                        if temp['V1'][4]== 0 and temp['Argent']>15000:
+                            temp['V1'][3]=90 #Définition de l'attaque à 70
+                            temp['V1'][4]=1 #Définition du nombre d'amélioration à 1
+                            temp['Argent']-=15000 #Retrait de 15000 d'argent
+                            with open('sauvegarde.pkl', 'wb') as f:
+                                pickle.dump(temp, f)  #Sauvegarde
+                        elif temp['V1'][4]== 1 and temp['Argent']>40000:
+                            temp['V1'][3]=120
+                            temp['V1'][4]=2
+                            temp['Argent']-=40000
+                            with open('sauvegarde.pkl', 'wb') as f:
+                                pickle.dump(temp, f)  
+                        break
+            if pygame.sprite.collide_rect(Joueur,CarteVie): #Achat vie
+                for i in pygame.mouse.get_pressed():
+                    if pygame.mouse.get_pressed()[i]==True:
+                        time.sleep(0.3)
+                        if temp['V1'][2]== 0 and temp['Argent']>20000:
+                            temp['V1'][1]=120 #Définition de l'attaque à 70
+                            temp['V1'][2]=1 #Définition du nombre d'amélioration à 1
+                            temp['Argent']-=20000 #Retrait de 15000 d'argent
+                            with open('sauvegarde.pkl', 'wb') as f:
+                                pickle.dump(temp, f)  #Sauvegarde
+                        elif temp['V1'][2]== 1 and temp['Argent']>60000:
+                            temp['V1'][1]=150
+                            temp['V1'][2]=2
+                            temp['Argent']-=60000
+                            with open('sauvegarde.pkl', 'wb') as f:
+                                pickle.dump(temp, f)  
+                        break
+            if pygame.sprite.collide_rect(Joueur,CarteCooldown): #Achat vie
+                for i in pygame.mouse.get_pressed():
+                    if pygame.mouse.get_pressed()[i]==True:
+                        time.sleep(0.3)
+                        if temp['V1'][6]== 0 and temp['Argent']>30000:
+                            temp['V1'][5]=9 #Définition de l'attaque à 70
+                            temp['V1'][6]=1 #Définition du nombre d'amélioration à 1
+                            temp['Argent']-=30000 #Retrait de 15000 d'argent
+                            with open('sauvegarde.pkl', 'wb') as f:
+                                pickle.dump(temp, f)  #Sauvegarde
+                        elif temp['V1'][6]== 1 and temp['Argent']>80000:
+                            temp['V1'][5]=8
+                            temp['V1'][6]=2
+                            temp['Argent']-=80000
+                            with open('sauvegarde.pkl', 'wb') as f:
+                                pickle.dump(temp, f)  
+                        break
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)

@@ -97,6 +97,7 @@ def Arcade():
         bonus.AttraperBoost(boosts,P1)
 
         if scoreArcade%2000<1500: #Verification du score (utile pour le spawn du boss de temps en temps) | 2000 correspond au modulo choisi et 1500 au seuil de controle
+            #ATTENTION: Avant de modifier les valeurs au dessus, aller voir la fonction qui fait spawn le boss
             Spawn(enemies,2) #Apparition aléatoire d'adversaires.
         else:
             if len(enemies)==0: #Si la limite de score a été atteinte et qu'il y a plus d'adversaires sur le terrain
