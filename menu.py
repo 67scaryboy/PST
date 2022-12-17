@@ -387,7 +387,7 @@ def MenuHistoire(niveau):
     FramePerSec.tick(const.FPS)
     Joueur = personnages.Player(0)
 
-    
+    Bretour=Affichage("sprites/NRetour.png",const.SCREEN_WIDTH-70,const.SCREEN_HEIGHT-30)
     AP=Affichage("sprites/AP.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) #Fond
     #Armée de bouton pour choisir son lvl
     if niveau>0:
@@ -437,6 +437,7 @@ def MenuHistoire(niveau):
                 pygame.quit()
                 sys.exit()
         personnages.DISPLAYSURF.fill(const.WHITE)
+        Bretour.modif("sprites/NRetour.png")
         AP.draw(personnages.DISPLAYSURF)
         B1.draw(personnages.DISPLAYSURF)
         B2.draw(personnages.DISPLAYSURF)
@@ -448,7 +449,8 @@ def MenuHistoire(niveau):
         B8.draw(personnages.DISPLAYSURF)    
         B9.draw(personnages.DISPLAYSURF)  
         B10.draw(personnages.DISPLAYSURF)
-        if niveau>1:
+        Bretour.draw(personnages.DISPLAYSURF)
+        if niveau>0:
             Atelier=Affichage("sprites/Atelier.png",const.SCREEN_WIDTH//2+200,const.SCREEN_HEIGHT//2-100)
             Atelier.draw(personnages.DISPLAYSURF)
             if pygame.sprite.collide_rect(Joueur,Atelier):
@@ -458,12 +460,18 @@ def MenuHistoire(niveau):
                     if pygame.mouse.get_pressed()[i]==True:
                         Shop() #Ouvre le menu de modifications
         listebouton=[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10]
-        Joueur.souris(personnages.DISPLAYSURF)
         for c in range (0,10,1):
             if pygame.sprite.collide_rect(Joueur,listebouton[c]):
                 for i in pygame.mouse.get_pressed():
-                    if pygame.mouse.get_pressed()[i]==True and c<niveau:
+                    if pygame.mouse.get_pressed()[i]==True and c<niveau+1:
                         return c+1
+        if pygame.sprite.collide_rect(Joueur,Bretour):
+            Bretour.modif("sprites/HRetour.png")
+            Bretour.draw(personnages.DISPLAYSURF)
+            for i in pygame.mouse.get_pressed():
+                if pygame.mouse.get_pressed()[i]==True:
+                    return 
+        Joueur.souris(personnages.DISPLAYSURF)
                     
         """"
         if pygame.sprite.collide_rect(Joueur,Barcade):
@@ -655,7 +663,7 @@ def ChoixSauvegarde():
                         'V2': personnages.V2,
                         'V3': personnages.V3,
                         'Argent': 0,
-                        'Histoire':1} #Attention, cela indique le niveau max auquel le joueur peut jouer. Si 0 tout cassé
+                        'Histoire':0} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max)
                         with open('sauvegarde.pkl', 'wb') as f:
                             pickle.dump(sauvegarde, f)  
                         return  
@@ -669,7 +677,7 @@ def ChoixSauvegarde():
                     'V2': personnages.V2,
                     'V3': personnages.V3,
                     'Argent': 200000,
-                    'Histoire':1} #Attention, cela indique le niveau max auquel le joueur peut jouer. Si 0 tout cassé
+                    'Histoire':0} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
                     with open('sauvegarde.pkl', 'wb') as f:
                         pickle.dump(sauvegarde, f)  
                     return 
