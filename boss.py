@@ -10,7 +10,7 @@ class ModularBoss_main_body(pygame.sprite.Sprite):
         self.image = pygame.image.load("sprites_boss/boss_damaged.png")
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2,80)
-        self.cooldown = 100
+        self.cooldown = 60
         self.id = "body"
         self.destination = const.SCREEN_WIDTH//2
     
@@ -32,7 +32,7 @@ class ModularBoss_destructible(pygame.sprite.Sprite):
         self.image = pygame.image.load(adresse)
         self.rect = self.image.get_rect()
         self.id = id
-        self.PVMAX = 1000
+        self.PVMAX = 10000
         self.PV = self.PVMAX
         self.ATK = 100
         self.rect.center = mainbody.rect.center
