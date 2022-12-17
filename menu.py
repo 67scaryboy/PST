@@ -174,7 +174,7 @@ def Shop():
                 personnages.DISPLAYSURF.blit(texte,texterect)
 
             if temp['V1'][6]==0: #Verification du nombre d'amélioration du cooldown
-                Cooldown = Affichage("sprites/boostvie1.png",const.SCREEN_WIDTH/2-200,470) #Modifier la sprite dès qu'on en a un
+                Cooldown = Affichage("sprites/boostva1.png",const.SCREEN_WIDTH/2-200,470) #Modifier la sprite dès qu'on en a un
                 Cooldown.draw(personnages.DISPLAYSURF)
                 font = pygame.font.SysFont("impact", 15)
                 texte=font.render("Vitesse d'attaque actuelle (ms): " + str(temp['V1'][5]), True, const.WHITE)
@@ -190,7 +190,7 @@ def Shop():
                 texterect.center=(const.SCREEN_WIDTH/2-200,560)
                 personnages.DISPLAYSURF.blit(texte,texterect)
             elif temp['V1'][6]==1: #Verification du nombre d'amélioration du cooldown
-                Cooldown = Affichage("sprites/boostvie2.png",const.SCREEN_WIDTH/2-200,470) #Modifier la sprite dès qu'on en a un
+                Cooldown = Affichage("sprites/boostva2.png",const.SCREEN_WIDTH/2-200,470) #Modifier la sprite dès qu'on en a un
                 Cooldown.draw(personnages.DISPLAYSURF)
                 font = pygame.font.SysFont("impact", 15)
                 texte=font.render("Vitesse d'attaque actuelle (ms): " + str(temp['V1'][5]), True, const.WHITE)
@@ -206,7 +206,7 @@ def Shop():
                 texterect.center=(const.SCREEN_WIDTH/2-200,560)
                 personnages.DISPLAYSURF.blit(texte,texterect)
             else:
-                Cooldown = Affichage("sprites/boostvie2.png",const.SCREEN_WIDTH/2-200,470) #Modifier la sprite dès qu'on en a un
+                Cooldown = Affichage("sprites/boostva2.png",const.SCREEN_WIDTH/2-200,470) #Modifier la sprite dès qu'on en a un
                 Cooldown.draw(personnages.DISPLAYSURF)
                 font = pygame.font.SysFont("impact", 15)
                 texte=font.render("Vitesse d'attaque actuelle (ms): " + str(temp['V1'][5]), True, const.WHITE)
