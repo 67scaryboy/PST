@@ -119,7 +119,7 @@ def LancerMission1():
             texterect=texte.get_rect()
             texterect.center=(465,120)
             personnages.DISPLAYSURF.blit(texte,texterect)
-            texte=font.render("à disposition un atelier dédié. Evitez de le cassez...", True, const.BLACK)
+            texte=font.render("à disposition un atelier dédié. Evitez de le casser...", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,130)
             personnages.DISPLAYSURF.blit(texte,texterect)
