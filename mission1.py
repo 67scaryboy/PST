@@ -201,7 +201,7 @@ def LancerMission1():
         elif tempspasse > 7 and numformation==1: #Création d'une formation rectangle
             for c in range (0,4,1): #Nombre de colonne
                 for l in range (0,7,1): #Nombre de lignes
-                    fight.SpawHistoire(enemies,1,l*30,c*(-30))
+                    fight.SpawHistoire(enemies,1,l*40,c*(-30))
             numformation=2
         elif tempspasse > 15 and numformation==2:
             for i in range (1,11,1): #Creation d'une rampe
@@ -223,10 +223,10 @@ def LancerMission1():
         elif tempspasse > 25 and numformation==4:
             for i in range (0,5,1): #Formation carée décalé
                 for j in range (0,5,1):
-                    fight.SpawHistoire(enemies,1,10+j*30+i*20,i*(-30))
+                    fight.SpawHistoire(enemies,1,10+j*40+i*20,i*(-30))
             for c in range (0,4,1): #Nombre de colonne
                 for l in range (0,7,1): #Nombre de lignes
-                    fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH-l*30,c*(-30)-200)#Formation carée
+                    fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH-l*40,c*(-30)-200)#Formation carée
             numformation=5
         elif tempspasse > 32 and numformation==5:
             fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2,0)
@@ -246,12 +246,12 @@ def LancerMission1():
             fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2,-45)
             numformation=6
         elif tempspasse > 35 and numformation==6:
-            for i in range (1,26,1):
-                fight.SpawHistoire(enemies,2,i*30,0)
+            for i in range (1,23,1):
+                fight.SpawHistoire(enemies,2,i*40,0)
             numformation=7
         elif tempspasse > 40 and numformation==7:
-            for l in range (1,26,1):
-                fight.SpawHistoire(enemies,3,l*30,0)
+            for l in range (1,23,1):
+                fight.SpawHistoire(enemies,3,l*40,0)
             numformation=8
         elif numformation==8 and tempspasse>55:
             print("a")
