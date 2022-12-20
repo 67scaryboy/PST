@@ -1,6 +1,6 @@
 import pygame, sys, math, fight, time, cinematiques, pickle
 from pygame.locals import *
-import personnages, menu, bonus
+import personnages, menu, bonus, gc
 import constantes as const    
 
 def LancerMission1():
@@ -250,10 +250,12 @@ def LancerMission1():
             for i in range (1,23,1):
                 fight.SpawHistoire(enemies,2,i*40,0)
             numformation=7
+            gc.collect()
         elif tempspasse > 40 and numformation==7:
             for l in range (1,23,1):
                 fight.SpawHistoire(enemies,3,l*40,0)
             numformation=8
+            gc.collect
         elif numformation==8 and tempspasse>55:
             print("a")
             menu.MenuFinPartie(score,True)
