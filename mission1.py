@@ -6,9 +6,10 @@ import constantes as const
 def LancerMission1():
 
     FramePerSec = pygame.time.Clock()
-    scoreArcade = 0
+    score = 0
     alive = True
     dialogue = 1
+    numformation=0
     appui = False
     valeurs_cinematique = cinematiques.Cinematique1(menu.ChoixPerso()) #cinématique
     AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
@@ -28,7 +29,7 @@ def LancerMission1():
     tirs = []
     explo = []
     boosts = []
-    while True:
+    while alive:
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -168,6 +169,7 @@ def LancerMission1():
             texterect.center=(465,130)
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
+            tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
             break
                 
         pygame.display.update()
@@ -178,7 +180,56 @@ def LancerMission1():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-        
+
+        score,alive=fight.Colision(tirs,P1,enemies,explo,boosts,score,alive)
+        bonus.AttraperBoost(boosts,P1)
+
+        for boost in boosts:
+                    boost.move()
+                    if boost.rect.bottom > const.SCREEN_HEIGHT:
+                            boosts.remove(boost)
+
+        #Boucle de spawn après timer
+        tempspasse = time.time() - tempsdemarrage
+        if tempspasse > 5 and numformation==0: # Temps en secondes
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-20,-20)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2,0)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+20,-20)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+40,-40)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-40,-40)
+            numformation=1
+        elif tempspasse > 7 and numformation==1: #Création d'une formation rectangle
+            for c in range (0,4,1): #Nombre de colonne
+                for l in range (0,7,1): #Nombre de lignes
+                    fight.SpawHistoire(enemies,1,l*30,c*(-30))
+            numformation=2
+        elif tempspasse > 15 and numformation==2:
+            for i in range (1,11,1): #Creation d'une rampe
+                fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH-(i*30),i*(-30))
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2+40,-350)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2-40,-350)
+            numformation=3
+        elif tempspasse > 20 and numformation==3:
+            fight.SpawHistoire(enemies,1,10,-60)
+            fight.SpawHistoire(enemies,1,40,-30)
+            fight.SpawHistoire(enemies,1,70,0)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH-10,-60)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH-40,-30)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH-70,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2,-60)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2,-30)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2,0)
+            numformation=4
+        elif tempspasse > 25 and numformation==4:
+            for i in range (0,5,1): #Formation carée décalé
+                for j in range (0,5,1):
+                    fight.SpawHistoire(enemies,1,10+j*30+i*20,i*(-30))
+            for c in range (0,4,1): #Nombre de colonne
+                for l in range (0,7,1): #Nombre de lignes
+                    fight.SpawHistoire(enemies,1,l*30,c*(-30)-200)#Formation carée
+            numformation=5
+            
+
         #tir automatique
         if P1.cooldown == 0:
             shoot = fight.Projectile(P1,0,"sprites/tira.png")
@@ -188,6 +239,10 @@ def LancerMission1():
             P1.cooldown = cooldown
         else:
             P1.cooldown += -1
+        
+        for entity in enemies: #Déplacement linéaire des ennemis !A CHANGER!
+            if entity.active == 1:
+                entity.move()
 
         #faire avance les tirs
         for shoot in tirs:
@@ -230,9 +285,10 @@ def LancerMission1():
         CP.update(P1)
         CP.draw(personnages.DISPLAYSURF)#Affichage Compagnon
         MB.draw(personnages.DISPLAYSURF)#Affichage menu bas
-        menu.AfficheScore(scoreArcade) #Affichage score
+        menu.AfficheScore(score) #Affichage score
 
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
+    menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent
         
