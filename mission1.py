@@ -29,6 +29,7 @@ def LancerMission1():
     tirs = []
     explo = []
     boosts = []
+    gc.collect()
     while alive:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -250,14 +251,11 @@ def LancerMission1():
             for i in range (1,23,1):
                 fight.SpawHistoire(enemies,2,i*40,0)
             numformation=7
-            gc.collect()
         elif tempspasse > 40 and numformation==7:
             for l in range (1,23,1):
                 fight.SpawHistoire(enemies,3,l*40,0)
             numformation=8
-            gc.collect
         elif numformation==8 and tempspasse>55:
-            print("a")
             menu.MenuFinPartie(score,True)
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
