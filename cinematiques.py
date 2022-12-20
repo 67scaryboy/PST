@@ -8,8 +8,6 @@ def Cinematique1(numero):#utiliser numero pour modifier image vaisseau
     montee = 0
     deplacementlaser=0
     descente = 0
-    dialogue = 1
-    appui = False
 
     AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
