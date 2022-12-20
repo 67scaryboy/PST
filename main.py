@@ -1,7 +1,7 @@
 import pygame, sys
 import mission1, mission2, mission3, mission4, mission5, mission6, mission7, mission8, mission9, mission10
 from pygame.locals import *
-import random, personnages, menu, fight, bonus, boss
+import random, personnages, menu, fight, bonus, boss, pickle
 import constantes as const
 
 pygame.init()
@@ -9,6 +9,9 @@ pygame.init()
 scoretotal = 0
 pygame.mouse.set_visible(False)
 menu.ChoixSauvegarde()
+with open('sauvegarde.pkl', 'rb') as f:
+    temp = pickle.load(f)
+const.Niveau=temp['Histoire']
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:

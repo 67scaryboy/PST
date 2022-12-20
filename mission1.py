@@ -1,4 +1,4 @@
-import pygame, sys, math, fight, time, cinematiques
+import pygame, sys, math, fight, time, cinematiques, pickle
 from pygame.locals import *
 import personnages, menu, bonus
 import constantes as const    
@@ -226,9 +226,44 @@ def LancerMission1():
                     fight.SpawHistoire(enemies,1,10+j*30+i*20,i*(-30))
             for c in range (0,4,1): #Nombre de colonne
                 for l in range (0,7,1): #Nombre de lignes
-                    fight.SpawHistoire(enemies,1,l*30,c*(-30)-200)#Formation carée
+                    fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH-l*30,c*(-30)-200)#Formation carée
             numformation=5
-            
+        elif tempspasse > 32 and numformation==5:
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2+30,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2-30,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2+60,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2-60,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2-60,-30)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2+60,-30)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2-60,-60)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2+60,-60)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-60,-90)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+60,-90)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-30,-90)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2,-90)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+30,-90)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2,-45)
+            numformation=6
+        elif tempspasse > 35 and numformation==6:
+            for i in range (1,26,1):
+                fight.SpawHistoire(enemies,2,i*30,0)
+            numformation=7
+        elif tempspasse > 40 and numformation==7:
+            for l in range (1,26,1):
+                fight.SpawHistoire(enemies,3,l*30,c*-30)
+            numformation=8
+        elif numformation==8 and tempspasse>55:
+            print("a")
+            menu.MenuFinPartie(score,True)
+            with open('sauvegarde.pkl', 'rb') as f:
+                temp = pickle.load(f)
+            if temp['Histoire']==0:
+                temp['Histoire']=1
+            with open('sauvegarde.pkl', 'wb') as f:
+                    pickle.dump(temp, f)
+            break
+
 
         #tir automatique
         if P1.cooldown == 0:
@@ -290,5 +325,6 @@ def LancerMission1():
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
-    menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent
+    if alive != True: #En cas de victoire, on sort de la boucle avec alive=True
+        menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent
         
