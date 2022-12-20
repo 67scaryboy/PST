@@ -251,7 +251,7 @@ def LancerMission1():
             numformation=7
         elif tempspasse > 40 and numformation==7:
             for l in range (1,26,1):
-                fight.SpawHistoire(enemies,3,l*30,c*-30)
+                fight.SpawHistoire(enemies,3,l*30,0)
             numformation=8
         elif numformation==8 and tempspasse>55:
             print("a")

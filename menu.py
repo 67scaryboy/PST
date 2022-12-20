@@ -375,7 +375,7 @@ def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Défini
         FramePerSec.tick(const.FPS)
 
 
-def MenuHistoire(niveau):
+def MenuHistoire():
     """
     while True:
         personnages.DISPLAYSURF.fill(const.WHITE)
@@ -389,6 +389,7 @@ def MenuHistoire(niveau):
     with open('sauvegarde.pkl', 'rb') as f:
         temp = pickle.load(f)
     const.Niveau=temp['Histoire']
+    niveau=temp['Histoire']
     Bretour=Affichage("sprites/NRetour.png",const.SCREEN_WIDTH-70,const.SCREEN_HEIGHT-30)
     AP=Affichage("sprites/AP.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) #Fond
     #Armée de bouton pour choisir son lvl
