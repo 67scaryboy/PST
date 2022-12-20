@@ -191,6 +191,7 @@ def LancerMission1():
 
         #Boucle de spawn après timer
         tempspasse = time.time() - tempsdemarrage
+        print(len(enemies))
         if tempspasse > 5 and numformation==0: # Temps en secondes
             fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-20,-20)
             fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2,0)
@@ -278,6 +279,9 @@ def LancerMission1():
         for entity in enemies: #Déplacement linéaire des ennemis !A CHANGER!
             if entity.active == 1:
                 entity.move()
+            if entity.rect.bottom > const.SCREEN_HEIGHT:
+                    enemies.remove(entity)
+
 
         #faire avance les tirs
         for shoot in tirs:
