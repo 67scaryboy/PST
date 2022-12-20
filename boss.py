@@ -7,7 +7,7 @@ from copy import deepcopy
 class ModularBoss_main_body(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("sprites_boss/boss_damaged.png")
+        self.image = pygame.image.load("sprites_boss/boss_damaged.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2,80)
         self.cooldown = 60
@@ -29,7 +29,7 @@ class ModularBoss_main_body(pygame.sprite.Sprite):
 class ModularBoss_destructible(pygame.sprite.Sprite):
     def __init__(self,mainbody,adresse,id):
         super().__init__()#bras gauche
-        self.image = pygame.image.load(adresse)
+        self.image = pygame.image.load(adresse).convert_alpha()
         self.rect = self.image.get_rect()
         self.id = id
         self.PVMAX = 10000

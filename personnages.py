@@ -19,21 +19,21 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         self.active = 1
         if id == 1:
-            self.image = pygame.image.load("sprites/e1.png")
+            self.image = pygame.image.load("sprites/e1.png").convert_alpha()
             self.PV = 100 #PV de ce type d'adversaire
             self.MAXPV = self.PV
             self.ATK = 10 #Attaque de ce type d'adversaire
             self.score = 10 #Score crédité en cas de kill
             self.id = 'e1' #ID de ce type
         elif id == 2:
-            self.image = pygame.image.load("sprites/e2.png")
+            self.image = pygame.image.load("sprites/e2.png").convert_alpha()
             self.PV = 150
             self.MAXPV = self.PV
             self.ATK = 30
             self.score = 50
             self.id = 'e2'
         elif id == 3:
-            self.image = pygame.image.load("sprites/e3.png")
+            self.image = pygame.image.load("sprites/e3.png").convert_alpha()
             self.PV = 200
             self.MAXPV = self.PV
             self.ATK = 50
@@ -63,7 +63,7 @@ class Player(pygame.sprite.Sprite): #Si on
     def __init__(self, id):
         super().__init__()
         if id == 0:#selecteur de perso
-            self.image = pygame.image.load("sprites/souris.png")
+            self.image = pygame.image.load("sprites/souris.png").convert_alpha()
             self.id = 'N/A'
             self.PV = 10
             self.MAXPV=self.PV
@@ -74,7 +74,7 @@ class Player(pygame.sprite.Sprite): #Si on
         if id == 1:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f) # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
-            self.image = pygame.image.load("sprites/p1.png")
+            self.image = pygame.image.load("sprites/p1.png").convert_alpha()
             self.id = 'p1'
             self.PV = temp['V1'][1] #a modifier en fonction de perso
             self.MAXPV=self.PV
@@ -85,7 +85,7 @@ class Player(pygame.sprite.Sprite): #Si on
         elif id == 2:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f) # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
-            self.image = pygame.image.load("sprites/p2.png")
+            self.image = pygame.image.load("sprites/p2.png").convert_alpha()
             self.id = 'p2'
             self.PV = temp['V2'][1] #a modifier en fonction de perso
             self.MAXPV=self.PV
@@ -96,7 +96,7 @@ class Player(pygame.sprite.Sprite): #Si on
         elif id == 3:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f) # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
-            self.image = pygame.image.load("sprites/p3.png")
+            self.image = pygame.image.load("sprites/p3.png").convert_alpha()
             self.id = 'p3'
             self.PV = temp['V3'][1] #a modifier en fonction de perso
             self.MAXPV=self.PV

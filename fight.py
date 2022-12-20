@@ -184,7 +184,7 @@ class Projectile(pygame.sprite.Sprite):
         super().__init__()
         self.tireur_id = tireur.id
         self.damage = tireur.ATK
-        self.image = pygame.image.load(adresse)
+        self.image = pygame.image.load(adresse).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center
         if tireur.id in ['e1','e2','e3']: #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)

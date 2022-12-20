@@ -498,7 +498,7 @@ def MenuHistoire():
 
 def Animation(listeA, classe):  #Animation d'un objet liée a une classe
                                 # ListeA: [a1,a2,a3,...,an,status animation en cours(int)]
-    classe.image = pygame.image.load(listeA[listeA[len(listeA)-1]])
+    classe.image = pygame.image.load(listeA[listeA[len(listeA)-1]]).convert_alpha()
     classe.mask = pygame.mask.from_surface(classe.image)
     if listeA[len(listeA)-1]<len(listeA)-2:
         listeA[len(listeA)-1]+=1
@@ -517,7 +517,7 @@ def draw_health_bar(surf, pos, size, borderC, backC, healthC, progress):
 class Affichage(pygame.sprite.Sprite): #Permet l'affichage d'un simple sprite
     def __init__(self, chemin, posX, posY): #chemin=chemin d'accès a l'image a draw
         super().__init__()
-        self.image = pygame.image.load(chemin)
+        self.image = pygame.image.load(chemin).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (posX, posY)
 
@@ -531,7 +531,7 @@ class Affichage(pygame.sprite.Sprite): #Permet l'affichage d'un simple sprite
         self.rect.move_ip(x,y)
 
     def modif(self,chemin): #Permet de modifier sa texture
-        self.image = pygame.image.load(chemin)
+        self.image = pygame.image.load(chemin).convert_alpha()
 
 class Arrièreplan(pygame.sprite.Sprite): 
     def __init__(self,n):
@@ -730,7 +730,7 @@ def ChoixMode():
 class explosion():
     def __init__(self, origine):
         super().__init__()
-        self.image = pygame.image.load("sprites_animation/explosion1.png")#à  modifier
+        self.image = pygame.image.load("sprites_animation/explosion1.png").convert_alpha()#à  modifier
         self.rect = self.image.get_rect()
         self.rect.center=origine.rect.center
         self.time = 0 

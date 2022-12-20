@@ -9,9 +9,9 @@ class booster(pygame.sprite.Sprite):
         self.boost = value
         self.type = catégorie
         if catégorie == 0:#boost ATK
-            self.image = pygame.image.load("sprites/bonusatk.png")#modifier l'image
+            self.image = pygame.image.load("sprites/bonusatk.png").convert_alpha()
         elif catégorie == 1:#boost PV
-            self.image = pygame.image.load("sprites/bonusvie.png")#modifier l'image
+            self.image = pygame.image.load("sprites/bonusvie.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = origine.rect.center
         self.mask = pygame.mask.from_surface(self.image)
