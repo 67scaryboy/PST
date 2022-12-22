@@ -192,7 +192,7 @@ class Projectile(pygame.sprite.Sprite):
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
             
         elif tireur.id in ['p1','p2','p3','c1']:
-            self.direction = [0,-5]
+            self.direction = [0,-10]
             self.team = 1
             
         elif tireur.id in ['boss_g', 'boss_d', 'boss_a_g', 'boss_a_d']:
