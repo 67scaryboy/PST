@@ -227,7 +227,7 @@ def LancerMission1():
                 for j in range (0,5,1):
                     fight.SpawHistoire(enemies,1,10+j*40+i*20,i*(-30))
             for c in range (0,4,1): #Nombre de colonne
-                for l in range (0,7,1): #Nombre de lignes
+                for l in range (0,3,1): #Nombre de lignes
                     fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH-l*40,c*(-30)-200)#Formation carée
             numformation=5
         elif tempspasse > 32 and numformation==5:
@@ -248,14 +248,18 @@ def LancerMission1():
             fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2,-45)
             numformation=6
         elif tempspasse > 35 and numformation==6:
-            for i in range (1,23,1):
+            for i in range (1,5,1):
                 fight.SpawHistoire(enemies,2,i*40,0)
+                fight.SpawHistoire(enemies,2,l*(-40),0)
             numformation=7
         elif tempspasse > 40 and numformation==7:
-            for l in range (1,23,1):
-                fight.SpawHistoire(enemies,3,l*40,0)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2,0)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2-30,0)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2+30,0)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2+60,0)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2-60,0)
             numformation=8
-        elif numformation==8 and tempspasse>55:
+        elif numformation==8 and tempspasse>50:
             menu.MenuFinPartie(score,True)
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
