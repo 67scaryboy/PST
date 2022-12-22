@@ -192,7 +192,6 @@ def LancerMission1():
 
         #Boucle de spawn après timer
         tempspasse = time.time() - tempsdemarrage
-        print(len(enemies))
         if tempspasse > 5 and numformation==0: # Temps en secondes
             fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-20,-20)
             fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2,0)
