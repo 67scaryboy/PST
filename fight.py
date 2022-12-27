@@ -30,12 +30,13 @@ def Arcade():
     FramePerSec = pygame.time.Clock()
     scoreArcade = 0
     alive = True
+    VaisseauChoisis = menu.ChoixPerso()
 
     AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
     AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
     MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)
-    P1 = personnages.Player(menu.ChoixPerso())
+    P1 = personnages.Player(VaisseauChoisis)
     E1 = personnages.Enemy(1)
     CP = personnages.Compagon(P1)
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
@@ -79,8 +80,56 @@ def Arcade():
 
         #tir automatique
         if P1.cooldown == 0:
-            shoot = Projectile(P1,0,"sprites/tira.png")
-            shootf= Projectile(CP,0,"sprites/tira.png")
+            with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+                temp = pickle.load(f)
+            if VaisseauChoisis==1: #Permet de changer le sprite des tirs en fonction du nombre d'amélioration d'attaque
+                if temp['V1'][4]==0:
+                    shoot = Projectile(P1,0,"sprites/tira.png")
+                    shootf= Projectile(CP,0,"sprites/tira.png")
+                elif temp['V1'][4]==1:
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shootf= Projectile(CP,0,"sprites/tira2.png")
+                elif temp['V1'][4]==2:
+                    shoot = Projectile(P1,0,"sprites/tira3.png")
+                    shootf= Projectile(CP,0,"sprites/tira3.png")
+            elif VaisseauChoisis==2: 
+                if temp['V2'][4]==0:
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shootf= Projectile(CP,0,"sprites/tira2.png")
+                elif temp['V2'][4]==1:
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    shootf= Projectile(CP,0,"sprites/tira2.png")
+                elif temp['V2'][4]==2:
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,6,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,7,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    shootf= Projectile(CP,0,"sprites/tira2.png")
+            elif VaisseauChoisis==3:
+                if temp['V3'][4]==0:
+                    shoot = Projectile(P1,0,"sprites/tira.png")
+                    shootf= Projectile(CP,0,"sprites/tira.png")
+                elif temp['V3'][4]==1:
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shootf= Projectile(CP,0,"sprites/tira2.png")
+                elif temp['V3'][4]==2:
+                    shoot = Projectile(P1,0,"sprites/tira3.png")
+                    shootf= Projectile(CP,0,"sprites/tira3.png")
             tirs.append(shoot)
             tirs.append(shootf)
             P1.cooldown = cooldown
@@ -192,7 +241,7 @@ class Projectile(pygame.sprite.Sprite):
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
             
         elif tireur.id in ['p1','p2','p3','c1']:
-            self.direction = [0,-10]
+            self.direction = [0,-10] #A modifier pour modifier la vitesse des tirs "normaux"
             self.team = 1
             
         elif tireur.id in ['boss_g', 'boss_d', 'boss_a_g', 'boss_a_d']:
@@ -227,6 +276,10 @@ class Projectile(pygame.sprite.Sprite):
             self.direction = [1,2]
         elif self.trajectoire == 5:#diagonale gauche
             self.direction = [-1,2]
+        elif self.trajectoire == 6:#diagonale droite JOUEUR
+            self.direction = [1,-10]
+        elif self.trajectoire == 7:#diagonale gauche JOUEUR
+            self.direction = [-1,-10]
 
         self.time += 1
         if ((self.rect.bottom > const.SCREEN_HEIGHT) or (self.rect.top < 0)):

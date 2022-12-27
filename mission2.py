@@ -11,11 +11,12 @@ def LancerMission2():
     dialogue = 0
     numformation=0
     appui = False
+    VaisseauChoisis = menu.ChoixPerso()
     AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
     AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
     MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)
-    P1 = personnages.Player(menu.ChoixPerso())
+    P1 = personnages.Player(VaisseauChoisis)
     CP = personnages.Compagon(P1)
     bulle = menu.Affichage("sprites/bulletexte.png",const.SCREEN_WIDTH-270,110)
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
@@ -196,8 +197,56 @@ def LancerMission2():
 
         #tir automatique
         if P1.cooldown == 0:
-            shoot = fight.Projectile(P1,0,"sprites/tira.png")
-            shootf= fight.Projectile(CP,0,"sprites/tira.png")
+            with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+                temp = pickle.load(f)
+            if VaisseauChoisis==1: #Permet de changer le sprite des tirs en fonction du nombre d'amélioration d'attaque
+                if temp['V1'][4]==0:
+                    shoot = fight.Projectile(P1,0,"sprites/tira.png")
+                    shootf= fight.Projectile(CP,0,"sprites/tira.png")
+                elif temp['V1'][4]==1:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
+                elif temp['V1'][4]==2:
+                    shoot = fight.Projectile(P1,0,"sprites/tira3.png")
+                    shootf= fight.Projectile(CP,0,"sprites/tira3.png")
+            elif VaisseauChoisis==2: 
+                if temp['V2'][4]==0:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
+                elif temp['V2'][4]==1:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
+                elif temp['V2'][4]==2:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,6,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,7,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
+            elif VaisseauChoisis==3:
+                if temp['V3'][4]==0:
+                    shoot = fight.Projectile(P1,0,"sprites/tira.png")
+                    shootf= fight.Projectile(CP,0,"sprites/tira.png")
+                elif temp['V3'][4]==1:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
+                elif temp['V3'][4]==2:
+                    shoot = fight.Projectile(P1,0,"sprites/tira3.png")
+                    shootf= fight.Projectile(CP,0,"sprites/tira3.png")
             tirs.append(shoot)
             tirs.append(shootf)
             P1.cooldown = cooldown
