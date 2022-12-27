@@ -10,7 +10,7 @@ pygame.display.set_caption("Game")
 
 ###Stats de bases des vaisseaux joueurs###
 V1 = [True,100,0,70,0,10,0] # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
-V2 = [False,130,0,100,0,20,0] 
+V2 = [True,130,0,70,0,20,0] 
 V3 = [False,150,0,150,0,30,0]
 
 
