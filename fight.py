@@ -122,14 +122,50 @@ def Arcade():
                     shootf= Projectile(CP,0,"sprites/tira2.png")
             elif VaisseauChoisis==3:
                 if temp['V3'][4]==0:
-                    shoot = Projectile(P1,0,"sprites/tira.png")
-                    shootf= Projectile(CP,0,"sprites/tira.png")
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    shootf= Projectile(CP,0,"sprites/tira2.png")
                 elif temp['V3'][4]==1:
                     shoot = Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,6,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,7,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
                     shootf= Projectile(CP,0,"sprites/tira2.png")
                 elif temp['V3'][4]==2:
-                    shoot = Projectile(P1,0,"sprites/tira3.png")
-                    shootf= Projectile(CP,0,"sprites/tira3.png")
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,6,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,7,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    shootf= Projectile(CP,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,8,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = Projectile(P1,9,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.right
             tirs.append(shoot)
             tirs.append(shootf)
             P1.cooldown = cooldown
@@ -280,6 +316,12 @@ class Projectile(pygame.sprite.Sprite):
             self.direction = [1,-10]
         elif self.trajectoire == 7:#diagonale gauche JOUEUR
             self.direction = [-1,-10]
+        elif self.trajectoire == 8:#logarithme gauche JOUEUR
+            temp = 2*(math.log(self.time+81/2)-math.log(self.time+1/2))
+            self.direction = [-temp,math.sqrt(9-temp)-12]
+        elif self.trajectoire == 9:#logarithme droite JOUEUR
+            temp = 2*(math.log(self.time+81/2)-math.log(self.time+1/2))
+            self.direction = [+temp,math.sqrt(9-temp)-12]
 
         self.time += 1
         if ((self.rect.bottom > const.SCREEN_HEIGHT) or (self.rect.top < 0)):

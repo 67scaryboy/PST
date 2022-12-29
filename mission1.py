@@ -314,14 +314,51 @@ def LancerMission1():
                     shootf= fight.Projectile(CP,0,"sprites/tira2.png")
             elif VaisseauChoisis==3:
                 if temp['V3'][4]==0:
-                    shoot = fight.Projectile(P1,0,"sprites/tira.png")
-                    shootf= fight.Projectile(CP,0,"sprites/tira.png")
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
                 elif temp['V3'][4]==1:
                     shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,6,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,7,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
                     shootf= fight.Projectile(CP,0,"sprites/tira2.png")
                 elif temp['V3'][4]==2:
-                    shoot = fight.Projectile(P1,0,"sprites/tira3.png")
-                    shootf= fight.Projectile(CP,0,"sprites/tira3.png")
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,6,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,7,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,8,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,9,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.right
+
             tirs.append(shoot)
             tirs.append(shootf)
             P1.cooldown = cooldown

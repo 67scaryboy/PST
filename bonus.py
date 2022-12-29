@@ -35,7 +35,7 @@ class booster(pygame.sprite.Sprite):
 
 def dropBooster(liste_boosts,origine):#faire l'équilibrage plus tard
     p = random.randint(0, 100)
-    if p <= 20:
+    if p <= 5:
         q = random.randint(0, 100)
         if q < 50:
             liste_boosts.append(booster(origine,25,1))  
