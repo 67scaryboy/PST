@@ -1,4 +1,4 @@
-import pygame, sys, math
+import pygame, sys, math, pickle
 from pygame.locals import *
 import random, personnages, menu, bonus, fight
 import constantes as const
@@ -83,7 +83,7 @@ def Bossfight():
                 
         if Body.cooldown == 0:
             for Morceau in MorceauxBoss:
-                shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
+                shoot = fight.fight.Projectile(Morceau,0,"sprites/tir2.png")
                 tirs.append(shoot)
             Body.cooldown = cooldown_boss
         else:
@@ -92,7 +92,7 @@ def Bossfight():
 
         #tir automatique du joueur
         if P1.cooldown == 0:
-            shoot = fight.Projectile(P1,0,"sprites/tira.png")
+            shoot = fight.fight.Projectile(P1,0,"sprites/tira.png")
             tirs.append(shoot)
             P1.cooldown = cooldown
         else:
@@ -166,7 +166,7 @@ def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
                 
     return (tempscore,p_alive)
 
-def temp(joueur, score, coord_AP3,coord_AP2,coord_AP):
+def temp(joueur, score, coord_AP3,coord_AP2,coord_AP,VaisseauChoisis):
     FramePerSec = pygame.time.Clock()
     ScoreBoss = score
     alive = True
@@ -178,7 +178,7 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP):
     AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
     AP3.rect.center = coord_AP3
     MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)#menu bas
-    TEST = joueur
+    P1 = joueur
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
 
     Body = ModularBoss_main_body()
@@ -187,7 +187,7 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP):
     Piece_g = ModularBoss_destructible(Body,"sprites_boss/boss_g.png","boss_g")
     Piece_d = ModularBoss_destructible(Body,"sprites_boss/boss_d.png","boss_d")
 
-    cooldown = TEST.cooldown
+    cooldown = P1.cooldown
     cooldown_boss = Body.cooldown
 
     MorceauxBoss = [Piece_g,Piece_d,Piece_a_g,Piece_a_d] 
@@ -208,7 +208,7 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP):
                 
         if Body.cooldown == 0:
             for Morceau in MorceauxBoss:
-                shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
+                shoot = fight.fight.Projectile(Morceau,0,"sprites/tir2.png")
                 tirs.append(shoot)
             Body.cooldown = cooldown_boss
         else:
@@ -216,12 +216,97 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP):
                 
 
         #tir automatique du joueur
-        if TEST.cooldown == 0:
-            shoot = fight.Projectile(TEST,0,"sprites/tira.png")
+        if P1.cooldown == 0:
+            with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+                temp = pickle.load(f)
+            if VaisseauChoisis==1: #Permet de changer le sprite des tirs en fonction du nombre d'amélioration d'attaque
+                if temp['V1'][4]==0:
+                    shoot = fight.Projectile(P1,0,"sprites/tira.png")
+                    
+                elif temp['V1'][4]==1:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    
+                elif temp['V1'][4]==2:
+                    shoot = fight.Projectile(P1,0,"sprites/tira3.png")
+                    
+            elif VaisseauChoisis==2: 
+                if temp['V2'][4]==0:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    
+                elif temp['V2'][4]==1:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    
+                elif temp['V2'][4]==2:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,6,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,7,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    
+            elif VaisseauChoisis==3:
+                if temp['V3'][4]==0:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right()
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    
+                elif temp['V3'][4]==1:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,6,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,7,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    
+                elif temp['V3'][4]==2:
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,6,"sprites/tira2.png")
+                    shoot.rect.right=P1.rect.right
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,7,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,8,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.left
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(P1,9,"sprites/tira2.png")
+                    shoot.rect.left=P1.rect.right
             tirs.append(shoot)
-            TEST.cooldown = cooldown
+            P1.cooldown = cooldown
         else:
-            TEST.cooldown += -1
+            P1.cooldown += -1
 
         #faire avancer les tirs
         for shoot in tirs:
@@ -233,7 +318,7 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP):
         AP2.move(2)
         AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
 
-        ScoreBoss,alive=BossColision(tirs,TEST,MorceauxBoss,explo,ScoreBoss,alive) #Colisions
+        ScoreBoss,alive=BossColision(tirs,P1,MorceauxBoss,explo,ScoreBoss,alive) #Colisions
 
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
@@ -246,8 +331,8 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP):
 
         Body.draw(personnages.DISPLAYSURF)
         
-        TEST.souris(personnages.DISPLAYSURF)#Affichage joueur
-        TEST.draw_health(personnages.DISPLAYSURF)
+        P1.souris(personnages.DISPLAYSURF)#Affichage joueur
+        P1.draw_health(personnages.DISPLAYSURF)
         MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
         menu.AfficheScore(ScoreBoss) #Affichage score
 
