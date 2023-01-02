@@ -196,7 +196,7 @@ def Arcade():
             Spawn(enemies,2) #Apparition aléatoire d'adversaires.
         else:
             if len(enemies)==0: #Si la limite de score a été atteinte et qu'il y a plus d'adversaires sur le terrain
-                temp = boss.temp(P1,scoreArcade,AP3.rect.center,AP2.rect.center,AP.rect.center,VaisseauChoisis)
+                temp = boss.temp(P1,scoreArcade,AP3,AP2,AP,VaisseauChoisis)
                 AP.rect.center = temp[1]
                 AP2.rect.center = temp[2]
                 AP3.rect.center = temp[3]

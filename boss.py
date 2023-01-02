@@ -72,20 +72,20 @@ def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
                 
     return (tempscore,p_alive)
 
-def temp(joueur, score, coord_AP3,coord_AP2,coord_AP,VaisseauChoisis):
+def temp(joueur, score,AP3,AP2,AP,VaisseauChoisis):
     FramePerSec = pygame.time.Clock()
     ScoreBoss = score
     alive = True
 
-    AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
-    AP.rect.center = coord_AP
-    AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
-    AP2.rect.center = coord_AP2
-    AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
-    AP3.rect.center = coord_AP3
     MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)#menu bas
     P1 = joueur
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
+
+    coord_AP, coord_AP2, coord_AP3 = cinematiques.ArriveBoss(P1,AP,AP2,AP3)
+
+    AP.rect.center = coord_AP
+    AP2.rect.center = coord_AP2
+    AP3.rect.center = coord_AP3
 
     Body = ModularBoss_main_body()
     Piece_a_d = ModularBoss_destructible(Body,"sprites_boss/boss_aile_d.png","boss_a_d")
@@ -93,7 +93,7 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP,VaisseauChoisis):
     Piece_g = ModularBoss_destructible(Body,"sprites_boss/boss_g.png","boss_g")
     Piece_d = ModularBoss_destructible(Body,"sprites_boss/boss_d.png","boss_d")
 
-    with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+    with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour récupérer le cooldown
         temp = pickle.load(f)
     if VaisseauChoisis==1:
         cooldown = temp['V1'][5]
