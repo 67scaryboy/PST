@@ -143,7 +143,7 @@ def ArriveBoss(P1,AP,AP2,AP3):
     rec = True
     PNJ1 = menu.Affichage("sprites_boss/boss.png",(const.SCREEN_WIDTH//2),-200)
     tempsdemarrage = time.time()
-    alerterouge=menu.Affichage("sprites_animation/Alerte1.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2)
+    alerterouge=menu.Affichage("sprites_animation/Alerte1.png",const.SCREEN_WIDTH//2+80,const.SCREEN_HEIGHT//2)
     alerterouge.draw(personnages.DISPLAYSURF)
 
     while rec:
