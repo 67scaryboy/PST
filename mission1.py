@@ -1,6 +1,6 @@
 import pygame, sys, math, fight, time, cinematiques, pickle
 from pygame.locals import *
-import personnages, menu, bonus, gc
+import personnages, menu, bonus, gc, random
 import constantes as const    
 
 def LancerMission1():
@@ -24,7 +24,6 @@ def LancerMission1():
     CP = personnages.Compagon(P1)
     bulle = menu.Affichage("sprites/bulletexte.png",const.SCREEN_WIDTH-270,110)
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
-    P1.rect.center = pygame.mouse.get_pos()
     cooldown = P1.cooldown
 
     enemies = [] 
@@ -271,6 +270,7 @@ def LancerMission1():
             break
 
 
+
         #tir automatique
         if P1.cooldown == 0:
             with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
@@ -369,6 +369,19 @@ def LancerMission1():
         for entity in enemies: #Déplacement linéaire des ennemis !A CHANGER!
             if entity.active == 1:
                 entity.move()
+                p = random.randint(0,500)
+                if p < 1:
+                    if (entity.id == "e1"):
+                        shoot = fight.Projectile(entity,3,"sprites_animation/boule1.png")
+                    elif (entity.id == "e2"):
+                        shoot = fight.Projectile(entity,2,"sprites/tir3.png")
+                        tirs.append(shoot)
+                        shoot = fight.Projectile(entity,1,"sprites/tir3.png")
+                        tirs.append(shoot)
+                        shoot = fight.Projectile(entity,0,"sprites/tir3.png")
+                    else:
+                        shoot = fight.Projectile(entity,0,"sprites/tir.png")
+                    tirs.append(shoot)
             if entity.rect.bottom > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
