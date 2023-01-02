@@ -24,6 +24,7 @@ def LancerMission1():
     CP = personnages.Compagon(P1)
     bulle = menu.Affichage("sprites/bulletexte.png",const.SCREEN_WIDTH-270,110)
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
+    P1.rect.center = pygame.mouse.get_pos()
     cooldown = P1.cooldown
 
     enemies = [] 

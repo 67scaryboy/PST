@@ -1,6 +1,6 @@
 import pygame, sys, math, pickle
 from pygame.locals import *
-import random, personnages, menu, bonus, fight
+import random, personnages, menu, bonus, fight, cinematiques
 import constantes as const
 from copy import deepcopy
 
@@ -44,100 +44,6 @@ class ModularBoss_destructible(pygame.sprite.Sprite):
     def move(self,mainbody):
         self.rect.center = mainbody.rect.center
 
-def Bossfight():
-    FramePerSec = pygame.time.Clock()
-    ScoreBoss = 0
-    alive = True
-
-    AP = menu.Arrièreplan(2)# 1 a 3 pour le fond
-    AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
-    AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
-    MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)#menu bas
-    P1 = personnages.Player(menu.ChoixPerso())
-    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
-
-    Body = ModularBoss_main_body()
-    Piece_a_d = ModularBoss_destructible(Body,"sprites_boss/boss_aile_d.png","boss_a_d")
-    Piece_a_g = ModularBoss_destructible(Body,"sprites_boss/boss_aile_g.png","boss_a_g")
-    Piece_g = ModularBoss_destructible(Body,"sprites_boss/boss_g.png","boss_g")
-    Piece_d = ModularBoss_destructible(Body,"sprites_boss/boss_d.png","boss_d")
-
-    cooldown = P1.cooldown
-    cooldown_boss = Body.cooldown
-
-    MorceauxBoss = [Piece_g,Piece_d,Piece_a_g,Piece_a_d] 
-    tirs = []
-    explo = []
-
-    while alive:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-        #mouvements ennemis
-        
-        Body.move()
-        for Morceau in MorceauxBoss:
-                if Morceau.PV > 0:
-                    Morceau.move(Body)
-                
-        if Body.cooldown == 0:
-            for Morceau in MorceauxBoss:
-                shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
-                tirs.append(shoot)
-            Body.cooldown = cooldown_boss
-        else:
-            Body.cooldown += -1
-                
-
-        #tir automatique du joueur
-        if P1.cooldown == 0:
-            shoot = fight.Projectile(P1,0,"sprites/tira.png")
-            tirs.append(shoot)
-            P1.cooldown = cooldown
-        else:
-            P1.cooldown += -1
-
-        #faire avancer les tirs
-        for shoot in tirs:
-            shoot.move()
-            if shoot.rect.bottom > const.SCREEN_HEIGHT:
-                    tirs.remove(shoot)
-    
-        AP3.move(3)#vitesse de déplacement des couches
-        AP2.move(2)
-        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
-
-        ScoreBoss,alive=BossColision(tirs,P1,MorceauxBoss,explo,ScoreBoss,alive) #Colisions
-
-        personnages.DISPLAYSURF.fill(const.WHITE)
-        AP.draw(personnages.DISPLAYSURF)
-        AP2.draw(personnages.DISPLAYSURF)
-        AP3.draw(personnages.DISPLAYSURF)
-
-        menu.aff_explo(explo)
-        for boom in explo:
-            menu.Animation(const.explosions,boom)
-
-        Body.draw(personnages.DISPLAYSURF)
-        
-        P1.souris(personnages.DISPLAYSURF)#Affichage joueur
-        P1.draw_health(personnages.DISPLAYSURF)
-        MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
-        menu.AfficheScore(ScoreBoss) #Affichage score
-
-        for shoot in tirs:#ici pour les animations des tirs animées
-            shoot.draw(personnages.DISPLAYSURF)
-
-        for Morceau in MorceauxBoss:
-            if Morceau.PV > 0:
-                Morceau.draw(personnages.DISPLAYSURF)
-
-        pygame.display.update()
-        FramePerSec.tick(const.FPS)
-        if not MorceauxBoss:
-            alive = fight.Mort(tirs,P1,MorceauxBoss) #met fin au jeu si le boss est mort (ajouter différences par raport à si joueur meurt)
-    return (ScoreBoss)
 
 def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
     for shoot in p_tirs:
@@ -147,7 +53,7 @@ def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
                 if shoot in p_tirs:
                     p_tirs.remove(shoot)
                 if p_P1.PV <= 0:
-                    p_alive = fight.Mort(p_tirs,p_P1,p_morceaux)
+                    p_alive = fight.Mort(p_tirs,p_P1,[])
         else:    
             for morceaux in p_morceaux:
                 if pygame.sprite.collide_mask(shoot,morceaux):
@@ -162,7 +68,7 @@ def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
     for morceaux in p_morceaux:
         if pygame.sprite.collide_mask(p_P1,morceaux):
             p_P1.PV = 0
-            p_alive = fight.Mort(p_tirs,p_P1,p_morceaux)
+            p_alive = fight.Mort(p_tirs,p_P1,[])
                 
     return (tempscore,p_alive)
 
@@ -369,9 +275,7 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP,VaisseauChoisis):
         
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
-        MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
-        menu.AfficheScore(ScoreBoss) #Affichage score
-
+        
         for shoot in tirs:#ici pour les animations des tirs animées
             shoot.draw(personnages.DISPLAYSURF)
 
@@ -379,9 +283,13 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP,VaisseauChoisis):
             if Morceau.PV > 0:
                 Morceau.draw(personnages.DISPLAYSURF)
 
+        MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
+        menu.AfficheScore(ScoreBoss) #Affichage score
+
         pygame.display.update()
         FramePerSec.tick(const.FPS)
+
         if not MorceauxBoss:
-            return [(ScoreBoss+500),AP.rect.center,AP2.rect.center,AP3.rect.center] #L'ajout de score doit etre supérieur ou egal à la différence entre le modulo choisi et le seuil de controle
-            alive = fight.Mort(tirs,P1,MorceauxBoss) #met fin au jeu si le boss est mort (ajouter différences par raport à si joueur meurt)
-    return [0,AP.rect.center,AP2.rect.center,AP3.rect.center]
+            pos_AP,pos_AP2,pos_AP3 = cinematiques.MortBoss(P1,Body,AP,AP2,AP3)
+            return [(ScoreBoss+500),pos_AP,pos_AP2,pos_AP3] #L'ajout de score doit etre supérieur ou egal à la différence entre le modulo choisi et le seuil de controle
+    return [0,AP.rect.center,AP2.rect.center,AP3.rect.center] #si le joueur est mort met fin au jeu

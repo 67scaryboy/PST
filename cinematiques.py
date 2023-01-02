@@ -108,3 +108,32 @@ def Cinematique1(numero):#utiliser numero pour modifier image vaisseau
 
     return [numero,AP3.rect.center,AP2.rect.center,AP.rect.center]
 
+
+def MortBoss(P1,Body,AP,AP2,AP3):
+    FramePerSec = pygame.time.Clock()
+    rec = True
+    while rec:
+        for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+        AP3.move(3)
+        AP2.move(2)
+        AP.move(1)
+
+        if Body.rect.center[1] > -100:
+            Body.rect.move_ip(0,-2)
+        else:
+            rec = False
+
+        AP.draw(personnages.DISPLAYSURF)
+        AP2.draw(personnages.DISPLAYSURF)
+        AP3.draw(personnages.DISPLAYSURF)
+        P1.draw(personnages.DISPLAYSURF)
+        Body.draw(personnages.DISPLAYSURF)
+
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
+    
+    pygame.mouse.set_pos(P1.rect.center[0],P1.rect.center[1])
+    return AP.rect.center, AP2.rect.center, AP3.rect.center
