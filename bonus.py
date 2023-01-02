@@ -38,9 +38,9 @@ def dropBooster(liste_boosts,origine):#faire l'équilibrage plus tard
     if p <= 5:
         q = random.randint(0, 100)
         if q < 50:
-            liste_boosts.append(booster(origine,25,1))  
+            liste_boosts.append(booster(origine,50,1))  #rend 50 PV
         else:
-            liste_boosts.append(booster(origine,5,0))
+            liste_boosts.append(booster(origine,10,0)) #donne +10 attaque
 
 def AttraperBoost(liste_boosts,p_P1):
     for boost in liste_boosts:
