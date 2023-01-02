@@ -83,7 +83,7 @@ def Bossfight():
                 
         if Body.cooldown == 0:
             for Morceau in MorceauxBoss:
-                shoot = fight.fight.Projectile(Morceau,0,"sprites/tir2.png")
+                shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
                 tirs.append(shoot)
             Body.cooldown = cooldown_boss
         else:
@@ -92,7 +92,7 @@ def Bossfight():
 
         #tir automatique du joueur
         if P1.cooldown == 0:
-            shoot = fight.fight.Projectile(P1,0,"sprites/tira.png")
+            shoot = fight.Projectile(P1,0,"sprites/tira.png")
             tirs.append(shoot)
             P1.cooldown = cooldown
         else:
@@ -187,7 +187,14 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP,VaisseauChoisis):
     Piece_g = ModularBoss_destructible(Body,"sprites_boss/boss_g.png","boss_g")
     Piece_d = ModularBoss_destructible(Body,"sprites_boss/boss_d.png","boss_d")
 
-    cooldown = P1.cooldown
+    with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+        temp = pickle.load(f)
+    if VaisseauChoisis==1:
+        cooldown = temp['V1'][5]
+    elif VaisseauChoisis==2:
+        cooldown = temp['V2'][5]
+    elif VaisseauChoisis==3:
+        cooldown = temp['V3'][5]
     cooldown_boss = Body.cooldown
 
     MorceauxBoss = [Piece_g,Piece_d,Piece_a_g,Piece_a_d] 
@@ -208,7 +215,7 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP,VaisseauChoisis):
                 
         if Body.cooldown == 0:
             for Morceau in MorceauxBoss:
-                shoot = fight.fight.Projectile(Morceau,0,"sprites/tir2.png")
+                shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
                 tirs.append(shoot)
             Body.cooldown = cooldown_boss
         else:
