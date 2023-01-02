@@ -214,10 +214,39 @@ def temp(joueur, score, coord_AP3,coord_AP2,coord_AP,VaisseauChoisis):
                     Morceau.move(Body)
                 
         if Body.cooldown == 0:
-            for Morceau in MorceauxBoss:
-                shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
-                tirs.append(shoot)
-            Body.cooldown = cooldown_boss
+            if len(MorceauxBoss)==4:
+                for Morceau in MorceauxBoss:
+                    shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
+                    tirs.append(shoot)
+                Body.cooldown = cooldown_boss
+            elif len(MorceauxBoss)==3:
+                for Morceau in MorceauxBoss:
+                    shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
+                    tirs.append(shoot)
+                Body.cooldown = cooldown_boss//2
+            elif len(MorceauxBoss)==2:
+                for Morceau in MorceauxBoss:
+                    shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(Morceau,4,"sprites/tir2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(Morceau,5,"sprites/tir2.png")
+                    tirs.append(shoot)
+                Body.cooldown = cooldown_boss
+            else:
+                for Morceau in MorceauxBoss:
+                    shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(Morceau,4,"sprites/tir2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(Morceau,5,"sprites/tir2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(Morceau,1,"sprites/tir2.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(Morceau,2,"sprites/tir2.png")
+                    tirs.append(shoot)
+                Body.cooldown = cooldown_boss
+
         else:
             Body.cooldown += -1
                 
