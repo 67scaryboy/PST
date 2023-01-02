@@ -142,6 +142,9 @@ def ArriveBoss(P1,AP,AP2,AP3):
     FramePerSec = pygame.time.Clock()
     rec = True
     PNJ1 = menu.Affichage("sprites_boss/boss.png",(const.SCREEN_WIDTH//2),-200)
+    tempsdemarrage = time.time()
+    alerterouge=menu.Affichage("sprites_animation/Alerte1.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2)
+    alerterouge.draw(personnages.DISPLAYSURF)
 
     while rec:
         for event in pygame.event.get():
@@ -151,6 +154,7 @@ def ArriveBoss(P1,AP,AP2,AP3):
         AP3.move(3)
         AP2.move(2)
         AP.move(1)
+        
         
         if PNJ1.rect.center[1] < 80:
             PNJ1.rect.move_ip(0,2)
@@ -162,6 +166,8 @@ def ArriveBoss(P1,AP,AP2,AP3):
         AP3.draw(personnages.DISPLAYSURF)
         P1.draw(personnages.DISPLAYSURF)
         PNJ1.draw(personnages.DISPLAYSURF)
+        menu.Animation(const.alerte,alerterouge)
+        alerterouge.draw(personnages.DISPLAYSURF)
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
