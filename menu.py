@@ -51,8 +51,7 @@ def Shop():
         texterect=texte.get_rect()
         texterect.center=(const.SCREEN_WIDTH/2-200,400)
         personnages.DISPLAYSURF.blit(texte,texterect)
-        #Affichage argent
-        texte=font.render("Composants possédés: " + str(temp['Argent']), True, const.WHITE)#
+        texte=font.render("Composants possédés: " + str(temp['Argent']), True, const.WHITE)#Affichage argent
         texterect=texte.get_rect()
         texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2)
         personnages.DISPLAYSURF.blit(texte,texterect)
