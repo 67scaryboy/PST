@@ -1075,7 +1075,7 @@ def ChoixSauvegarde():
 
 def ChoixMode():
     #Choix du mode de jeu
-    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
+    relache = False
     FramePerSec.tick(const.FPS)
     Joueur = personnages.Player(0)
 
@@ -1100,20 +1100,25 @@ def ChoixMode():
         texterect.center=(const.SCREEN_WIDTH/2,30)
         personnages.DISPLAYSURF.blit(texte,texterect)
         Joueur.souris(personnages.DISPLAYSURF)
+
+        if pygame.mouse.get_pressed()[0]==False and not relache:
+            relache = True
+
         if pygame.sprite.collide_rect(Joueur,Barcade):
             Barcade.modif("sprites/HArcade.png")
             Barcade.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
-            for i in pygame.mouse.get_pressed():
-                if pygame.mouse.get_pressed()[i]==True:
-                    return 1
+
+            if pygame.mouse.get_pressed()[0]==True and relache:
+                return 1
+
         elif pygame.sprite.collide_rect(Joueur,Bhistoire):
             Bhistoire.modif("sprites/HHistoire.png")
             Bhistoire.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
-            for i in pygame.mouse.get_pressed():
-                if pygame.mouse.get_pressed()[i]==True:
-                    return 2
+            
+            if pygame.mouse.get_pressed()[0]==True and relache:
+                return 2
        
         pygame.display.update()
         FramePerSec.tick(const.FPS)
