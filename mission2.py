@@ -8,7 +8,7 @@ def LancerMission2():
     FramePerSec = pygame.time.Clock()
     score = 0
     alive = True
-    dialogue = 0
+    dialogue = 1
     numformation=0
     appui = False
     VaisseauChoisis = menu.ChoixPerso()
@@ -68,19 +68,19 @@ def LancerMission2():
             font = pygame.font.SysFont("arial", 13)
             texte=font.render("Premièrement nous avons appris le but des aliens:", True, const.BLACK)
             texterect=texte.get_rect()
-            texterect.center=(465,100)
+            texterect.center=(465,85)
             personnages.DISPLAYSURF.blit(texte,texterect)
             texte=font.render("[Faire histoire]", True, const.BLACK)
             texterect=texte.get_rect()
-            texterect.center=(465,115)
+            texterect.center=(465,100)
             personnages.DISPLAYSURF.blit(texte,texterect)
             texte=font.render("[Encore]", True, const.BLACK)
             texterect=texte.get_rect()
-            texterect.center=(465,130)
+            texterect.center=(465,115)
             personnages.DISPLAYSURF.blit(texte,texterect)
             texte=font.render("[Et toujours]", True, const.BLACK)
             texterect=texte.get_rect()
-            texterect.center=(465,145)
+            texterect.center=(465,130)
             personnages.DISPLAYSURF.blit(texte,texterect)
         elif dialogue==3:
             font = pygame.font.SysFont("arial", 13)
@@ -96,7 +96,7 @@ def LancerMission2():
             texterect=texte.get_rect()
             texterect.center=(465,115)
             personnages.DISPLAYSURF.blit(texte,texterect)
-            texte=font.render("Même pouvoir bricoler des armes et vaisseaux aliens si vous", True, const.BLACK)
+            texte=font.render("même pouvoir bricoler des armes et vaisseaux aliens si vous", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,130)
             personnages.DISPLAYSURF.blit(texte,texterect)
