@@ -41,7 +41,7 @@ class Enemy(pygame.sprite.Sprite):
             self.id = 'e3'
         elif id == 4: #Kamikaze
             self.image = pygame.image.load("sprites/e4.png").convert_alpha()
-            self.PV = 50
+            self.PV = 100
             self.MAXPV = self.PV
             self.ATK = 70
             self.score = 70
@@ -61,12 +61,12 @@ class Enemy(pygame.sprite.Sprite):
     
       def moveKamikaze(self, joueur):
         if self.id =='e4':
-            if self.rect.centerx < joueur.rect.centerx:
-                self.rect.move_ip(4,4)
+            if joueur.rect.centerx < self.rect.centerx + 10 and joueur.rect.centerx > self.rect.centerx-10:
+                self.rect.move_ip(0,7)
+            elif self.rect.centerx < joueur.rect.centerx:
+                self.rect.move_ip(13,7)
             elif self.rect.centerx > joueur.rect.centerx:
-                self.rect.move_ip(-4,4)
-            else:
-                self.rect.move_ip(4,4)
+                self.rect.move_ip(-13,7)
             if (self.rect.bottom > const.SCREEN_HEIGHT):
                 self.kill()
 
