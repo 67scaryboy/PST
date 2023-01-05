@@ -258,6 +258,9 @@ def LancerMission1():
             fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2+30,0)
             fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2+60,0)
             fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2-60,0)
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH,-60)
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2,-60)
+            fight.SpawHistoire(enemies,4,0,-60)
             numformation=8
         elif numformation==8 and tempspasse>50:
             menu.MenuFinPartie(score,True)
@@ -369,6 +372,7 @@ def LancerMission1():
         for entity in enemies: #Déplacement linéaire des ennemis !A CHANGER!
             if entity.active == 1:
                 entity.move()
+                entity.moveKamikaze(P1)
                 p = random.randint(0,500)
                 if p < 1:
                     if (entity.id == "e1"):
@@ -379,7 +383,7 @@ def LancerMission1():
                         shoot = fight.Projectile(entity,1,"sprites/tir3.png")
                         tirs.append(shoot)
                         shoot = fight.Projectile(entity,0,"sprites/tir3.png")
-                    else:
+                    elif (entity.id == "e3"):
                         shoot = fight.Projectile(entity,0,"sprites/tir.png")
                     tirs.append(shoot)
             if entity.rect.bottom > const.SCREEN_HEIGHT:
