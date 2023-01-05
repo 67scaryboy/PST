@@ -17,12 +17,7 @@ def Spawn(enemies,q):#random, pour le mode arcade
         enemies.append(enemy)
 
 def SpawHistoire(listeennemis,idennemis,posX,posY):#Faire spawn un ennemis précis à certaine coordonnés.
-    if idennemis == 1:
-        enemy  = personnages.Enemy(1)
-    elif idennemis == 2:
-        enemy  = personnages.Enemy(2)
-    elif idennemis == 3:
-        enemy= personnages.Enemy(3)
+    enemy  = personnages.Enemy(idennemis)
     enemy.rect.center=(posX,posY)
     listeennemis.append(enemy)
 
@@ -60,6 +55,7 @@ def Arcade():
         for entity in enemies:
             if entity.active == 1:
                 entity.move()
+                entity.moveKamikaze(P1)
                 #ici pour décider si il tire
                 p = random.randint(0,100)
                 if p < 1:
