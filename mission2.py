@@ -1,4 +1,4 @@
-import pygame, sys, math, fight, time, cinematiques, pickle
+import pygame, sys, math, fight, time, cinematiques, pickle, random
 from pygame.locals import *
 import personnages, menu, bonus, gc
 import constantes as const    
@@ -163,27 +163,100 @@ def LancerMission2():
             fight.SpawHistoire(enemies,1,60,-80)
             fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH-60,-80)
             numformation=1
-        elif tempspasse > 7 and numformation==1: 
-            #### A faire des que les vaisseaux sont plus linéaires
+        elif tempspasse > 10 and numformation==1: 
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH-60,0)
             numformation=2
-        elif tempspasse > 15 and numformation==2:
-            ###
+        elif tempspasse > 11 and numformation==2:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2,0)
             numformation=3
-        elif tempspasse > 20 and numformation==3:
-            ###
+        elif tempspasse > 12 and numformation==3:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH,0)
             numformation=4
-        elif tempspasse > 25 and numformation==4:
-            ###
+        elif tempspasse > 13 and numformation==4:
+            fight.SpawHistoire(enemies,4,0,0)
             numformation=5
-        elif tempspasse > 32 and numformation==5:
-            ###
+        elif tempspasse > 14 and numformation==5:
+            fight.SpawHistoire(enemies,4,200,0)
             numformation=6
-        elif tempspasse > 35 and numformation==6:
-            ###
+        elif tempspasse > 15 and numformation==6:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH-200,0)
             numformation=7
-        elif tempspasse > 40 and numformation==7:
-            ###
+        elif tempspasse > 16 and numformation==7:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2-50,0)
             numformation=8
+        elif tempspasse > 17 and numformation==8:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2+50,0)
+            numformation=9
+        elif tempspasse > 18 and numformation==9:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH-50,0)
+            numformation=10
+        elif tempspasse > 19 and numformation==10:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH,0)
+            fight.SpawHistoire(enemies,4,0,0)
+            fight.SpawHistoire(enemies,4,100,0)
+            numformation=11
+        elif tempspasse > 22 and numformation==11:
+            for i in range (0,5,1):
+                fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2+i*40,0)
+                fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2-i*40,0)
+            numformation=12
+        elif tempspasse > 25 and numformation==12:
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-30,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-70,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-50,-30)
+            fight.SpawHistoire(enemies,2,30,0)
+            fight.SpawHistoire(enemies,2,70,0)
+            fight.SpawHistoire(enemies,2,50,-30)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2+15,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2-15,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH//2,-30)
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2,-60)
+            numformation=13
+        elif tempspasse > 30 and numformation==13:
+            fight.SpawHistoire(enemies,1,30,0)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH-30,0)
+            fight.SpawHistoire(enemies,2,70,0)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-70,0)
+            fight.SpawHistoire(enemies,3,110,0)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-110,0)
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH,-100)
+            numformation=14
+        elif tempspasse > 35 and numformation==14:
+            fight.SpawHistoire(enemies,4,const.SCREEN_HEIGHT,0)
+            fight.SpawHistoire(enemies,4,0,0)
+            numformation+=1
+        elif tempspasse > 36 and numformation==15:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2,0)
+            fight.SpawHistoire(enemies,4,0,0)
+            numformation+=1
+        elif tempspasse > 37 and numformation==16:
+            fight.SpawHistoire(enemies,4,const.SCREEN_HEIGHT,0)
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2,0)
+            numformation+=1
+        elif tempspasse > 38 and numformation==17:
+            fight.SpawHistoire(enemies,4,const.SCREEN_HEIGHT//2+50,0)
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2-50,0)
+            numformation+=1
+        elif tempspasse > 39 and numformation==18:
+            fight.SpawHistoire(enemies,4,50,0)
+            fight.SpawHistoire(enemies,4,100,0)
+            numformation+=1
+        elif tempspasse > 40 and numformation==19:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH,0)
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH-150,0)
+            numformation+=1
+        elif tempspasse > 41 and numformation==20:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2+150,0)
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2-350,0)
+            numformation+=1
+        elif tempspasse > 42 and numformation==21:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2,0)
+            fight.SpawHistoire(enemies,4,100,0)
+            numformation+=1
+        elif tempspasse > 43 and numformation==22:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH-400,0)
+            fight.SpawHistoire(enemies,4,400,0)
+            numformation+=1
         elif numformation==8 and tempspasse>50:
             menu.MenuFinPartie(score,True)
             with open('sauvegarde.pkl', 'rb') as f:
@@ -292,6 +365,20 @@ def LancerMission2():
         for entity in enemies: #Déplacement linéaire des ennemis !A CHANGER!
             if entity.active == 1:
                 entity.move()
+                entity.moveKamikaze(P1)
+            p = random.randint(0,300)
+            if p < 1:
+                if (entity.id == "e1"):
+                    shoot = fight.Projectile(entity,3,"sprites_animation/boule1.png")
+                elif (entity.id == "e2"):
+                    shoot = fight.Projectile(entity,2,"sprites/tir3.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(entity,1,"sprites/tir3.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(entity,0,"sprites/tir3.png")
+                elif (entity.id == "e3"):
+                    shoot = fight.Projectile(entity,0,"sprites/tir.png")
+                tirs.append(shoot)
             if entity.rect.bottom > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
