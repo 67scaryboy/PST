@@ -39,14 +39,36 @@ class Enemy(pygame.sprite.Sprite):
             self.ATK = 50
             self.score = 100
             self.id = 'e3'
+        elif id == 4: #Kamikaze
+            self.image = pygame.image.load("sprites/e4.png").convert_alpha()
+            self.PV = 50
+            self.MAXPV = self.PV
+            self.ATK = 70
+            self.score = 70
+            self.id = 'e4'
         self.rect = self.image.get_rect()
         self.rect.center=(random.randint(50,const.SCREEN_WIDTH-50),0)
         self.mask = pygame.mask.from_surface(self.image)
 
       def move(self):
-        self.rect.move_ip(0,2)
+
+        if self.id=='e4':
+            pass
+        else:
+            self.rect.move_ip(0,2)
         if (self.rect.bottom > const.SCREEN_HEIGHT):
             self.kill()
+    
+      def moveKamikaze(self, joueur):
+        if self.id =='e4':
+            if self.rect.centerx < joueur.rect.centerx:
+                self.rect.move_ip(4,4)
+            elif self.rect.centerx > joueur.rect.centerx:
+                self.rect.move_ip(-4,4)
+            else:
+                self.rect.move_ip(4,4)
+            if (self.rect.bottom > const.SCREEN_HEIGHT):
+                self.kill()
 
       def draw(self, surface):
         surface.blit(self.image, self.rect)
