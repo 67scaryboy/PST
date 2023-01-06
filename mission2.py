@@ -257,7 +257,11 @@ def LancerMission2():
             fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH-400,0)
             fight.SpawHistoire(enemies,4,400,0)
             numformation+=1
-        elif numformation==8 and tempspasse>50:
+        elif tempspasse > 47 and numformation==23:
+            fight.SpawHistoire(enemies,5,const.SCREEN_WIDTH-100,0)
+            fight.SpawHistoire(enemies,5,100,0)
+            numformation+=1
+        elif numformation==24 and len(enemies)==0:
             menu.MenuFinPartie(score,True)
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
@@ -378,6 +382,10 @@ def LancerMission2():
                     shoot = fight.Projectile(entity,0,"sprites/tir3.png")
                 elif (entity.id == "e3"):
                     shoot = fight.Projectile(entity,0,"sprites/tir.png")
+                elif (entity.id == "e5"):
+                    shoot = fight.Projectile(entity,4,"sprites_animation/boule1.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(entity,5,"sprites_animation/boule1.png")
                 tirs.append(shoot)
             if entity.rect.bottom > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
