@@ -66,9 +66,8 @@ def Shop():
             Bcontinuer.modif("sprites/HContinuer.png")
             Bcontinuer.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
-            for i in pygame.mouse.get_pressed():
-                if pygame.mouse.get_pressed()[i]==True:
-                    return #Ne ferme le shop qu'après 2 appuis, pourquoi ?
+            if pygame.mouse.get_pressed() == (1, 0, 0):
+                return #Ne ferme le shop qu'après 2 appuis, pourquoi ?
         if pygame.sprite.collide_rect(Joueur,V1):
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
@@ -841,9 +840,8 @@ def MenuHistoire():
             if pygame.sprite.collide_rect(Joueur,Atelier):
                 Atelier.modif("sprites/Atelier_b.png")
                 Atelier.draw(personnages.DISPLAYSURF)
-                for i in pygame.mouse.get_pressed():
-                    if pygame.mouse.get_pressed()[i]==True:
-                        Shop() #Ouvre le menu de modifications
+                if pygame.mouse.get_pressed()==(1,0,0):
+                    Shop() #Ouvre le menu de modifications
         listebouton=[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10]
         for c in range (0,10,1):
             if pygame.sprite.collide_rect(Joueur,listebouton[c]):
