@@ -262,13 +262,13 @@ def LancerMission2():
             fight.SpawHistoire(enemies,5,100,0)
             numformation+=1
         elif numformation==24 and len(enemies)==0:
-            menu.MenuFinPartie(score,True)
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
             if temp['Histoire']==1:
                 temp['Histoire']=2
             with open('sauvegarde.pkl', 'wb') as f:
                     pickle.dump(temp, f)
+            menu.MenuFinPartie(score,True)
             break
 
 
