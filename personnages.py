@@ -46,6 +46,13 @@ class Enemy(pygame.sprite.Sprite):
             self.ATK = 70
             self.score = 70
             self.id = 'e4'
+        elif id == 5: #Tir diagonaux
+            self.image = pygame.image.load("sprites/e5.png").convert_alpha()
+            self.PV = 500
+            self.MAXPV = self.PV
+            self.ATK = 30
+            self.score = 70
+            self.id = 'e5'
         self.rect = self.image.get_rect()
         self.rect.center=(random.randint(50,const.SCREEN_WIDTH-50),0)
         self.mask = pygame.mask.from_surface(self.image)
@@ -61,14 +68,18 @@ class Enemy(pygame.sprite.Sprite):
     
       def moveKamikaze(self, joueur):
         if self.id =='e4':
-            if joueur.rect.centerx < self.rect.centerx + 10 and joueur.rect.centerx > self.rect.centerx-10:
+            if joueur.rect.centery-self.rect.centery<300:
+                if joueur.rect.centerx < self.rect.centerx + 10 and joueur.rect.centerx > self.rect.centerx-10:
+                    self.rect.move_ip(0,7)
+                elif self.rect.centerx < joueur.rect.centerx:
+                    self.rect.move_ip(13,7)
+                elif self.rect.centerx > joueur.rect.centerx:
+                    self.rect.move_ip(-13,7)
+            else:
                 self.rect.move_ip(0,7)
-            elif self.rect.centerx < joueur.rect.centerx:
-                self.rect.move_ip(13,7)
-            elif self.rect.centerx > joueur.rect.centerx:
-                self.rect.move_ip(-13,7)
             if (self.rect.bottom > const.SCREEN_HEIGHT):
                 self.kill()
+
 
       def draw(self, surface):
         surface.blit(self.image, self.rect)
