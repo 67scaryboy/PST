@@ -268,7 +268,7 @@ class Projectile(pygame.sprite.Sprite):
         self.image = pygame.image.load(adresse).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = tireur.rect.center
-        if tireur.id in ['e1','e2','e3']: #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
+        if tireur.id in ['e1','e2','e3','e5']: #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
             self.direction = [0,4]  #Vitesse de déplacement horizontale et verticale
             self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
             
@@ -305,9 +305,9 @@ class Projectile(pygame.sprite.Sprite):
             temp = 3* math.cos(self.time/20)
             self.direction = [temp,math.sqrt(9-temp*temp)+2]
         elif self.trajectoire == 4:#diagonale droite
-            self.direction = [1,2]
+            self.direction = [2,4]
         elif self.trajectoire == 5:#diagonale gauche
-            self.direction = [-1,2]
+            self.direction = [-2,4]
         elif self.trajectoire == 6:#diagonale droite JOUEUR
             self.direction = [1,-10]
         elif self.trajectoire == 7:#diagonale gauche JOUEUR
