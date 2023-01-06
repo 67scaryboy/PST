@@ -779,39 +779,39 @@ def MenuHistoire():
         B1=Affichage("sprites_menu/1v.png",const.SCREEN_WIDTH//2-325,const.SCREEN_HEIGHT//2+345)
     else:
         B1=Affichage("sprites_menu/1.png",const.SCREEN_WIDTH//2-325,const.SCREEN_HEIGHT//2+345)
-    if niveau>2:
+    if niveau>1:
         B2=Affichage("sprites_menu/2v.png",const.SCREEN_WIDTH//2-198,const.SCREEN_HEIGHT//2+230)
     else:
         B2=Affichage("sprites_menu/2.png",const.SCREEN_WIDTH//2-198,const.SCREEN_HEIGHT//2+230)
-    if niveau>3:
+    if niveau>2:
         B3=Affichage("sprites_menu/3v.png",const.SCREEN_WIDTH//2-90,const.SCREEN_HEIGHT//2+330)
     else:
         B3=Affichage("sprites_menu/3.png",const.SCREEN_WIDTH//2-90,const.SCREEN_HEIGHT//2+330)
-    if niveau>4:
+    if niveau>3:
         B4=Affichage("sprites_menu/4v.png",const.SCREEN_WIDTH//2+65,const.SCREEN_HEIGHT//2+328)
     else:
         B4=Affichage("sprites_menu/4.png",const.SCREEN_WIDTH//2+65,const.SCREEN_HEIGHT//2+328)
-    if niveau>5:
+    if niveau>4:
         B5=Affichage("sprites_menu/5v.png",const.SCREEN_WIDTH//2+180,const.SCREEN_HEIGHT//2+233)
     else:
         B5=Affichage("sprites_menu/5.png",const.SCREEN_WIDTH//2+180,const.SCREEN_HEIGHT//2+233)
-    if niveau>7:
+    if niveau>6:
         B7=Affichage("sprites_menu/7v.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2+30)
     else:
         B7=Affichage("sprites_menu/7.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2+30)
-    if niveau>6:
+    if niveau>5:
         B6=Affichage("sprites_menu/6v.png",const.SCREEN_WIDTH//2+170,const.SCREEN_HEIGHT//2+75)
     else:
         B6=Affichage("sprites_menu/6.png",const.SCREEN_WIDTH//2+170,const.SCREEN_HEIGHT//2+75)
-    if niveau>8:
+    if niveau>7:
         B8=Affichage("sprites_menu/8v.png",const.SCREEN_WIDTH//2-165,const.SCREEN_HEIGHT//2+30)
     else:
         B8=Affichage("sprites_menu/8.png",const.SCREEN_WIDTH//2-165,const.SCREEN_HEIGHT//2+30)
-    if niveau>9:
+    if niveau>8:
         B9=Affichage("sprites_menu/9v.png",const.SCREEN_WIDTH//2-150,const.SCREEN_HEIGHT//2-125)
     else:
         B9=Affichage("sprites_menu/9.png",const.SCREEN_WIDTH//2-150,const.SCREEN_HEIGHT//2-125)
-    if niveau>10:
+    if niveau>9:
         B10=Affichage("sprites_menu/10v.png",const.SCREEN_WIDTH//2-15,const.SCREEN_HEIGHT//2-240)
     else:
         B10=Affichage("sprites_menu/10.png",const.SCREEN_WIDTH//2-15,const.SCREEN_HEIGHT//2-240)
@@ -1063,8 +1063,8 @@ def ChoixSauvegarde():
                     sauvegarde = {'V1': personnages.V1, #[Vie,Attaque,Cooldown]
                     'V2': personnages.V2,
                     'V3': personnages.V3,
-                    'Argent': 200000000,
-                    'Histoire':1} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
+                    'Argent': 0,
+                    'Histoire':2} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
                     with open('sauvegarde.pkl', 'wb') as f:
                         pickle.dump(sauvegarde, f)  
                     return 
