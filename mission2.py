@@ -88,7 +88,7 @@ def LancerMission2():
             texterect=texte.get_rect()
             texterect.center=(465,85)
             personnages.DISPLAYSURF.blit(texte,texterect)
-            texte=font.render("Un vieux satellite des années 2000 à été ré-équipé", True, const.BLACK)
+            texte=font.render("Un vieux satellite des années 2000 a été ré-équipé", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,100)
             personnages.DISPLAYSURF.blit(texte,texterect)
