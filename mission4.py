@@ -150,7 +150,6 @@ def LancerMission4():
         #Boucle de spawn après timer
         tempspasse = time.time() - tempsdemarrage
         if tempspasse > 5 and numformation==0: # Temps en secondes
-            ###
             numformation=1
         elif tempspasse > 10 and numformation==1: 
             ###
@@ -219,7 +218,12 @@ def LancerMission4():
             #
             numformation+=1
         elif len(enemies) and numformation==23: #Début du combat de boss
-            score = boss.temp(P1,score,AP3,AP2,AP,VaisseauChoisis)
+            pygame.mixer.music.load("sons/boss1.mp3")
+            pygame.mixer.music.set_volume(0.1)
+            pygame.mixer.music.play()
+            temp = boss.temp(P1,score,AP3,AP2,AP,VaisseauChoisis)
+            pygame.mixer.music.fadeout(10000)
+            score=temp[0]
             numformation+=1
         elif numformation==24 and len(enemies)==0:
             with open('sauvegarde.pkl', 'rb') as f:

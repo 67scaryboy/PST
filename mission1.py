@@ -4,7 +4,7 @@ import personnages, menu, bonus, gc, random
 import constantes as const    
 
 def LancerMission1():
-
+    pygame.mixer.music.stop()
     FramePerSec = pygame.time.Clock()
     score = 0
     alive = True
@@ -172,6 +172,9 @@ def LancerMission1():
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
+            pygame.mixer.music.load("sons/Mission1.mp3")
+            pygame.mixer.music.set_volume(0.3)
+            pygame.mixer.music.play()
             break
                 
         pygame.display.update()
@@ -269,6 +272,7 @@ def LancerMission1():
                 temp['Histoire']=1
             with open('sauvegarde.pkl', 'wb') as f:
                     pickle.dump(temp, f)
+            pygame.mixer.music.fadeout(10000)
             menu.MenuFinPartie(score,True)
             break
 
@@ -437,5 +441,6 @@ def LancerMission1():
         pygame.display.update()
         FramePerSec.tick(const.FPS)
     if alive != True: #En cas de victoire, on sort de la boucle avec alive=True
+        pygame.mixer.music.fadeout(10000)
         menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent
         
