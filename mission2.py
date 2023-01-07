@@ -56,7 +56,7 @@ def LancerMission2():
             texterect=texte.get_rect()
             texterect.center=(465,100)
             personnages.DISPLAYSURF.blit(texte,texterect)
-            texte=font.render("vous amusiez avec les aliens, nous on à bossé pour de vrai.", True, const.BLACK)
+            texte=font.render("vous amusiez avec les aliens, nous on a bossé pour de vrai.", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,115)
             personnages.DISPLAYSURF.blit(texte,texterect)
