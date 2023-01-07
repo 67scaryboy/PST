@@ -134,18 +134,18 @@ def temp(joueur, score,AP3,AP2,AP,VaisseauChoisis):
                 for Morceau in MorceauxBoss:
                     shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
                     tirs.append(shoot)
-                    shoot = fight.Projectile(Morceau,4,"sprites/tir2.png")
+                    shoot = fight.Projectile(Morceau,4,"sprites_animation/boule1.png")
                     tirs.append(shoot)
-                    shoot = fight.Projectile(Morceau,5,"sprites/tir2.png")
+                    shoot = fight.Projectile(Morceau,5,"sprites_animation/boule1.png")
                     tirs.append(shoot)
                 Body.cooldown = cooldown_boss
             else:
                 for Morceau in MorceauxBoss:
                     shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
                     tirs.append(shoot)
-                    shoot = fight.Projectile(Morceau,4,"sprites/tir2.png")
+                    shoot = fight.Projectile(Morceau,4,"sprites_animation/boule1.png")
                     tirs.append(shoot)
-                    shoot = fight.Projectile(Morceau,5,"sprites/tir2.png")
+                    shoot = fight.Projectile(Morceau,5,"sprites_animation/boule1.png")
                     tirs.append(shoot)
                     shoot = fight.Projectile(Morceau,1,"sprites/tir2.png")
                     tirs.append(shoot)

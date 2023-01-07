@@ -110,7 +110,7 @@ def LancerMission2():
             texterect=texte.get_rect()
             texterect.center=(465,85)
             personnages.DISPLAYSURF.blit(texte,texterect)
-            texte=font.render("récupérer des informations. Méfiez vous, ce que vous avez affronté", True, const.BLACK)
+            texte=font.render("récupérer des informations. Méfiez vous, ceux que vous avez affronté", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,100)
             personnages.DISPLAYSURF.blit(texte,texterect)
