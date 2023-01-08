@@ -978,6 +978,11 @@ def ChoixPerso():
         AP.draw(personnages.DISPLAYSURF)
         AP2.draw(personnages.DISPLAYSURF)
         AP3.draw(personnages.DISPLAYSURF)
+        font = pygame.font.SysFont("arial", 25)
+        texte=font.render("Choisissez votre vaisseau", True, const.WHITE)
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH/2,30)
+        personnages.DISPLAYSURF.blit(texte,texterect)
         V1.draw(personnages.DISPLAYSURF)
         if temp['V2'][0]==True:
             V2.draw(personnages.DISPLAYSURF)
@@ -1012,10 +1017,10 @@ def ChoixSauvegarde():
     FramePerSec.tick(const.FPS)
     Joueur = personnages.Player(0)
 
-    AP=Affichage("sprites_menu/AP_mp.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) #Bouton arcade
-    Bcontinuer=Affichage("sprites/NContinuer.png",const.SCREEN_WIDTH//2-150,const.SCREEN_HEIGHT//2) #Bouton arcade
-    Brecommencer=Affichage("sprites/NHistoire.png",const.SCREEN_WIDTH//2+150,const.SCREEN_HEIGHT//2) #Bouton historie
-    
+    AP=Affichage("sprites_menu/AP_mp.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) 
+    Bcontinuer=Affichage("sprites/NContinuer.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) #Bouton continuer
+    Brecommencer=Affichage("sprites/NHistoire.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2+80) #Bouton recommencer
+    logo=Affichage("sprites/logo.png",const.SCREEN_WIDTH//2,150) #logo Space Crusade
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -1023,15 +1028,11 @@ def ChoixSauvegarde():
                 sys.exit()
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
+        logo.draw(personnages.DISPLAYSURF)
         Bcontinuer.modif("sprites/NContinuer.png")
         Bcontinuer.draw(personnages.DISPLAYSURF)
         Brecommencer.modif("sprites/NRecommencer.png")
         Brecommencer.draw(personnages.DISPLAYSURF)
-        font = pygame.font.SysFont("arial", 25)
-        texte=font.render("Que souhaitez vous faire de votre progression ?", True, const.WHITE)
-        texterect=texte.get_rect()
-        texterect.center=(const.SCREEN_WIDTH/2,30)
-        personnages.DISPLAYSURF.blit(texte,texterect)
         Joueur.souris(personnages.DISPLAYSURF)
         if pygame.sprite.collide_rect(Joueur,Bcontinuer): #Bouton chargement de la sauvegarde
             Bcontinuer.modif("sprites/HContinuer.png")
@@ -1077,9 +1078,10 @@ def ChoixMode():
     FramePerSec.tick(const.FPS)
     Joueur = personnages.Player(0)
 
-    AP=Affichage("sprites_menu/AP_mp.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) #Bouton arcade
-    Barcade=Affichage("sprites/NArcade.png",const.SCREEN_WIDTH//2-150,const.SCREEN_HEIGHT//2) #Bouton arcade
-    Bhistoire=Affichage("sprites/NHistoire.png",const.SCREEN_WIDTH//2+150,const.SCREEN_HEIGHT//2) #Bouton historie
+    AP=Affichage("sprites_menu/AP_mp.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) 
+    Barcade=Affichage("sprites/NArcade.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2+80) #Bouton arcade
+    Bhistoire=Affichage("sprites/NHistoire.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) #Bouton historie
+    logo=Affichage("sprites/logo.png",const.SCREEN_WIDTH//2,150) #logo Space Crusade
     
     while True:
         for event in pygame.event.get():
@@ -1088,15 +1090,11 @@ def ChoixMode():
                 sys.exit()
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
+        logo.draw(personnages.DISPLAYSURF)
         Barcade.modif("sprites/NArcade.png")
         Barcade.draw(personnages.DISPLAYSURF)
         Bhistoire.modif("sprites/NHistoire.png")
         Bhistoire.draw(personnages.DISPLAYSURF)
-        font = pygame.font.SysFont("arial", 25)
-        texte=font.render("Choisissez le mode dans lequel jouer", True, const.WHITE)
-        texterect=texte.get_rect()
-        texterect.center=(const.SCREEN_WIDTH/2,30)
-        personnages.DISPLAYSURF.blit(texte,texterect)
         Joueur.souris(personnages.DISPLAYSURF)
 
         if pygame.mouse.get_pressed()[0]==False and not relache:
