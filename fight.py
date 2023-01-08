@@ -121,7 +121,7 @@ def Arcade():
                     shoot = Projectile(P1,0,"sprites/tira2.png")
                     tirs.append(shoot)
                     shoot = Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.right=P1.rect.right()
+                    shoot.rect.right=P1.rect.right
                     tirs.append(shoot)
                     shoot = Projectile(P1,0,"sprites/tira2.png")
                     shoot.rect.left=P1.rect.left
