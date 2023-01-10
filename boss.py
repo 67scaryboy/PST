@@ -291,5 +291,5 @@ def temp(joueur, score,AP3,AP2,AP,VaisseauChoisis):
 
         if not MorceauxBoss:
             pos_AP,pos_AP2,pos_AP3 = cinematiques.MortBoss(P1,Body,AP,AP2,AP3)
-            return [(ScoreBoss+500),pos_AP,pos_AP2,pos_AP3] #L'ajout de score doit etre supérieur ou egal à la différence entre le modulo choisi et le seuil de controle
+            return [(ScoreBoss+1000),pos_AP,pos_AP2,pos_AP3] #L'ajout de score doit etre supérieur ou egal à la différence entre le modulo choisi et le seuil de controle
     return [0,AP.rect.center,AP2.rect.center,AP3.rect.center] #si le joueur est mort met fin au jeu
