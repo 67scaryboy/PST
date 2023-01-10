@@ -171,7 +171,7 @@ def Arcade():
         #faire avance les tirs
         for shoot in tirs:
             shoot.move()
-            if shoot.rect.bottom > const.SCREEN_HEIGHT:
+            if ((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)):
                     tirs.remove(shoot)
         
         for boost in boosts:
@@ -187,7 +187,7 @@ def Arcade():
 
         bonus.AttraperBoost(boosts,P1)
 
-        if scoreArcade%2000<1500: #Verification du score (utile pour le spawn du boss de temps en temps) | 2000 correspond au modulo choisi et 1500 au seuil de controle
+        if scoreArcade%11000<10000: #Verification du score (utile pour le spawn du boss de temps en temps) | 2000 correspond au modulo choisi et 1500 au seuil de controle
             #ATTENTION: Avant de modifier les valeurs au dessus, aller voir la fonction qui fait spawn le boss
             Spawn(enemies,2) #Apparition aléatoire d'adversaires.
         else:
