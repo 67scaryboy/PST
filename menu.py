@@ -1006,7 +1006,7 @@ def ChoixPerso():
     
 def AfficheScore(valeur):
     font = pygame.font.Font('freesansbold.ttf', 32)
-    Score=font.render(str(valeur), True, const.GREEN)#, const.BLACK)
+    Score=font.render(str(valeur), True, const.GREEN)
     scorerect=Score.get_rect()
     scorerect.center=(100,const.SCREEN_HEIGHT-12)
     personnages.DISPLAYSURF.blit(Score,scorerect)
