@@ -315,7 +315,7 @@ def LancerMission4():
                 break
             score=temp[0]
             numformation+=1
-        elif numformation==24 and len(enemies)==0:
+        elif numformation==16 and len(enemies)==0:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
             if temp['Histoire']==1:
