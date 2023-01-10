@@ -25,7 +25,9 @@ def Arcade():
     FramePerSec = pygame.time.Clock()
     scoreArcade = 0
     alive = True
+    niveau=0
     VaisseauChoisis = menu.ChoixPerso()
+    font = pygame.font.Font('freesansbold.ttf', 32)
 
     AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
     AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
@@ -54,8 +56,9 @@ def Arcade():
         #mouvements ennemis
         for entity in enemies:
             if entity.active == 1:
-                entity.move()
-                entity.moveKamikaze(P1)
+                for i in range (0,niveau+1,1): #Accélération des ennemis en fonction du nombre de boss battus
+                    entity.move()
+                    entity.moveKamikaze(P1)
                 #ici pour décider si il tire
                 p = random.randint(0,100)
                 if p < 1:
@@ -170,7 +173,8 @@ def Arcade():
 
         #faire avance les tirs
         for shoot in tirs:
-            shoot.move()
+            for i in range (0,niveau+1,1):#Tirs plus rapides en fonction du nombre de boss battus
+                shoot.move()
             if ((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)):
                     tirs.remove(shoot)
         
@@ -200,6 +204,7 @@ def Arcade():
                     break
                 else:
                     scoreArcade=temp[0]
+                    niveau+=1
 
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
@@ -227,6 +232,10 @@ def Arcade():
         CP.draw(personnages.DISPLAYSURF)#Affichage Compagnon
         MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
         menu.AfficheScore(scoreArcade) #Affichage score
+        texte=font.render("Niveau: "+str(niveau), True, const.GREEN)
+        texterect=texte.get_rect()
+        texterect.center=(const.SCREEN_WIDTH-200,const.SCREEN_HEIGHT-12)
+        personnages.DISPLAYSURF.blit(texte,texterect)
 
 
         pygame.display.update()
