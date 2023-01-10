@@ -204,7 +204,7 @@ def temp(joueur, score,AP3,AP2,AP,VaisseauChoisis):
                     shoot = fight.Projectile(P1,0,"sprites/tira2.png")
                     tirs.append(shoot)
                     shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.right=P1.rect.right()
+                    shoot.rect.right=P1.rect.right
                     tirs.append(shoot)
                     shoot = fight.Projectile(P1,0,"sprites/tira2.png")
                     shoot.rect.left=P1.rect.left
