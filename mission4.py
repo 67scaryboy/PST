@@ -223,6 +223,8 @@ def LancerMission4():
             pygame.mixer.music.play()
             temp = boss.temp(P1,score,AP3,AP2,AP,VaisseauChoisis)
             pygame.mixer.music.fadeout(10000)
+            if temp[0]==0:
+                break
             score=temp[0]
             numformation+=1
         elif numformation==24 and len(enemies)==0:
