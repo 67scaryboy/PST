@@ -182,7 +182,7 @@ class Player(pygame.sprite.Sprite): #Si on
 class Compagon(pygame.sprite.Sprite):
     def __init__(self,perso):
         super().__init__()
-        self.image = pygame.image.load("sprites/compagnon.png")
+        self.image = pygame.transform.scale(pygame.image.load("sprites/compagnon.png"),(20,20)) #pygame.image.load("sprites/compagnon.png") 
         self.ATK = perso.ATK/10
         self.rect = self.image.get_rect()
         self.rect.center = perso.rect.center
