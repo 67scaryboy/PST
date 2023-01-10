@@ -318,8 +318,8 @@ def LancerMission4():
         elif numformation==16 and len(enemies)==0:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
-            if temp['Histoire']==1:
-                temp['Histoire']=2
+            if temp['Histoire']==3:
+                temp['Histoire']=4
                 temp['V2'][0]=True
             with open('sauvegarde.pkl', 'wb') as f:
                     pickle.dump(temp, f)
