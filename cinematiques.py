@@ -139,6 +139,7 @@ def MortBoss(P1,Body,AP,AP2,AP3):
     return AP.rect.center, AP2.rect.center, AP3.rect.center
 
 def ArriveBoss(P1,AP,AP2,AP3):
+    pygame.mouse.set_pos(P1.rect.center[0],P1.rect.center[1])
     FramePerSec = pygame.time.Clock()
     rec = True
     PNJ1 = menu.Affichage("sprites_boss/boss.png",(const.SCREEN_WIDTH//2),-200)
@@ -164,7 +165,7 @@ def ArriveBoss(P1,AP,AP2,AP3):
         AP.draw(personnages.DISPLAYSURF)
         AP2.draw(personnages.DISPLAYSURF)
         AP3.draw(personnages.DISPLAYSURF)
-        P1.draw(personnages.DISPLAYSURF)
+        P1.souris(personnages.DISPLAYSURF)
         PNJ1.draw(personnages.DISPLAYSURF)
         menu.Animation(const.alerte,alerterouge)
         alerterouge.draw(personnages.DISPLAYSURF)
