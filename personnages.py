@@ -18,21 +18,21 @@ class Enemy(pygame.sprite.Sprite):
       def __init__(self, id):
         super().__init__()
         self.active = 1
-        if id == 1:
+        if id == 1:#Tir sinusoidaux
             self.image = pygame.image.load("sprites/e1.png").convert_alpha()
             self.PV = 100 #PV de ce type d'adversaire
             self.MAXPV = self.PV
             self.ATK = 10 #Attaque de ce type d'adversaire
             self.score = 10 #Score crédité en cas de kill
             self.id = 'e1' #ID de ce type
-        elif id == 2:
+        elif id == 2:#Tir triple
             self.image = pygame.image.load("sprites/e2.png").convert_alpha()
             self.PV = 150
             self.MAXPV = self.PV
             self.ATK = 30
             self.score = 50
             self.id = 'e2'
-        elif id == 3:
+        elif id == 3:#Tir standard
             self.image = pygame.image.load("sprites/e3.png").convert_alpha()
             self.PV = 200
             self.MAXPV = self.PV
@@ -53,6 +53,13 @@ class Enemy(pygame.sprite.Sprite):
             self.ATK = 30
             self.score = 70
             self.id = 'e5'
+        elif id == 6: #A définir
+            self.image = pygame.image.load("sprites/e6.png").convert_alpha()
+            self.PV = 100
+            self.MAXPV = self.PV
+            self.ATK = 20
+            self.score = 20
+            self.id = 'e6'
         self.rect = self.image.get_rect()
         self.rect.center=(random.randint(50,const.SCREEN_WIDTH-50),0)
         self.mask = pygame.mask.from_surface(self.image)
@@ -175,7 +182,7 @@ class Player(pygame.sprite.Sprite): #Si on
 class Compagon(pygame.sprite.Sprite):
     def __init__(self,perso):
         super().__init__()
-        self.image = pygame.image.load("sprites/e3.png")
+        self.image = pygame.transform.scale(pygame.image.load("sprites/compagnon.png"),(20,20)) #pygame.image.load("sprites/compagnon.png") 
         self.ATK = perso.ATK/10
         self.rect = self.image.get_rect()
         self.rect.center = perso.rect.center

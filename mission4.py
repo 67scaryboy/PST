@@ -150,44 +150,117 @@ def LancerMission4():
         #Boucle de spawn après timer
         tempspasse = time.time() - tempsdemarrage
         if tempspasse > 5 and numformation==0: # Temps en secondes
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-200,-120)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-160,-100)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-120,-80)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-80,-60)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-40,-40)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2,-20)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+40,-40)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+80,-60)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+120,-80)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+160,-100)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+200,-120)
             numformation=1
         elif tempspasse > 10 and numformation==1: 
-            ###
+            fight.SpawHistoire(enemies,2,200+200,-120)
+            fight.SpawHistoire(enemies,2,200+160,-100)
+            fight.SpawHistoire(enemies,2,200+120,-80)
+            fight.SpawHistoire(enemies,2,200+80,-60)
+            fight.SpawHistoire(enemies,2,200+40,-40)
+            fight.SpawHistoire(enemies,1,200,-20)
+            fight.SpawHistoire(enemies,3,200-200,-40)
+            fight.SpawHistoire(enemies,3,200-160,-60)
+            fight.SpawHistoire(enemies,3,200-120,-80)
+            fight.SpawHistoire(enemies,3,200-80,-100)
+            fight.SpawHistoire(enemies,3,200-40,-120)
+
+            fight.SpawHistoire(enemies,2,600-200,-120)
+            fight.SpawHistoire(enemies,2,600-160,-100)
+            fight.SpawHistoire(enemies,2,600-120,-80)
+            fight.SpawHistoire(enemies,2,600-80,-60)
+            fight.SpawHistoire(enemies,2,600-40,-40)
+            fight.SpawHistoire(enemies,1,600,-20)
+            fight.SpawHistoire(enemies,3,600+200,-40)
+            fight.SpawHistoire(enemies,3,600+160,-60)
+            fight.SpawHistoire(enemies,3,600+120,-80)
+            fight.SpawHistoire(enemies,3,600+80,-100)
+            fight.SpawHistoire(enemies,3,600+40,-120)
             numformation=2
-        elif tempspasse > 11 and numformation==2:
-            ###
+        elif tempspasse > 15 and numformation==2:
+            fight.SpawHistoire(enemies,2,200-200,-120)
+            fight.SpawHistoire(enemies,2,200-160,-100)
+            fight.SpawHistoire(enemies,2,200-120,-80)
+            fight.SpawHistoire(enemies,2,200-80,-60)
+            fight.SpawHistoire(enemies,2,200-40,-40)
+            fight.SpawHistoire(enemies,2,200,-20)
+            fight.SpawHistoire(enemies,2,200+40,-40)
+            fight.SpawHistoire(enemies,2,200+80,-60)
+            fight.SpawHistoire(enemies,2,200+120,-80)
+            fight.SpawHistoire(enemies,2,200+160,-100)
+            fight.SpawHistoire(enemies,2,200+200,-120)
+            fight.SpawHistoire(enemies,2,600-200,-120)
+            fight.SpawHistoire(enemies,2,600-160,-100)
+            fight.SpawHistoire(enemies,2,600-120,-80)
+            fight.SpawHistoire(enemies,2,600-80,-60)
+            fight.SpawHistoire(enemies,2,600-40,-40)
+            fight.SpawHistoire(enemies,2,600,-20)
+            fight.SpawHistoire(enemies,2,600+40,-40)
+            fight.SpawHistoire(enemies,2,600+80,-60)
+            fight.SpawHistoire(enemies,2,600+120,-80)
+            fight.SpawHistoire(enemies,2,600+160,-100)
+            fight.SpawHistoire(enemies,2,600+200,-120)
             numformation=3
-        elif tempspasse > 12 and numformation==3:
-            ###
+        elif tempspasse > 16 and numformation==3:
+            fight.SpawHistoire(enemies,5,160,-40)
             numformation=4
-        elif tempspasse > 13 and numformation==4:
-            ###
+        elif tempspasse > 17 and numformation==4:
+            fight.SpawHistoire(enemies,5,const.SCREEN_WIDTH-100,-40)
             numformation=5
-        elif tempspasse > 14 and numformation==5:
-            ###
+        elif tempspasse > 18 and numformation==5:
+            fight.SpawHistoire(enemies,5,350,-40)
             numformation=6
-        elif tempspasse > 15 and numformation==6:
-            ###
+        elif tempspasse > 19 and numformation==6:
+            fight.SpawHistoire(enemies,5,const.SCREEN_WIDTH-300,-40)
             numformation=7
-        elif tempspasse > 16 and numformation==7:
-            ###
+        elif tempspasse > 20 and numformation==7:
+            fight.SpawHistoire(enemies,5,const.SCREEN_WIDTH-200,-40)
             numformation=8
-        elif tempspasse > 17 and numformation==8:
-            ###
+        elif tempspasse > 21 and numformation==8:
+            fight.SpawHistoire(enemies,5,100,-40)
             numformation=9
-        elif tempspasse > 18 and numformation==9:
-            ###
+        elif tempspasse > 22 and numformation==9:
+            fight.SpawHistoire(enemies,5,300,-40)
             numformation=10
-        elif tempspasse > 19 and numformation==10:
-            #
+        elif tempspasse > 25 and numformation==10:
+            fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH-100,-40)
             numformation=11
-        elif tempspasse > 22 and numformation==11:
-            #
+        elif tempspasse > 30 and numformation==11:
+            fight.SpawHistoire(enemies,3,40,-20)
+            fight.SpawHistoire(enemies,3,50,-40)
+            fight.SpawHistoire(enemies,3,70,-60)
+            fight.SpawHistoire(enemies,3,100,-80)
+            fight.SpawHistoire(enemies,3,140,-100)
+            fight.SpawHistoire(enemies,3,190,-120)
+            fight.SpawHistoire(enemies,3,250,-140)
+            fight.SpawHistoire(enemies,3,320,-160)
+            fight.SpawHistoire(enemies,3,400,-180)
+
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-40,-20)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-50,-40)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-70,-60)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-100,-80)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-140,-100)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-190,-120)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-250,-140)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-320,-160)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-400,-180)
             numformation=12
-        elif tempspasse > 25 and numformation==12:
-            #
+        elif tempspasse > 33 and numformation==12:
+            fight.SpawHistoire(enemies,4,40,-80)
+            fight.SpawHistoire(enemies,4,500,-160)
             numformation=13
-        elif tempspasse > 30 and numformation==13:
+        elif tempspasse > 37 and numformation==13:
             #
             numformation=14
         elif tempspasse > 35 and numformation==14:
@@ -223,6 +296,9 @@ def LancerMission4():
             pygame.mixer.music.play()
             temp = boss.temp(P1,score,AP3,AP2,AP,VaisseauChoisis)
             pygame.mixer.music.fadeout(10000)
+            if temp[0]==0:
+                menu.MenuFinPartie(score,False)
+                break
             score=temp[0]
             numformation+=1
         elif numformation==24 and len(enemies)==0:
@@ -230,6 +306,7 @@ def LancerMission4():
                 temp = pickle.load(f)
             if temp['Histoire']==1:
                 temp['Histoire']=2
+                temp['V2'][0]=True
             with open('sauvegarde.pkl', 'wb') as f:
                     pickle.dump(temp, f)
             menu.MenuFinPartie(score,True)
