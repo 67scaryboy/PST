@@ -253,8 +253,8 @@ def temp(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         #faire avancer les tirs
         for shoot in tirs:
             shoot.move()
-            if shoot.rect.bottom > const.SCREEN_HEIGHT:
-                    tirs.remove(shoot)
+            if ((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)):
+                tirs.remove(shoot)
     
         AP3.move(3)#vitesse de déplacement des couches
         AP2.move(2)
