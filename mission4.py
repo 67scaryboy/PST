@@ -261,36 +261,50 @@ def LancerMission4():
             fight.SpawHistoire(enemies,4,500,-160)
             numformation=13
         elif tempspasse > 37 and numformation==13:
-            #
+            fight.SpawHistoire(enemies,3,40,-20)
+            fight.SpawHistoire(enemies,3,80,-20)
+            fight.SpawHistoire(enemies,3,40,-60)
+            fight.SpawHistoire(enemies,3,80,-60)
+            fight.SpawHistoire(enemies,3,240,-80)
+            fight.SpawHistoire(enemies,3,240,-120)
+            fight.SpawHistoire(enemies,3,280,-80)
+            fight.SpawHistoire(enemies,3,280,-120)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-100,-70)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-140,-70)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-100,-110)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-140,-110)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-200,-140)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-240,-140)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-200,-180)
+            fight.SpawHistoire(enemies,2,const.SCREEN_WIDTH-240,-180)
+            fight.SpawHistoire(enemies,1,370,-120)
+            fight.SpawHistoire(enemies,1,410,-120)
+            fight.SpawHistoire(enemies,1,370,-160)
+            fight.SpawHistoire(enemies,1,410,-160)
             numformation=14
-        elif tempspasse > 35 and numformation==14:
-            #
+        elif tempspasse > 40 and numformation==14:
+            fight.SpawHistoire(enemies,1,450,-20)
+            fight.SpawHistoire(enemies,1,410,-20)
+            fight.SpawHistoire(enemies,1,450,-60)
+            fight.SpawHistoire(enemies,1,410,-60)
+            fight.SpawHistoire(enemies,1,300,-80)
+            fight.SpawHistoire(enemies,1,340,-120)
+            fight.SpawHistoire(enemies,1,300,-80)
+            fight.SpawHistoire(enemies,1,340,-120)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-250,-70)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-290,-70)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-250,-110)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-290,-110)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-300,-140)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-260,-140)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-300,-180)
+            fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH-260,-180)
+            fight.SpawHistoire(enemies,2,110,-120)
+            fight.SpawHistoire(enemies,2,150,-120)
+            fight.SpawHistoire(enemies,2,110,-160)
+            fight.SpawHistoire(enemies,2,150,-160)
             numformation+=1
-        elif tempspasse > 36 and numformation==15:
-            #
-            numformation+=1
-        elif tempspasse > 37 and numformation==16:
-            #
-            numformation+=1
-        elif tempspasse > 38 and numformation==17:
-            #
-            numformation+=1
-        elif tempspasse > 39 and numformation==18:
-            #
-            numformation+=1
-        elif tempspasse > 40 and numformation==19:
-            #
-            numformation+=1
-        elif tempspasse > 41 and numformation==20:
-            #
-            numformation+=1
-        elif tempspasse > 42 and numformation==21:
-            #
-            numformation+=1
-        elif tempspasse > 43 and numformation==22:
-            #
-            numformation+=1
-        elif len(enemies) and numformation==23: #Début du combat de boss
+        elif len(enemies)==0 and numformation==15: #Début du combat de boss
             pygame.mixer.music.load("sons/boss1.mp3")
             pygame.mixer.music.set_volume(0.1)
             pygame.mixer.music.play()
