@@ -30,6 +30,9 @@ def LancerMission6():
     tempsdemarrage = time.time()
     gc.collect()  
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
+    pygame.mixer.music.load("sons/Mission6.mp3")
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play()
     while alive:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -294,6 +297,7 @@ def LancerMission6():
                 temp['Histoire']=6
             with open('sauvegarde.pkl', 'wb') as f:
                     pickle.dump(temp, f)
+            pygame.mixer.music.fadeout(10000)
             menu.MenuFinPartie(score,True)
             break
 
@@ -464,5 +468,6 @@ def LancerMission6():
         pygame.display.update()
         FramePerSec.tick(const.FPS)
     if alive != True: #En cas de victoire, on sort de la boucle avec alive=True
+        pygame.mixer.music.fadeout(10000)
         menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent
         

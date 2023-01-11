@@ -28,6 +28,7 @@ def LancerMission4():
     explo = []
     boosts = []
     gc.collect()
+    
     while alive:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -129,6 +130,9 @@ def LancerMission4():
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
+            pygame.mixer.music.load("sons/Mission4.mp3")
+            pygame.mixer.music.set_volume(0.3)
+            pygame.mixer.music.play()
             break
                 
         pygame.display.update()
@@ -283,6 +287,7 @@ def LancerMission4():
             fight.SpawHistoire(enemies,1,370,-160)
             fight.SpawHistoire(enemies,1,410,-160)
             numformation=14
+            pygame.mixer.music.fadeout(10000)
         elif tempspasse > 40 and numformation==14:
             fight.SpawHistoire(enemies,1,450,-20)
             fight.SpawHistoire(enemies,1,410,-20)
