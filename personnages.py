@@ -57,7 +57,7 @@ class Enemy(pygame.sprite.Sprite):
             self.image = pygame.image.load("sprites/e6.png").convert_alpha()
             self.PV = 1500
             self.MAXPV = self.PV
-            self.ATK = 20
+            self.ATK = 30
             self.score = 200
             self.id = 'e6'
         self.rect = self.image.get_rect()
