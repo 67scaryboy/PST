@@ -15,6 +15,7 @@ def LancerMission9():
     P1 = personnages.Player(menu.ChoixPerso())
     CP = personnages.Compagon(P1)
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
+    P1.souris(personnages.DISPLAYSURF)
 
     cooldown = P1.cooldown
 
