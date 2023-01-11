@@ -1006,7 +1006,7 @@ def ChoixPerso():
     
 def AfficheScore(valeur):
     font = pygame.font.Font('freesansbold.ttf', 32)
-    Score=font.render(str(valeur), True, const.GREEN)#, const.BLACK)
+    Score=font.render(str(valeur), True, const.GREEN)
     scorerect=Score.get_rect()
     scorerect.center=(100,const.SCREEN_HEIGHT-12)
     personnages.DISPLAYSURF.blit(Score,scorerect)
@@ -1063,7 +1063,7 @@ def ChoixSauvegarde():
                     'V2': personnages.V2,
                     'V3': personnages.V3,
                     'Argent': 0,
-                    'Histoire':2} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
+                    'Histoire':0} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
                     with open('sauvegarde.pkl', 'wb') as f:
                         pickle.dump(sauvegarde, f)  
                     return 
