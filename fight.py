@@ -39,6 +39,7 @@ def Arcade():
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
 
     cooldown = P1.cooldown
+    backup = cooldown
 
     enemies = [] 
     enemies.append(E1)
@@ -170,12 +171,29 @@ def Arcade():
             P1.cooldown = cooldown
         else:
             P1.cooldown += -1
+        
+        #gestion des ultis
+        if P1.DureeUlti == -1:
+            P1.ulti(enemies,tirs,explo)
+        elif P1.DureeUlti > 0:
+            P1.DureeUlti -= 1
+            cooldown = P1.cooldown
+        elif P1.DureeUlti == 0:
+            for shoot in tirs:
+                if shoot.trajectoire == 10:
+                    tirs.remove(shoot)
+            cooldown = backup
+            P1.DureeUlti -= 1
+
+
 
         #faire avance les tirs
         for shoot in tirs:
             for i in range (0,niveau+1,1):#Tirs plus rapides en fonction du nombre de boss battus
                 shoot.move()
-            if ((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)):
+                if shoot.trajectoire == 10:
+                    shoot.suivre(P1)
+            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):
                     tirs.remove(shoot)
         
         for boost in boosts:
@@ -216,6 +234,8 @@ def Arcade():
             if shoot.trajectoire == 3 and shoot.tireur_id == "e1":
                 menu.Animation(const.boules,shoot)
             shoot.draw(personnages.DISPLAYSURF)
+            if shoot.trajectoire == 10:
+                menu.Animation(const.laserboss, shoot)
         
         for boost in boosts:
             boost.draw(personnages.DISPLAYSURF)
@@ -229,6 +249,7 @@ def Arcade():
                 entity.draw(personnages.DISPLAYSURF)
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
+        P1.draw_ulti(personnages.DISPLAYSURF)
         CP.draw(personnages.DISPLAYSURF)#Affichage Compagnon
         MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
         menu.AfficheScore(scoreArcade) #Affichage score
@@ -297,9 +318,15 @@ class Projectile(pygame.sprite.Sprite):
             elif tireur.id == 'boss_a_d':
                 self.rect.center = (self.rect.center[0]+140,self.rect.center[1])
 
-        self.trajectoire = traj
+        self.trajectoire = traj # 10 pour laser
+        if traj == 10:
+            self.direction = [0,0]
+
         self.time = 0
         self.mask = pygame.mask.from_surface(self.image)
+
+      def suivre(self,joueur):
+        self.rect.center = (joueur.rect.center[0],joueur.rect.center[1]-20)
 
       def move(self):
         self.rect.move_ip(self.direction[0],self.direction[1])
@@ -350,7 +377,7 @@ def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):
                 if pygame.sprite.collide_rect(shoot,enemy): #ajout pour voir si limite les lags  
                     if pygame.sprite.collide_mask(shoot,enemy):
                         enemy.PV -=  shoot.damage
-                        if shoot in p_tirs:
+                        if shoot in p_tirs and shoot.trajectoire == 10:
                             p_tirs.remove(shoot)
                         if enemy.PV <= 0:
                             tempscore+=enemy.score

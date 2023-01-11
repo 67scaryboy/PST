@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-import random, menu, pickle
+import random, menu, pickle, fight
 import constantes as const
 
 
@@ -81,7 +81,6 @@ class Enemy(pygame.sprite.Sprite):
                     self.rect.move_ip(0,9)
                 elif self.rect.centerx < joueur.rect.centerx:
                     self.rect.move_ip(8,6)
-                    
                 elif self.rect.centerx > joueur.rect.centerx:
                     self.rect.move_ip(-8,6)
             else:
@@ -146,7 +145,7 @@ class Player(pygame.sprite.Sprite): #Si on
             self.cooldown = temp['V3'][5]
             self.Ulti = 0
             self.MAXUlti = 100
-
+        self.DureeUlti = -1
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT - 50))
         self.mask = pygame.mask.from_surface(self.image)
@@ -156,6 +155,12 @@ class Player(pygame.sprite.Sprite): #Si on
         health_rect.midbottom = self.rect.centerx, self.rect.bottom
         menu.draw_health_bar(surf, health_rect.bottomleft, health_rect.size, 
                 (0, 0, 0), (255, 0, 0), (0, 255, 0), self.PV/self.MAXPV)
+
+    def draw_ulti(self, surf):
+        health_rect = pygame.Rect(0, 0, self.image.get_width(), 7)
+        health_rect.midbottom = self.rect.centerx, self.rect.bottom + 10
+        menu.draw_health_bar(surf, health_rect.bottomleft, health_rect.size, 
+                (0, 0, 0), (75, 75, 75), (0, 255, 255), 1-self.Ulti/self.MAXUlti)
 
     def update(self):
         pressed_keys = pygame.key.get_pressed()
@@ -180,6 +185,33 @@ class Player(pygame.sprite.Sprite): #Si on
     def souris(self,surface):
         self.rect.center = pygame.mouse.get_pos()
         self.draw(surface)
+
+    def ulti(self,enemies,tirs,explo):
+        if self.Ulti == self.MAXUlti: 
+            if pygame.mouse.get_pressed()[0]:
+                if self.id == 'p1': #IEM
+                    liste = []
+                    for i in range(0,len(enemies)):
+                        if enemies[i].id in ['e1','e2','e3']:
+                            liste.append(i)
+                            explo.append(menu.explosion(enemies[i]))
+                    while liste:
+                        del enemies[liste.pop()]
+                        
+                    self.Ulti = 0
+                elif self.id == 'p2': #Spam
+                    self.DureeUlti = 300
+                    self.cooldown = 30
+                    self.Ulti = 0
+                elif self.id == 'p3': #Laser
+                    self.DureeUlti = 300
+                    tirs.append(fight.Projectile(self,10,"sprites_animation/laser1.png"))
+                    self.cooldown = 300 # pour éviter qu'il tire pendant l'ulti
+                    self.Ulti = 0
+                else:
+                    pass
+        else:
+            self.Ulti += 1
 
 class Compagon(pygame.sprite.Sprite):
     def __init__(self,perso):
