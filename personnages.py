@@ -77,13 +77,13 @@ class Enemy(pygame.sprite.Sprite):
         if self.id =='e4':
             if joueur.rect.centery-self.rect.centery<400:
                 if joueur.rect.centerx < self.rect.centerx + 10 and joueur.rect.centerx > self.rect.centerx-10:
-                    self.rect.move_ip(0,8)
+                    self.rect.move_ip(0,9)
                 elif self.rect.centerx < joueur.rect.centerx:
-                    self.rect.move_ip(5,6)
+                    self.rect.move_ip(6,7)
                 elif self.rect.centerx > joueur.rect.centerx:
-                    self.rect.move_ip(-5,6)
+                    self.rect.move_ip(-6,7)
             else:
-                self.rect.move_ip(0,8)
+                self.rect.move_ip(0,9)
             if (self.rect.bottom > const.SCREEN_HEIGHT):
                 self.kill()
 
