@@ -75,15 +75,15 @@ class Enemy(pygame.sprite.Sprite):
     
       def moveKamikaze(self, joueur):
         if self.id =='e4':
-            if joueur.rect.centery-self.rect.centery<300:
+            if joueur.rect.centery-self.rect.centery<400:
                 if joueur.rect.centerx < self.rect.centerx + 10 and joueur.rect.centerx > self.rect.centerx-10:
-                    self.rect.move_ip(0,7)
+                    self.rect.move_ip(0,8)
                 elif self.rect.centerx < joueur.rect.centerx:
-                    self.rect.move_ip(13,7)
+                    self.rect.move_ip(5,6)
                 elif self.rect.centerx > joueur.rect.centerx:
-                    self.rect.move_ip(-13,7)
+                    self.rect.move_ip(-5,6)
             else:
-                self.rect.move_ip(0,7)
+                self.rect.move_ip(0,8)
             if (self.rect.bottom > const.SCREEN_HEIGHT):
                 self.kill()
 

@@ -32,6 +32,8 @@ def LancerMission3():
     pygame.mixer.music.load("sons/Mission3.mp3")
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play()
+    
+
     while alive:
         for event in pygame.event.get():
             if event.type == QUIT:

@@ -85,7 +85,7 @@ def LancerMission2():
             personnages.DISPLAYSURF.blit(texte,texterect)
         elif dialogue==3:
             font = pygame.font.SysFont("arial", 13)
-            texte=font.render("Enfin, l'équipe technique à bosser dur pour vous:", True, const.BLACK)
+            texte=font.render("Enfin, l'équipe technique à bossée dur pour vous:", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,85)
             personnages.DISPLAYSURF.blit(texte,texterect)
