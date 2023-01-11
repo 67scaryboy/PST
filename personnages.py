@@ -53,12 +53,12 @@ class Enemy(pygame.sprite.Sprite):
             self.ATK = 30
             self.score = 70
             self.id = 'e5'
-        elif id == 6: #A définir
+        elif id == 6: #Tanks
             self.image = pygame.image.load("sprites/e6.png").convert_alpha()
-            self.PV = 100
+            self.PV = 1500
             self.MAXPV = self.PV
             self.ATK = 20
-            self.score = 20
+            self.score = 200
             self.id = 'e6'
         self.rect = self.image.get_rect()
         self.rect.center=(random.randint(50,const.SCREEN_WIDTH-50),0)
