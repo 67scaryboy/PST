@@ -71,15 +71,15 @@ def LancerMission2():
             texterect=texte.get_rect()
             texterect.center=(465,85)
             personnages.DISPLAYSURF.blit(texte,texterect)
-            texte=font.render("Aucun alien n'a jamais réussit à terminer le jeu 'Space invader'.", True, const.BLACK)
+            texte=font.render("Aucun alien n'a jamais réussi à terminer le jeu 'Space invader'.", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,100)
             personnages.DISPLAYSURF.blit(texte,texterect)
-            texte=font.render("Considérant cela comme une tâche prioritaire pour leur éspèces, ils", True, const.BLACK)
+            texte=font.render("Considérant cela comme une tâche prioritaire pour leur espèces, ils", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,115)
             personnages.DISPLAYSURF.blit(texte,texterect)
-            texte=font.render("ont apparemment décider de voler toutes les versions du jeu.", True, const.BLACK)
+            texte=font.render("ont apparemment décidé de voler toutes les versions du jeu.", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,130)
             personnages.DISPLAYSURF.blit(texte,texterect)
@@ -123,15 +123,15 @@ def LancerMission2():
             texterect=texte.get_rect()
             texterect.center=(465,130)
             personnages.DISPLAYSURF.blit(texte,texterect)
-            texte=font.render("va bientôt couper. On vous recontacte dès quelle sera rétablie !", True, const.BLACK)
+            texte=font.render("va bientôt couper. On vous recontacte dès qu'elle sera rétablie !", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,145)
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
-            """pygame.mixer.music.load("sons/Mission2.mp3")
+            pygame.mixer.music.load("sons/Mission2.mp3")
             pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play()"""
+            pygame.mixer.music.play()
             break
                 
         pygame.display.update()
