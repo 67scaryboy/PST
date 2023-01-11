@@ -4,7 +4,7 @@ import personnages, menu, bonus, gc
 import constantes as const    
 
 def LancerMission6():
-
+    pygame.mixer.music.stop()
     FramePerSec = pygame.time.Clock()
     score = 0
     alive = True

@@ -4,7 +4,7 @@ import personnages, menu, bonus, gc
 import constantes as const    
 
 def LancerMission5():
-
+    pygame.mixer.music.stop()
     FramePerSec = pygame.time.Clock()
     score = 0
     alive = True
@@ -107,7 +107,7 @@ def LancerMission5():
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
-            pygame.mixer.music.load("sons/Mission4.mp3")
+            pygame.mixer.music.load("sons/Mission5.mp3")
             pygame.mixer.music.set_volume(0.3)
             pygame.mixer.music.play()
             break

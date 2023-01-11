@@ -4,7 +4,7 @@ import personnages, menu, bonus, gc
 import constantes as const    
 
 def LancerMission4():
-
+    pygame.mixer.music.stop()
     FramePerSec = pygame.time.Clock()
     score = 0
     alive = True
@@ -499,5 +499,6 @@ def LancerMission4():
         pygame.display.update()
         FramePerSec.tick(const.FPS)
     if alive != True: #En cas de victoire, on sort de la boucle avec alive=True
+        pygame.mixer.music.fadeout(10000)
         menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent
         
