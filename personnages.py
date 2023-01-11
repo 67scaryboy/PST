@@ -48,16 +48,16 @@ class Enemy(pygame.sprite.Sprite):
             self.id = 'e4'
         elif id == 5: #Tir diagonaux
             self.image = pygame.image.load("sprites/e5.png").convert_alpha()
-            self.PV = 500
+            self.PV = 1000
             self.MAXPV = self.PV
             self.ATK = 30
-            self.score = 70
+            self.score = 100
             self.id = 'e5'
         elif id == 6: #Tanks
             self.image = pygame.image.load("sprites/e6.png").convert_alpha()
-            self.PV = 1500
+            self.PV = 2000
             self.MAXPV = self.PV
-            self.ATK = 30
+            self.ATK = 70
             self.score = 200
             self.id = 'e6'
         self.rect = self.image.get_rect()

@@ -4,7 +4,7 @@ import personnages, menu, bonus, gc
 import constantes as const    
 
 def LancerMission5():
-
+    pygame.mixer.music.stop()
     FramePerSec = pygame.time.Clock()
     score = 0
     alive = True
@@ -67,7 +67,7 @@ def LancerMission5():
             personnages.DISPLAYSURF.blit(texte,texterect)
         elif dialogue==2:
             font = pygame.font.SysFont("arial", 13)
-            texte=font.render("Vous avez du pouvoir récupérer un vaisseau alien.", True, const.BLACK)
+            texte=font.render("Vous avez récupéré un vaisseau alien.", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,85)
             personnages.DISPLAYSURF.blit(texte,texterect)
@@ -79,7 +79,7 @@ def LancerMission5():
             texterect=texte.get_rect()
             texterect.center=(465,115)
             personnages.DISPLAYSURF.blit(texte,texterect)
-            texte=font.render("materiel, quitte à retourner dans des secteurs déjà passés.", True, const.BLACK)
+            texte=font.render("matériel, quitte à retourner dans des secteurs déjà passés.", True, const.BLACK)
             texterect=texte.get_rect()
             texterect.center=(465,130)
             personnages.DISPLAYSURF.blit(texte,texterect)
@@ -107,6 +107,9 @@ def LancerMission5():
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
+            pygame.mixer.music.load("sons/Mission5.mp3")
+            pygame.mixer.music.set_volume(0.3)
+            pygame.mixer.music.play()
             break
                 
         pygame.display.update()
@@ -235,13 +238,21 @@ def LancerMission5():
             fight.SpawHistoire(enemies,6,const.SCREEN_WIDTH//2,-70)
             fight.SpawHistoire(enemies,3,const.SCREEN_WIDTH//2,-150)
             numformation=13
-        elif numformation==13 and len(enemies)==0:
+        elif tempspasse > 45 and numformation==13:
+            fight.SpawHistoire(enemies,6,const.SCREEN_WIDTH//2-200,-70)
+            fight.SpawHistoire(enemies,6,const.SCREEN_WIDTH//2,-70)
+            fight.SpawHistoire(enemies,6,const.SCREEN_WIDTH//2+200,-70)
+            for l in range (const.SCREEN_WIDTH//2-200,const.SCREEN_WIDTH//2+200,40):
+                fight.SpawHistoire(enemies,1,l,-150)
+            numformation=14
+        elif numformation==14 and len(enemies)==0:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
             if temp['Histoire']==4:
                 temp['Histoire']=5
             with open('sauvegarde.pkl', 'wb') as f:
                     pickle.dump(temp, f)
+            pygame.mixer.music.fadeout(10000)
             menu.MenuFinPartie(score,True)
             break
 
@@ -361,7 +372,7 @@ def LancerMission5():
                     tirs.append(shoot)
                     shoot = fight.Projectile(entity,5,"sprites_animation/boule1.png")
                 tirs.append(shoot)
-            if entity.rect.bottom > const.SCREEN_HEIGHT:
+            if entity.rect.top > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
 
@@ -412,5 +423,6 @@ def LancerMission5():
         pygame.display.update()
         FramePerSec.tick(const.FPS)
     if alive != True: #En cas de victoire, on sort de la boucle avec alive=True
+        pygame.mixer.music.fadeout(10000)
         menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent
         
