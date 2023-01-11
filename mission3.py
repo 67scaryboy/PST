@@ -372,7 +372,7 @@ def LancerMission3():
                     tirs.append(shoot)
                     shoot = fight.Projectile(entity,5,"sprites_animation/boule1.png")
                 tirs.append(shoot)
-            if entity.rect.bottom > const.SCREEN_HEIGHT:
+            if entity.rect.top > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
 

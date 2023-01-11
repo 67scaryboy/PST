@@ -74,7 +74,7 @@ def Arcade():
                         shoot = Projectile(entity,0,"sprites/tir.png")
                     tirs.append(shoot)
                 #supprimer les enemis qui sortent de l'écrant
-                if entity.rect.bottom > const.SCREEN_HEIGHT:
+                if entity.rect.top > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
         #tir automatique

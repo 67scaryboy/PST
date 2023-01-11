@@ -391,7 +391,7 @@ def LancerMission1():
                     elif (entity.id == "e3"):
                         shoot = fight.Projectile(entity,0,"sprites/tir.png")
                     tirs.append(shoot)
-            if entity.rect.bottom > const.SCREEN_HEIGHT:
+            if entity.rect.top > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
 

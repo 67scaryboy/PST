@@ -129,9 +129,9 @@ def LancerMission2():
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
-            pygame.mixer.music.load("sons/Mission2.mp3")
+            """pygame.mixer.music.load("sons/Mission2.mp3")
             pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play()
+            pygame.mixer.music.play()"""
             break
                 
         pygame.display.update()
@@ -392,7 +392,7 @@ def LancerMission2():
                     tirs.append(shoot)
                     shoot = fight.Projectile(entity,5,"sprites_animation/boule1.png")
                 tirs.append(shoot)
-            if entity.rect.bottom > const.SCREEN_HEIGHT:
+            if entity.rect.top > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
 
