@@ -55,7 +55,7 @@ class Enemy(pygame.sprite.Sprite):
             self.id = 'e5'
         elif id == 6: #Tanks
             self.image = pygame.image.load("sprites/e6.png").convert_alpha()
-            self.PV = 1500
+            self.PV = 2000
             self.MAXPV = self.PV
             self.ATK = 70
             self.score = 200
