@@ -326,7 +326,7 @@ class Projectile(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
       def suivre(self,joueur):
-        self.rect.center = (joueur.rect.center[0],joueur.rect.center[1]-20)
+        self.rect.center = (joueur.rect.center[0],joueur.rect.center[1]-250)
 
       def move(self):
         self.rect.move_ip(self.direction[0],self.direction[1])
