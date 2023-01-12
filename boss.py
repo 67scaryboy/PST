@@ -325,6 +325,7 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
     FramePerSec = pygame.time.Clock()
     ScoreBoss = score
     alive = True
+    Bossenvie = True
 
     MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)#menu bas
     P1 = joueur
@@ -526,7 +527,7 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         for boom in explo:
             menu.Animation(const.explosions,boom)
 
-        if len(enemies)==1:
+        if len(enemies)==1 and Bossenvie:
             if enemies[0].id=='b2':
                 Cooldowncharge=Cooldownchargemax
                 MouvementFormation=True
@@ -614,5 +615,8 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         FramePerSec.tick(const.FPS)
         if enemies:
             if enemies[0].PV <0:
-                return alive,ScoreBoss
+                enemies[0].moveVitesse(0, -2)
+                Bossenvie = False
+        if len(enemies)==1 and Bossenvie==False:
+            return alive,ScoreBoss
     return alive,ScoreBoss
