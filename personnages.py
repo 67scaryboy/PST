@@ -243,9 +243,12 @@ class Compagon(pygame.sprite.Sprite):
         surface.blit(self.image, self.rect)
 
 class Debrit(pygame.sprite.Spritre):
-    def __init__(self,perso):
+    def __init__(self,id):
         super().__init()
-        self.image =  pygame.image.load("sprites/souris.png").convert_alpha()
+        if id == 1:
+            self.image =  pygame.image.load("sprites/débrit.png").convert_alpha()
+        else:
+            self.image =  pygame.image.load("sprites/débrit2.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
 
