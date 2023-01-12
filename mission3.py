@@ -297,7 +297,7 @@ def LancerMission3():
             fight.SpawHistoire(enemies,4,590,-1200)
             fight.SpawHistoire(enemies,4,const.SCREEN_WIDTH//2,-1350)
             numformation=15
-        elif numformation==15 and len(enemies)==0:
+        elif numformation==15 and len(enemies)==0 and tempspasse > 60:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
             if temp['Histoire']==2:
