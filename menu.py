@@ -5,12 +5,13 @@ import constantes as const
 FramePerSec = pygame.time.Clock()
 
 def Shop():
-    Bcontinuer=Affichage("sprites/NContinuer.png",const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+150)
+    Bcontinuer=Affichage("sprites/NContinuer.png",const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+50)
     AP=Affichage("sprites_menu/APshop.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
     MB=Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+70)
     CarteAttaque=Affichage("sprites_menu/Carte1.png",const.SCREEN_WIDTH/2-200,170)
     CarteVie=Affichage("sprites_menu/Carte1.png",const.SCREEN_WIDTH/2+200,170)
     CarteCooldown=Affichage("sprites_menu/Carte1.png",const.SCREEN_WIDTH/2-200,470)
+    Bultime=Affichage("sprites/NUltime.png",const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+150)
     Joueur = personnages.Player(0)
     VaisseauModifie=1
     V1 = personnages.Player(1)
@@ -32,6 +33,7 @@ def Shop():
                 pygame.quit()
                 sys.exit()
         Bcontinuer.modif("sprites/NContinuer.png")
+        Bultime.modif("sprites/NUltime.png")
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
         MB.draw(personnages.DISPLAYSURF)
@@ -62,12 +64,12 @@ def Shop():
         if temp['V3'][0]==True:
             V3.draw(personnages.DISPLAYSURF)
         Joueur.souris(personnages.DISPLAYSURF)
-        if pygame.sprite.collide_rect(Joueur,Bcontinuer): #Bouton chargement de la sauvegarde
+        if pygame.sprite.collide_rect(Joueur,Bcontinuer):
             Bcontinuer.modif("sprites/HContinuer.png")
             Bcontinuer.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
             if pygame.mouse.get_pressed() == (1, 0, 0):
-                return #Ne ferme le shop qu'après 2 appuis, pourquoi ?
+                return 
         if pygame.sprite.collide_rect(Joueur,V1):
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
@@ -80,8 +82,41 @@ def Shop():
             for i in pygame.mouse.get_pressed():
                 if pygame.mouse.get_pressed()[i]==True:
                     VaisseauModifie = 3
+        
+        if pygame.sprite.collide_rect(Joueur,Bultime):
+            Bultime.modif("sprites/HUltime.png")
+            if pygame.mouse.get_pressed() == (1, 0, 0):
+                if VaisseauModifie == 1 and temp['Argent']>50000 and temp['V1'][7]==False:
+                    temp['V1'][7]=True
+                    temp['Argent']-=50000
+                    time.sleep(0.3)
+                    with open('sauvegarde.pkl', 'wb') as f:
+                        pickle.dump(temp, f)  
+                elif VaisseauModifie == 2 and temp['Argent']>100000 and temp['V2'][7]==False:
+                        temp['V2'][7]=True
+                        temp['Argent']-=100000
+                        time.sleep(0.3)
+                        with open('sauvegarde.pkl', 'wb') as f:
+                            pickle.dump(temp, f) 
+                elif VaisseauModifie == 3 and temp['Argent']>200000 and temp['V3'][7]==False:
+                        temp['V3'][7]=True
+                        temp['Argent']-=200000
+                        time.sleep(0.3)
+                        with open('sauvegarde.pkl', 'wb') as f:
+                            pickle.dump(temp, f) 
+
+
+
         ###############AMELIORATION POUR LE 1ER VAISSEAU
         if VaisseauModifie==1: #Affichage des amélioration en fonction de ce qui à été acheté pour le vaisseau de gauche
+            if temp['V1'][7]==False:
+                Bultime.draw(personnages.DISPLAYSURF)
+                Joueur.souris(personnages.DISPLAYSURF)
+                texte=font.render("Prix: 50000", True, const.WHITE)#Affichage argent
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+200)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+
             if temp['V1'][4]==0: #Si aucune amélioration de tir
                 Attaque = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2-200,180)
                 Attaque.draw(personnages.DISPLAYSURF)
@@ -275,6 +310,14 @@ def Shop():
 
         #############AMELIORATIONS POUR LE 2E VAISSEAU
         if VaisseauModifie==2: #Affichage des amélioration en fonction de ce qui à été acheté pour le vaisseau de gauche
+            if temp['V2'][7]==False:
+                Bultime.draw(personnages.DISPLAYSURF)
+                Joueur.souris(personnages.DISPLAYSURF)
+                texte=font.render("Prix: 100000", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+200)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+
             if temp['V2'][4]==0: #Si aucune amélioration de tir
                 Attaque = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2-200,180)
                 Attaque.draw(personnages.DISPLAYSURF)
@@ -466,6 +509,14 @@ def Shop():
                         break
         #############AMELIORATIONS POUR LE 3E VAISSEAU
         if VaisseauModifie==3: #Affichage des amélioration en fonction de ce qui à été acheté pour le vaisseau de gauche
+            if temp['V3'][7]==False:
+                Bultime.draw(personnages.DISPLAYSURF)
+                Joueur.souris(personnages.DISPLAYSURF)
+                texte=font.render("Prix: 200000", True, const.WHITE)
+                texterect=texte.get_rect()
+                texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+200)
+                personnages.DISPLAYSURF.blit(texte,texterect)
+
             if temp['V3'][4]==0: #Si aucune amélioration de tir
                 Attaque = Affichage("sprites/tira2.png",const.SCREEN_WIDTH/2-200,180)
                 Attaque.draw(personnages.DISPLAYSURF)
@@ -1062,8 +1113,8 @@ def ChoixSauvegarde():
                     sauvegarde = {'V1': personnages.V1, #[Vie,Attaque,Cooldown]
                     'V2': personnages.V2,
                     'V3': personnages.V3,
-                    'Argent': 0,
-                    'Histoire':0} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
+                    'Argent': 3000000,
+                    'Histoire':6} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
                     with open('sauvegarde.pkl', 'wb') as f:
                         pickle.dump(sauvegarde, f)  
                     return 

@@ -9,9 +9,9 @@ DISPLAYSURF.fill(const.WHITE)
 pygame.display.set_caption("Game")
 
 ###Stats de bases des vaisseaux joueurs###
-V1 = [True,100,0,70,0,10,0] # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
-V2 = [False,130,0,70,0,20,0] 
-V3 = [False,150,0,150,0,30,0]
+V1 = [True,100,0,70,0,10,0, False] # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown, Ulti ?]
+V2 = [True,130,0,70,0,20,0, False] 
+V3 = [True,150,0,150,0,30,0, False]
 
 
 class Enemy(pygame.sprite.Sprite):
