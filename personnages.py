@@ -71,7 +71,7 @@ class Enemy(pygame.sprite.Sprite):
             pass
         else:
             self.rect.move_ip(0,2)
-        if (self.rect.bottom > const.SCREEN_HEIGHT):
+        if (self.rect.top > const.SCREEN_HEIGHT):
             self.kill()
     
       def moveKamikaze(self, joueur):
@@ -85,7 +85,7 @@ class Enemy(pygame.sprite.Sprite):
                     self.rect.move_ip(-8,6)
             else:
                 self.rect.move_ip(0,9)
-            if (self.rect.bottom > const.SCREEN_HEIGHT):
+            if (self.rect.top > const.SCREEN_HEIGHT):
                 self.kill()
 
 
@@ -241,3 +241,31 @@ class Compagon(pygame.sprite.Sprite):
         
     def draw(self, surface):
         surface.blit(self.image, self.rect)
+
+class Debrit(pygame.sprite.Spritre):
+    def __init__(self,perso):
+        super().__init()
+        self.image =  pygame.image.load("sprites/souris.png").convert_alpha()
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+    
+    def move(self):
+        self.rect.move_ip(0,2)
+        if (self.rect.top > const.SCREEN_HEIGHT):
+            self.kill()
+    
+    def move(self,x,y):
+        self.rect.move_ip(x,y)
+        if (self.rect.top > const.SCREEN_HEIGHT):
+            self.kill()
+
+def crash(debrits, joueur, tempscore, p_alive):#fonction de colision avec les débrits
+    for ferraille in debrits:
+        if pygame.sprite.collide_rect(ferraille,joueur): #ajout pour voir si limite les lags
+            if pygame.sprite.collide_mask(ferraille,joueur): #colision tirs joueur
+                joueur.PV = 0
+                p_alive = fight.Mort([],p_P1,debrits)
+    return (tempscore, p_alive)
