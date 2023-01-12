@@ -24,10 +24,6 @@ def LancerMission7():
     cooldown = P1.cooldown
 
     debrits = []
-    enemies = [] 
-    tirs = []
-    explo = []
-    boosts = []
     gc.collect()
     while alive:
         for event in pygame.event.get():
@@ -108,8 +104,8 @@ def LancerMission7():
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
-            pygame.mixer.music.load("sons/Mission5.mp3")
-            pygame.mixer.music.set_volume(0.3)
+            #pygame.mixer.music.load("sons/Mission5.mp3")
+            #pygame.mixer.music.set_volume(0.3)
             #pygame.mixer.music.play()
             break
                 
@@ -121,52 +117,16 @@ def LancerMission7():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-
-        score,alive=fight.Colision(tirs,P1,enemies,explo,boosts,score,alive)
-        bonus.AttraperBoost(boosts,P1)
-
-        for boost in boosts:
-                    boost.move()
-                    if boost.rect.bottom > const.SCREEN_HEIGHT:
-                            boosts.remove(boost)
-
-        #Boucle de spawn après timer
+        
         tempspasse = time.time() - tempsdemarrage
-        if tempspasse > 5 and numformation==0: # Temps en secondes
-            print("Boiss")
-            boss.Boss2(P1,score,AP3,AP2,AP,VaisseauChoisis)
+
+        if tempspasse > 5 and numformation==0:
+            personnages.poser_debrits(debrits, 1, 5, 5, 0)
             numformation=1
         elif tempspasse > 10 and numformation==1:
-            
-            numformation=2
-        elif tempspasse > 15 and numformation==2:
-            
-            numformation=3
-        elif tempspasse > 16 and numformation==3:
-            
-            numformation=4
-        elif tempspasse > 17 and numformation==4:
-            numformation=5
-        elif tempspasse > 18 and numformation==5:
-            numformation=6
-        elif tempspasse > 19 and numformation==6:
-            
-            numformation=7
-        elif tempspasse > 20 and numformation==7:
-            numformation=8
-        elif tempspasse > 25 and numformation==8:
-            numformation=9
-        elif tempspasse > 30 and numformation==9:
-            numformation=10
-        elif tempspasse > 33 and numformation==10:
-            numformation=11
-        elif tempspasse > 36 and numformation==11:
-            numformation=12
-        elif tempspasse > 40 and numformation==12:
-            numformation=13
-        elif tempspasse > 45 and numformation==13:
-            numformation=14
-        elif numformation==14 and len(enemies)==0:
+            boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
+            numformation=15
+        elif numformation==15:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
             if temp['Histoire']==6:
@@ -176,132 +136,8 @@ def LancerMission7():
             pygame.mixer.music.fadeout(10000)
             menu.MenuFinPartie(score,True)
             break
-
-
-        #tir automatique
-        if P1.cooldown == 0:
-            with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
-                temp = pickle.load(f)
-            if VaisseauChoisis==1: #Permet de changer le sprite des tirs en fonction du nombre d'amélioration d'attaque
-                if temp['V1'][4]==0:
-                    shoot = fight.Projectile(P1,0,"sprites/tira.png")
-                    shootf= fight.Projectile(CP,0,"sprites/tira.png")
-                elif temp['V1'][4]==1:
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
-                elif temp['V1'][4]==2:
-                    shoot = fight.Projectile(P1,0,"sprites/tira3.png")
-                    shootf= fight.Projectile(CP,0,"sprites/tira3.png")
-            elif VaisseauChoisis==2: 
-                if temp['V2'][4]==0:
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
-                elif temp['V2'][4]==1:
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.right=P1.rect.right
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.left=P1.rect.left
-                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
-                elif temp['V2'][4]==2:
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.right=P1.rect.right
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.left=P1.rect.left
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,6,"sprites/tira2.png")
-                    shoot.rect.right=P1.rect.right
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,7,"sprites/tira2.png")
-                    shoot.rect.left=P1.rect.left
-                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
-            elif VaisseauChoisis==3:
-                if temp['V3'][4]==0:
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.right=P1.rect.right
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.left=P1.rect.left
-                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
-                elif temp['V3'][4]==1:
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.right=P1.rect.right
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.left=P1.rect.left
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,6,"sprites/tira2.png")
-                    shoot.rect.right=P1.rect.right
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,7,"sprites/tira2.png")
-                    shoot.rect.left=P1.rect.left
-                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
-                elif temp['V3'][4]==2:
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.right=P1.rect.right
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,0,"sprites/tira2.png")
-                    shoot.rect.left=P1.rect.left
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,6,"sprites/tira2.png")
-                    shoot.rect.right=P1.rect.right
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,7,"sprites/tira2.png")
-                    shoot.rect.left=P1.rect.left
-                    shootf= fight.Projectile(CP,0,"sprites/tira2.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,8,"sprites/tira2.png")
-                    shoot.rect.left=P1.rect.left
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(P1,9,"sprites/tira2.png")
-                    shoot.rect.left=P1.rect.right
-            tirs.append(shoot)
-            tirs.append(shootf)
-            P1.cooldown = cooldown
-        else:
-            P1.cooldown += -1
         
-        for entity in enemies: #Déplacement linéaire des ennemis !A CHANGER!
-            if entity.active == 1:
-                entity.move()
-                entity.moveKamikaze(P1)
-            p = random.randint(0,300)
-            if p < 1:
-                if (entity.id == "e1"):
-                    shoot = fight.Projectile(entity,3,"sprites_animation/boule1.png")
-                elif (entity.id == "e2"):
-                    shoot = fight.Projectile(entity,2,"sprites/tir3.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(entity,1,"sprites/tir3.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(entity,0,"sprites/tir3.png")
-                elif (entity.id == "e3"):
-                    shoot = fight.Projectile(entity,0,"sprites/tir.png")
-                elif (entity.id == "e5"):
-                    shoot = fight.Projectile(entity,4,"sprites_animation/boule1.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(entity,5,"sprites_animation/boule1.png")
-                tirs.append(shoot)
-            if entity.rect.top > const.SCREEN_HEIGHT:
-                    enemies.remove(entity)
-
-
-        #faire avance les tirs
-        for shoot in tirs:
-            shoot.move()
-            if shoot.rect.bottom > const.SCREEN_HEIGHT:
-                    tirs.remove(shoot)
+        alive = personnages.crash(debrits, P1, alive)
 
         ###Partie graphique###
         personnages.DISPLAYSURF.fill(const.WHITE)
