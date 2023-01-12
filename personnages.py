@@ -243,12 +243,13 @@ class Compagon(pygame.sprite.Sprite):
         surface.blit(self.image, self.rect)
 
 class Debrit(pygame.sprite.Spritre):
-    def __init__(self,id):
+    def __init__(self,id,angle):
         super().__init()
         if id == 1:
             self.image =  pygame.image.load("sprites/débrit.png").convert_alpha()
         else:
             self.image =  pygame.image.load("sprites/débrit2.png").convert_alpha()
+        self.image = pygame.transform.rotate(self.image, angle)
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -273,7 +274,7 @@ def crash(debrits, joueur, tempscore, p_alive):#fonction de colision avec les d�
                 p_alive = fight.Mort([],p_P1,debrits)
     return (tempscore, p_alive)
 
-def poser_debrits(debrits,id_debrit,posX,posY):
-    ferraille  = Debrit(id_debrit)
+def poser_debrits(debrits, id_debrit, posX, posY, angle):
+    ferraille  = Debrit(id_debrit, angle)
     ferraille.rect.center=(posX,posY)
     debrits.append(ferraille)
