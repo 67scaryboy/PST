@@ -4,10 +4,10 @@ import random, personnages, menu, bonus
 import constantes as const
 import pickle, os
 
-def Spawn(enemies,q):#random, pour le mode arcade
+def Spawn(enemies,q): #donne une propabilité d'apparition pour le mode arcade
     p = random.randint(0,100)
     if p < q:
-        p2 = random.randint(1,3)#a modifier pour avoir une proba dépendant de la difficulté
+        p2 = random.randint(1,3)
         if p2 == 1:
             enemy  = personnages.Enemy(1)
         elif p2 == 2:
@@ -16,12 +16,12 @@ def Spawn(enemies,q):#random, pour le mode arcade
             enemy  = personnages.Enemy(3)
         enemies.append(enemy)
 
-def SpawHistoire(listeennemis,idennemis,posX,posY):#Faire spawn un ennemis précis à certaine coordonnés.
+def SpawHistoire(listeennemis,idennemis,posX,posY):#Faire spawn un ennemis précis pour le mode histoire.
     enemy  = personnages.Enemy(idennemis)
     enemy.rect.center=(posX,posY)
     listeennemis.append(enemy)
 
-def Arcade():
+def Arcade(): #Mode Arcade
     FramePerSec = pygame.time.Clock()
     scoreArcade = 0
     alive = True
@@ -29,17 +29,17 @@ def Arcade():
     VaisseauChoisis = menu.ChoixPerso()
     font = pygame.font.Font('freesansbold.ttf', 32)
 
-    AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
-    AP2= menu.Arrièreplan(5)# 4 ou 5 pour le paralax profond
-    AP3= menu.Arrièreplan(6)# 6 ou 7 pour le paralax superieur
+    AP = menu.Arrièreplan(3) #
+    AP2= menu.Arrièreplan(5) #Arrière plan
+    AP3= menu.Arrièreplan(6) #
     MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)
     P1 = personnages.Player(VaisseauChoisis)
     E1 = personnages.Enemy(1)
     CP = personnages.Compagon(P1)
-    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
+    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200) #Positionement du joueur
 
-    cooldown = P1.cooldown
-    backup = cooldown
+    cooldown = P1.cooldown  #sert à réinitialiser le cooldown après chaque tir
+    backup = cooldown       #sert à réinitialiser le cooldown après utilisation de l'ulti
 
     enemies = [] 
     enemies.append(E1)
@@ -53,7 +53,8 @@ def Arcade():
                 pygame.quit()
                 sys.exit()
 
-        CP.update(P1)
+        CP.update(P1)  #oscillations du compagnon
+
         #mouvements ennemis
         for entity in enemies:
             if entity.active == 1:
@@ -80,7 +81,7 @@ def Arcade():
 
         #tir automatique
         if P1.cooldown == 0:
-            with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+            with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir le niveau d'amélioration des tirs
                 temp = pickle.load(f)
             if VaisseauChoisis==1: #Permet de changer le sprite des tirs en fonction du nombre d'amélioration d'attaque
                 if temp['V1'][4]==0:
@@ -173,85 +174,86 @@ def Arcade():
             P1.cooldown += -1
         
         #gestion des ultis
-        if P1.DureeUlti == -1:
-            P1.ulti(enemies,tirs,explo,scoreArcade)
-        elif P1.DureeUlti > 0:
-            P1.DureeUlti -= 1
-            cooldown = P1.cooldown
-        elif P1.DureeUlti == 0:
-            for shoot in tirs:
+        if P1.DureeUlti == -1:                      #si l'ulti n'est pas en cours
+            P1.ulti(enemies,tirs,explo,scoreArcade)     #chargement de l'ulti
+        elif P1.DureeUlti > 0:                      #si l'ulti est en cours
+            P1.DureeUlti -= 1                           #reduit son temps d'utilisation
+            cooldown = P1.cooldown                      #change le cooldown de tir
+        elif P1.DureeUlti == 0:                     #si l'ulti se termine
+            for shoot in tirs:                          #supprime un écentuel laser
                 if shoot.trajectoire == 10:
                     tirs.remove(shoot)
-            cooldown = backup
-            P1.DureeUlti -= 1
+            cooldown = backup                           #réinitialise le cooldown de tir
+            P1.DureeUlti -= 1                           #termine l'ulti
 
 
 
-        #faire avance les tirs
+        #faire avancer les tirs
         for shoot in tirs:
-            for i in range (0,niveau+1,1):#Tirs plus rapides en fonction du nombre de boss battus
+            for i in range (0,niveau+1,1):    #Les tirs plus rapides en fonction du nombre de boss battus
                 shoot.move()
                 if shoot.trajectoire == 10:
-                    shoot.suivre(P1)
-                    menu.Animation(const.laserboss, shoot)
-            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):#pour l'ulti
-                    tirs.remove(shoot)
+                    shoot.suivre(P1)                          #Le laser de l'ulti suis le joueur
+                    menu.Animation(const.laserboss, shoot)    #et est animé 
+            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)): #empèche le laser de disparaitre avant la fin de l'ulti
+                    tirs.remove(shoot) #supprime les tirs qui sortent de l'écrant
         
+        #fait avancer les boosters
         for boost in boosts:
             boost.move()
             if boost.rect.bottom > const.SCREEN_HEIGHT:
-                    boosts.remove(boost)
+                    boosts.remove(boost) #supprime les boosters qui sortent de l'écrant
     
-        AP3.move(3)#vitesse de déplacement des couches
-        AP2.move(2)
-        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
+        AP3.move(3) #
+        AP2.move(2) #défillement du fond
+        AP.move(1)  #
 
-        scoreArcade,alive=Colision(tirs,P1,enemies,explo,boosts,scoreArcade,alive)
+        scoreArcade,alive=Colision(tirs,P1,enemies,explo,boosts,scoreArcade,alive) #gestion des colisions
 
-        bonus.AttraperBoost(boosts,P1)
+        bonus.AttraperBoost(boosts,P1) #gestion de la colision bonus-joueur
 
         if scoreArcade%11000<10000: #Verification du score (utile pour le spawn du boss de temps en temps) | 2000 correspond au modulo choisi et 1500 au seuil de controle
             #ATTENTION: Avant de modifier les valeurs au dessus, aller voir la fonction qui fait spawn le boss
             Spawn(enemies,2) #Apparition aléatoire d'adversaires.
         else:
-            if len(enemies)==0: #Si la limite de score a été atteinte et qu'il y a plus d'adversaires sur le terrain
-                temp = boss.Boss1(P1,scoreArcade,AP3,AP2,AP,VaisseauChoisis)
-                AP.rect.center = temp[1]
-                AP2.rect.center = temp[2]
-                AP3.rect.center = temp[3]
-                if temp[0]==0:
+            if len(enemies)==0:                                               #Si la limite de score a été atteinte et qu'il y a plus d'adversaires sur le terrain
+                temp = boss.Boss1(P1,scoreArcade,AP3,AP2,AP,VaisseauChoisis)  #Lancer le combat de boss n°1
+                AP.rect.center = temp[1]  #
+                AP2.rect.center = temp[2] #Assure la continuité du fond
+                AP3.rect.center = temp[3] #
+                if temp[0]==0: #le joueur est mort
                     break
                 else:
-                    scoreArcade=temp[0]
-                    niveau+=1
+                    scoreArcade=temp[0] #le joueur à gagné le combat de boss
+                    niveau+=1           #la difficultée augmente
 
+        #Affichage
         personnages.DISPLAYSURF.fill(const.WHITE)
-        AP.draw(personnages.DISPLAYSURF)
-        AP2.draw(personnages.DISPLAYSURF)
-        AP3.draw(personnages.DISPLAYSURF)
-
+        AP.draw(personnages.DISPLAYSURF)  #
+        AP2.draw(personnages.DISPLAYSURF) #Affichage du fond
+        AP3.draw(personnages.DISPLAYSURF) #
         
-        for shoot in tirs:
+        for shoot in tirs: #Affichage des tirs
             if shoot.trajectoire == 3 and shoot.tireur_id == "e1":
-                menu.Animation(const.boules,shoot)
+                menu.Animation(const.boules,shoot) #Animation des tirs
             shoot.draw(personnages.DISPLAYSURF)
         
-        for boost in boosts:
+        for boost in boosts: #Affichage des boosts
             boost.draw(personnages.DISPLAYSURF)
 
-        menu.aff_explo(explo)
+        menu.aff_explo(explo) #Affichge des explosions
         for boom in explo:
-            menu.Animation(const.explosions,boom)
+            menu.Animation(const.explosions,boom) #Animation des explosions
 
-        for entity in enemies:
+        for entity in enemies: #Affichage des enemis
             if entity.active == 1:
                 entity.draw(personnages.DISPLAYSURF)
-        P1.souris(personnages.DISPLAYSURF)#Affichage joueur
+        P1.souris(personnages.DISPLAYSURF) #Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
         P1.draw_ulti(personnages.DISPLAYSURF)
-        CP.draw(personnages.DISPLAYSURF)#Affichage Compagnon
-        MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
-        menu.AfficheScore(scoreArcade) #Affichage score
+        CP.draw(personnages.DISPLAYSURF) #Affichage Compagnon
+        MB.draw(personnages.DISPLAYSURF) #Affichage menu gauche
+        menu.AfficheScore(scoreArcade)   #Affichage score
         texte=font.render("Niveau: "+str(niveau), True, const.GREEN)
         texterect=texte.get_rect()
         texterect.center=(const.SCREEN_WIDTH-200,const.SCREEN_HEIGHT-12)
@@ -262,11 +264,11 @@ def Arcade():
         FramePerSec.tick(const.FPS)
     
     if os.path.exists('topscorearcade.pkl'): #Calcul des meilleurs scores
-        # Do something if the file exists
+        #Si le fichier existe
         with open('topscorearcade.pkl', 'rb') as f:
             temp = pickle.load(f)
             for i in range (1,6,1):
-                if temp[i]<scoreArcade and i<5:
+                if temp[i]<scoreArcade and i<5: #si le score est suffisement élevé pour être sur le leader board, l'ajoute
                     for a in range(5,i,-1):
                         temp[a]=temp[a-1]
                     temp[i]=scoreArcade 
@@ -276,30 +278,30 @@ def Arcade():
         with open('topscorearcade.pkl', 'wb') as f:
             pickle.dump(temp, f)       
     else:
-        # Do something if the file does not exist
+        #S'il n'existe pas (donc qu'il a été suprimé)
         topscore = {1: scoreArcade,
         2: 0,
         3: 0,
         4: 0,
         5:0}
         with open('topscorearcade.pkl', 'wb') as f:
-            pickle.dump(topscore, f)  
+            pickle.dump(topscore, f)  #créé le nouveau fichier
 
     menu.MenuFinPartieArcade(scoreArcade)
     return (scoreArcade)
 
 
-class Projectile(pygame.sprite.Sprite):
+class Projectile(pygame.sprite.Sprite):          #les tirs et le laser
       def __init__(self, tireur,traj,adresse):
         super().__init__()
-        self.tireur_id = tireur.id
-        self.damage = tireur.ATK
+        self.tireur_id = tireur.id                              #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
+        self.damage = tireur.ATK                                #Les dégats du tir
         self.image = pygame.image.load(adresse).convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.center = tireur.rect.center
-        if tireur.id in ['e1','e2','e3','e5','b2','s1','s2']: #Affiche differents tir en fonction de l'id tireur (e=ennemis, p=player, c=compagnon)
-            self.direction = [0,4]  #Vitesse de déplacement horizontale et verticale
-            self.team = 0# 0 pour les tirs enemis et 1 pour les aliés
+        self.rect.center = tireur.rect.center                   #Se place à la position du vaisseau qui tire
+        if tireur.id in ['e1','e2','e3','e5','b2','s1','s2']:   
+            self.direction = [0,4]                              #déplacement de base d'un projectile
+            self.team = 0                                       #0 pour les tirs ennemis et 1 pour les aliés
             
         elif tireur.id in ['p1','p2','p3','c1']:
             self.direction = [0,-10] #A modifier pour modifier la vitesse des tirs "normaux"
@@ -309,7 +311,7 @@ class Projectile(pygame.sprite.Sprite):
             self.direction = [0,4]
             self.team = 0
             if tireur.id == 'boss_g':
-                self.rect.center = (self.rect.center[0]-35,self.rect.center[1])
+                self.rect.center = (self.rect.center[0]-35,self.rect.center[1]) #décale les tirs puisque les morceaux font techniquement la même taille que le corp principal  
             elif tireur.id == 'boss_d':
                 self.rect.center = (self.rect.center[0]+35,self.rect.center[1])
             elif tireur.id == 'boss_a_g':
@@ -317,20 +319,20 @@ class Projectile(pygame.sprite.Sprite):
             elif tireur.id == 'boss_a_d':
                 self.rect.center = (self.rect.center[0]+140,self.rect.center[1])
 
-        self.trajectoire = traj # 10 pour laser
+        self.trajectoire = traj                                 #permet de paramettrer des trajectoires (10 est réservé pour le laser)
         if traj == 10:
-            self.direction = [0,0]
+            self.direction = [0,0]                              #le laser ne bouge pas avec "move", mais avec "suivre"
 
-        self.time = 0
-        self.mask = pygame.mask.from_surface(self.image)
+        self.time = 0                                           #permet de modifier la trajectoire en fonction du temps
+        self.mask = pygame.mask.from_surface(self.image)        #sert aux colisions
 
-      def suivre(self,joueur):
+      def suivre(self,joueur): #Permet au laser de suivre le joueur
         self.rect.center = (joueur.rect.center[0],joueur.rect.center[1]-250)
 
-      def move(self):
-        self.rect.move_ip(self.direction[0],self.direction[1])
+      def move(self): #fait avancer les tirs
+        self.rect.move_ip(self.direction[0],self.direction[1])            #fait avancer les tirs
 
-        if self.trajectoire == 1:#logarithme droite
+        if self.trajectoire == 1:#logarithme droite                       #en fonction de la trajectoire définie du tir, défini le prochain mouvement 
             temp = 2*(math.log(self.time+81/2)-math.log(self.time+1/2))
             self.direction = [temp,math.sqrt(9-temp)+2]
         elif self.trajectoire == 2:#logarithme gauche
@@ -353,50 +355,47 @@ class Projectile(pygame.sprite.Sprite):
         elif self.trajectoire == 9:#logarithme droite JOUEUR
             temp = 2*(math.log(self.time+81/2)-math.log(self.time+1/2))
             self.direction = [+temp,math.sqrt(9-temp)-12]
-
         self.time += 1
-        if ((self.rect.top > const.SCREEN_HEIGHT) or (self.rect.top < 0)):
-            self.kill()
 
-      def draw(self, surface):
+      def draw(self, surface): #Affichage du projectile
         surface.blit(self.image, self.rect)
 
-def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):
+def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):  #Detection des colisions
     for shoot in p_tirs:
-        if shoot.team == 0:#si tir enemi
-            if pygame.sprite.collide_rect(shoot,p_P1): #ajout pour voir si limite les lags
-                if pygame.sprite.collide_mask(shoot,p_P1): #colision tirs joueur
-                    p_P1.PV -= shoot.damage
+        if shoot.team == 0:                                                      #si un tir ennemi
+            if pygame.sprite.collide_rect(shoot,p_P1):                              #est proche du joueur
+                if pygame.sprite.collide_mask(shoot,p_P1):                          #au point de le toucher
+                    p_P1.PV -= shoot.damage                                         #le joueur subit des dégats
                     if shoot in p_tirs:
-                        p_tirs.remove(shoot)
-                    if p_P1.PV <= 0:
-                        p_alive = Mort(p_tirs,p_P1,p_enemies)
-        else:
+                        p_tirs.remove(shoot)                                        #le tir est supprimé
+                    if p_P1.PV <= 0:                                                #si les dégats ont réduit les PV du joueur à 0
+                        p_alive = Mort(p_tirs,p_P1,p_enemies)                       #celui ci n'est plus en vie
+        else:                                                                    #si un tir alié
             for enemy in p_enemies:
-                if pygame.sprite.collide_rect(shoot,enemy) and enemy.id != 'b2': #ajout pour voir si limite les lags  
-                    if pygame.sprite.collide_mask(shoot,enemy):
-                        enemy.PV -=  shoot.damage
-                        if shoot in p_tirs and shoot.trajectoire != 10:
-                            p_tirs.remove(shoot)
-                        if enemy.PV <= 0:
-                            tempscore+=enemy.score
-                            p_explo.append(menu.explosion(enemy))
-                            bonus.dropBooster(boosts,enemy)
-                            p_enemies.remove(enemy)
-    for enemy in p_enemies:
-        if pygame.sprite.collide_rect(p_P1, enemy) and enemy.id != 'b2':#ajout pour voir si limite les lags
-            if pygame.sprite.collide_mask(p_P1,enemy): #colision ennemi joueur 
-                p_P1.PV -= enemy.ATK
-                tempscore+=enemy.score
-                p_explo.append(menu.explosion(enemy))
-                bonus.dropBooster(boosts,enemy)
-                p_enemies.remove(enemy)
-                if p_P1.PV <= 0:
-                    p_alive = Mort(p_tirs,p_P1,p_enemies)
+                if pygame.sprite.collide_rect(shoot,enemy) and enemy.id != 'b2':    #est proche d'un ennemi 
+                    if pygame.sprite.collide_mask(shoot,enemy):                     #au point de le toucher
+                        enemy.PV -=  shoot.damage                                   #l'ennemi subit des dégats
+                        if shoot in p_tirs and shoot.trajectoire != 10:             #et si il ne s'agit pas du laser
+                            p_tirs.remove(shoot)                                    #le tir est supprimé
+                        if enemy.PV <= 0:                                           #si les dégats on réduit les PV de l'ennemi à 0
+                            tempscore+=enemy.score                                  #le joueur gagne des points
+                            p_explo.append(menu.explosion(enemy))                   #une explosion se produit
+                            bonus.dropBooster(boosts,enemy)                         #il y a une chance de faire tomber un bonus
+                            p_enemies.remove(enemy)                                 #et l'ennemi est supprimé
+    for enemy in p_enemies:                                                     #si un ennemi
+        if pygame.sprite.collide_rect(p_P1, enemy) and enemy.id != 'b2':            #est proche du joueur
+            if pygame.sprite.collide_mask(p_P1,enemy):                              #au point de le toucher 
+                p_P1.PV -= enemy.ATK                                                #le joueur subit des dégats
+                tempscore+=enemy.score                                              #le joueur gagne des points
+                p_explo.append(menu.explosion(enemy))                               #une explosion se produit
+                bonus.dropBooster(boosts,enemy)                                     #il y a une chance de faire tomber un bonus
+                p_enemies.remove(enemy)                                             #l'ennemi est détruit
+                if p_P1.PV <= 0:                                                    #si les dégats ont réduit les PV du joueur à 0
+                    p_alive = Mort(p_tirs,p_P1,p_enemies)                           #celui si n'est plus en vie
                 
-    return (tempscore,p_alive)
+    return (tempscore,p_alive)                                                 #le nouveau score et la situation du joueur est communiquée
     
-def Mort(p_tirs,p_P1,p_enemies):
-    p_tirs.clear()
+def Mort(p_tirs,p_P1,p_enemies): #Lorsque le joueur est mort
+    p_tirs.clear()    #on vide les fonctions
     p_enemies.clear()
-    return False
+    return False #fin de la boucle while alive
