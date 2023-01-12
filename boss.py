@@ -314,7 +314,7 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
 
     #Barre de cooldown pour la charge
     rect_capacite = pygame.Rect(0, 0, 750, 5)
-    rect_capacite.midbottom = const.SCREEN_WIDTH//2, 15
+    rect_capacite.midbottom = const.SCREEN_WIDTH//2, 20
     
     Cooldownchargemax=500
     Cooldowncharge=Cooldownchargemax
@@ -336,8 +336,12 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         
 
         # Gestion collision tirs
-        score,alive=fight.Colision(tirs,P1,enemies,explo,boosts,score,alive)
-        
+        temp = len(enemies)
+        ScoreBoss,alive=fight.Colision(tirs,P1,enemies,explo,boosts,score,alive)
+
+        enemies[0].PV -= (temp-len(enemies))*50
+
+
         #tir automatique du joueur
         if P1.cooldown == 0:
             with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
@@ -436,6 +440,12 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
             if p < 1:
                 if (entity.id == "s1"):
                     shoot = fight.Projectile(entity,3,"sprites_animation/boule1.png")
+                elif (entity.id == "s2"):
+                    shoot = fight.Projectile(entity,2,"sprites/tir3.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(entity,1,"sprites/tir3.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(entity,0,"sprites/tir3.png")
                 tirs.append(shoot)
             if entity.rect.top > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
@@ -464,9 +474,12 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
                 Cooldowncharge=Cooldownchargemax
                 MouvementFormation=True
                 Nbadversaire=random.randint(5,30) #Nombre d'adversaire qui apparait
-                for i in range (0,Nbadversaire,1):
-                    fight.SpawHistoire(enemies,-2,random.randint(0,const.SCREEN_WIDTH),random.randint(-400,-50))
-                pass
+                if enemies[0].PV > enemies[0].MAXPV//2:
+                    for i in range (0,Nbadversaire,1):
+                        fight.SpawHistoire(enemies,-2,random.randint(0,const.SCREEN_WIDTH),random.randint(-400,-50))
+                else:
+                    for i in range (0,Nbadversaire,1):
+                        fight.SpawHistoire(enemies,random.randint(-3,-2),random.randint(0,const.SCREEN_WIDTH),random.randint(-400,-50))
         if MouvementFormation==True:
             Coordbasse=-200
             for Vaisseau in enemies:
