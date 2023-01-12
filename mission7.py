@@ -121,7 +121,7 @@ def LancerMission7():
         tempspasse = time.time() - tempsdemarrage
 
         if tempspasse > 5 and numformation==0:
-            personnages.poser_debrits(debrits, 1, 5, 5, 0)
+            personnages.poser_debrits(debrits, 1, 40, -40, 0, numformation)
             numformation=1
         elif tempspasse > 10 and numformation==1:
             boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
@@ -137,6 +137,10 @@ def LancerMission7():
             menu.MenuFinPartie(score,True)
             break
         
+        for entity in debrits: #Déplacement des ennemis 
+           entity.move()
+                
+
         alive = personnages.crash(debrits, P1, alive)
 
         ###Partie graphique###
