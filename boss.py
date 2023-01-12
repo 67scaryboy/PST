@@ -4,57 +4,57 @@ import random, personnages, menu, bonus, fight, cinematiques
 import constantes as const
 from copy import deepcopy
 
-class ModularBoss_main_body(pygame.sprite.Sprite):
+class ModularBoss_main_body(pygame.sprite.Sprite):         #Boss modulaire
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load("sprites_boss/boss_damaged.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2,80)
-        self.cooldown = 60
+        self.cooldown = 60                                 #permet de définir la cadence de tir
         self.id = "body"
-        self.destination = const.SCREEN_WIDTH//2
+        self.destination = const.SCREEN_WIDTH//2           #sert à faire des petits mouvements au boss
     
-    def draw(self, surface):
+    def draw(self, surface):                 #sert à afficher le boss
         surface.blit(self.image, self.rect)
     
-    def move(self):
+    def move(self):                                                     #sert à faire des petits mouvements au boss
         position = self.rect.center[0]
         if position < self.destination:
             self.rect.move_ip(1,0)
         elif position > self.destination:
-            self.rect.move_ip(-1,0)
+            self.rect.move_ip(-1,0)                                     #le boss se déplace vers sa destination
         else:
-            self.destination = random.randint(70,const.SCREEN_WIDTH-70)
+            self.destination = random.randint(70,const.SCREEN_WIDTH-70) #lorsque la destination est atteinte, une autre est définie
 
 class ModularBoss_destructible(pygame.sprite.Sprite):
     def __init__(self,mainbody,adresse,id):
         super().__init__()
         self.image = pygame.image.load(adresse).convert_alpha()
         self.rect = self.image.get_rect()
-        self.id = id
-        self.PVMAX = 10000
-        self.PV = self.PVMAX
-        self.ATK = 100
+        self.id = id                                               #id du module
+        self.PVMAX = 10000                                         #
+        self.PV = self.PVMAX                                       #statistiques du module du boss
+        self.ATK = 100                                             #
         self.rect.center = mainbody.rect.center
-        self.mask = pygame.mask.from_surface(self.image)
+        self.mask = pygame.mask.from_surface(self.image)           #sert au colisions
     
-    def draw(self, surface):
+    def draw(self, surface):                                       #affichage du module
         surface.blit(self.image, self.rect)
     
-    def move(self,mainbody):
+    def move(self,mainbody):                                       #permet aux modules de rester juste au dessus du corps principal
         self.rect.center = mainbody.rect.center
 
 
-def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
+def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive): #Colisions durant le combat contre le Boss modulaire
     for shoot in p_tirs:
-        if shoot.team == 0:#si tir enemi
+        if shoot.team == 0:                                     #si un tir enemi touche le joueur
             if pygame.sprite.collide_mask(shoot,p_P1):
                 p_P1.PV -= shoot.damage
                 if shoot in p_tirs:
                     p_tirs.remove(shoot)
                 if p_P1.PV <= 0:
                     p_alive = fight.Mort(p_tirs,p_P1,[])
-        else:    
+        else:                                                  #si un tir alié touche le Boss
             for morceaux in p_morceaux:
                 if pygame.sprite.collide_mask(shoot,morceaux):
                     morceaux.PV -=  shoot.damage
@@ -65,27 +65,26 @@ def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
                         tempscore+=0
                         p_explo.append(menu.explosion(morceaux))
                         p_morceaux.remove(morceaux)
-    for morceaux in p_morceaux:
+    for morceaux in p_morceaux:                                #si le joueur touche le boss
         if pygame.sprite.collide_mask(p_P1,morceaux):
             p_P1.PV = 0
             p_alive = fight.Mort(p_tirs,p_P1,[])
                 
     return (tempscore,p_alive)
 
-def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis):
+def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis): #Boss Modulaire
     FramePerSec = pygame.time.Clock()
     ScoreBoss = score
     alive = True
 
-    MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)#menu bas
+    MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)
     P1 = joueur
-    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
 
-    coord_AP, coord_AP2, coord_AP3 = cinematiques.ArriveBoss1(P1,AP,AP2,AP3)
+    coord_AP, coord_AP2, coord_AP3 = cinematiques.ArriveBoss1(P1,AP,AP2,AP3)  #cinématique d'arrivée du boss 
 
-    AP.rect.center = coord_AP
-    AP2.rect.center = coord_AP2
-    AP3.rect.center = coord_AP3
+    AP.rect.center = coord_AP         #
+    AP2.rect.center = coord_AP2       #permet de garder une continuitée dans le défillement du fond
+    AP3.rect.center = coord_AP3       #
 
     Body = ModularBoss_main_body()
     Piece_a_d = ModularBoss_destructible(Body,"sprites_boss/boss_aile_d.png","boss_a_d")
@@ -103,7 +102,7 @@ def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         cooldown = temp['V3'][5]
     cooldown_boss = Body.cooldown
 
-    backup = cooldown #sert à la gestion des ultis 
+    backup = cooldown           #sert à la gestion des ultis 
     with open('sauvegarde.pkl', 'rb') as f:
         temp = pickle.load(f)
     if VaisseauChoisis == 1:
@@ -122,15 +121,15 @@ def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis):
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-        #mouvements ennemis
         
+        #mouvements ennemis
         Body.move()
         for Morceau in MorceauxBoss:
                 if Morceau.PV > 0:
                     Morceau.move(Body)
                 
-        if Body.cooldown == 0:
-            if len(MorceauxBoss)==4:
+        if Body.cooldown == 0:                  #tir ennemis
+            if len(MorceauxBoss)==4:            #le patern de tir dépends du nombre de morceaux encore fonctionels
                 for Morceau in MorceauxBoss:
                     shoot = fight.Projectile(Morceau,0,"sprites/tir2.png")
                     tirs.append(shoot)
@@ -162,16 +161,15 @@ def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis):
                     shoot = fight.Projectile(Morceau,2,"sprites/tir2.png")
                     tirs.append(shoot)
                 Body.cooldown = cooldown_boss
-
         else:
             Body.cooldown += -1
                 
 
         #tir automatique du joueur
         if P1.cooldown == 0:
-            with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+            with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir le niveau d'amélioration
                 temp = pickle.load(f)
-            if VaisseauChoisis==1: #Permet de changer le sprite des tirs en fonction du nombre d'amélioration d'attaque
+            if VaisseauChoisis==1:                  #Permet de changer le sprite des tirs en fonction du nombre d'amélioration d'attaque
                 if temp['V1'][4]==0:
                     shoot = fight.Projectile(P1,0,"sprites/tira.png")
                     
@@ -264,70 +262,74 @@ def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         for shoot in tirs:
             shoot.move()
             if shoot.trajectoire == 10:
-                shoot.suivre(P1)
-                menu.Animation(const.laserboss, shoot)
-            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):#pour l'ulti laser
-                tirs.remove(shoot)
+                shoot.suivre(P1)                               #permet au laser de suivre le vaisseau durant l'ulti
+                menu.Animation(const.laserboss, shoot)         #permet d'annimer le laser de l'ulti
+            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)): #permet d'éviter que le laser ne soit supprimé avant la fin de l'ulti
+                tirs.remove(shoot)                             #supprime les tirs qui sortent de l'écrant
     
-        AP3.move(3)#vitesse de déplacement des couches
-        AP2.move(2)
-        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
+        AP3.move(3)   #
+        AP2.move(2)   #défilement du fond (paralax)
+        AP.move(1)    #
 
-        ScoreBoss,alive=BossColision(tirs,P1,MorceauxBoss,explo,ScoreBoss,alive) #Colisions
+        ScoreBoss,alive=BossColision(tirs,P1,MorceauxBoss,explo,ScoreBoss,alive) #détection des colisions
 
+
+        #Affichage
         personnages.DISPLAYSURF.fill(const.WHITE)
-        AP.draw(personnages.DISPLAYSURF)
-        AP2.draw(personnages.DISPLAYSURF)
-        AP3.draw(personnages.DISPLAYSURF)
+        AP.draw(personnages.DISPLAYSURF)           #
+        AP2.draw(personnages.DISPLAYSURF)          #Affichage du fond
+        AP3.draw(personnages.DISPLAYSURF)          #
 
         menu.aff_explo(explo)
         for boom in explo:
-            menu.Animation(const.explosions,boom)
+            menu.Animation(const.explosions,boom)  #Affichage des explosions animées
 
-        Body.draw(personnages.DISPLAYSURF)
+        Body.draw(personnages.DISPLAYSURF)         #Affichage du corps principal du boss (abimé)
         
-        P1.souris(personnages.DISPLAYSURF)#Affichage joueur
-        P1.draw_health(personnages.DISPLAYSURF)
-        if Ulti: #gestion des ultis
-            if P1.DureeUlti == -1:
-                #P1.ulti(enemies,tirs,explo)
-                pass #Pas d'ennemis, donc ulti P1 inutile
-            elif P1.DureeUlti > 0:
-                P1.DureeUlti -= 1
+        P1.souris(personnages.DISPLAYSURF)         #Affichage du joueur
+        P1.draw_health(personnages.DISPLAYSURF)    #Affichage de la barre de vie
+        if Ulti:                             #gestion des ultis:
+            if P1.DureeUlti == -1:           #si l'ulti n'est pas en cours
+                P1.ulti(enemies,tirs,explo)  #charge l'ulti
+                pass 
+            elif P1.DureeUlti > 0:           #si l'ulti est en cours
+                P1.DureeUlti -= 1            #réduit son temps d'utilisation
                 cooldown = P1.cooldown
-            elif P1.DureeUlti == 0:
+            elif P1.DureeUlti == 0:          #lorsque l'ulti se termine
                 for shoot in tirs:
                     if shoot.trajectoire == 10:
-                        tirs.remove(shoot)
-                cooldown = backup
-                P1.DureeUlti -= 1
-            P1.draw_ulti(personnages.DISPLAYSURF)
+                        tirs.remove(shoot)  #supprime un éventuel laser de tirs  
+                cooldown = backup           #réinitialise le cooldown
+                P1.DureeUlti -= 1           #termine l'ulti
+            P1.draw_ulti(personnages.DISPLAYSURF)  #Affichage de la barre de chargement des ultis
         
-        for shoot in tirs:#ici pour les animations des tirs animées
+        for shoot in tirs:                         #Affiche les tirs
             shoot.draw(personnages.DISPLAYSURF)
 
-        for Morceau in MorceauxBoss:
+        for Morceau in MorceauxBoss:               #Affiche les modules du Boss
             if Morceau.PV > 0:
                 Morceau.draw(personnages.DISPLAYSURF)
 
-        MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
-        menu.AfficheScore(ScoreBoss) #Affichage score
+        MB.draw(personnages.DISPLAYSURF)          #Affiche le menu en bas
+        menu.AfficheScore(ScoreBoss)              #Affiche score
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
 
-        if not MorceauxBoss:
+        if not MorceauxBoss:                      #si le boss n'a plus de modules en fonctionnement
             pos_AP,pos_AP2,pos_AP3 = cinematiques.MortBoss(P1,Body,AP,AP2,AP3)
-            return [(ScoreBoss+1000),pos_AP,pos_AP2,pos_AP3] #L'ajout de score doit etre supérieur ou egal à la différence entre le modulo choisi et le seuil de controle
-    return [0,AP.rect.center,AP2.rect.center,AP3.rect.center] #si le joueur est mort met fin au jeu
+            return [(ScoreBoss+1000),pos_AP,pos_AP2,pos_AP3]  #renvoie le score et la position des arière plans
+    return [0,AP.rect.center,AP2.rect.center,AP3.rect.center] #si le joueur est mort met fin au combat
 
-def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
+#---------------------------------------------------------------------------------------------------------------------------------------
+
+def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):    #Boss Essaim
     FramePerSec = pygame.time.Clock()
     ScoreBoss = score
     alive = True
     Bossenvie = True
 
-    MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)#menu bas
+    MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)
     P1 = joueur
 
     with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour récupérer le cooldown
@@ -339,7 +341,7 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
     elif VaisseauChoisis==3:
         cooldown = temp['V3'][5]
 
-    #Barre de cooldown pour la charge
+    #Barre de cooldown pour la charge des sbires
     rect_capacite = pygame.Rect(0, 0, 750, 5)
     rect_capacite.midbottom = const.SCREEN_WIDTH//2, 20
     
@@ -361,15 +363,15 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
     explo = []
     boosts = []
     
-    fight.SpawHistoire(enemies,-1,const.SCREEN_WIDTH//2,-200)
-    while enemies[0].rect.bottom < const.SCREEN_HEIGHT//2-50:
+    fight.SpawHistoire(enemies,-1,const.SCREEN_WIDTH//2,-200) #place le boss dans la liste
+    while enemies[0].rect.bottom < const.SCREEN_HEIGHT//2-50: #cinématique d'entrée du boss
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-        AP3.move(3)#vitesse de déplacement des couches
-        AP2.move(2)
-        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
+        AP3.move(3)   #
+        AP2.move(2)   #déplacement de l'arrière plan
+        AP.move(1)    #
         AP.draw(personnages.DISPLAYSURF)
         AP2.draw(personnages.DISPLAYSURF)
         AP3.draw(personnages.DISPLAYSURF)
@@ -379,26 +381,26 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         pygame.display.update()
         FramePerSec.tick(const.FPS)
 
-    while alive:
+    while alive: #combat contre le Boss
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
         
-        if Cooldowncharge>-1:
+        if Cooldowncharge>-1:    #Charge la capacité du Boss
             Cooldowncharge-=1
         
 
-        # Gestion collision tirs
+        
         temp = len(enemies)
-        ScoreBoss,alive=fight.Colision(tirs,P1,enemies,explo,boosts,ScoreBoss,alive)
-        if enemies:
-            enemies[0].PV -= (temp-len(enemies))*50
+        ScoreBoss,alive=fight.Colision(tirs,P1,enemies,explo,boosts,ScoreBoss,alive) #gestion des colisions et des drops
+        if enemies:                                                                  #en cas de mort du joueur, enemies est vidé donc vérification
+            enemies[0].PV -= (temp-len(enemies))*50                                  #les dégats sont infligés au boss
 
 
         #tir automatique du joueur
         if P1.cooldown == 0:
-            with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
+            with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir le nombre d'améliorations
                 temp = pickle.load(f)
             if VaisseauChoisis==1: #Permet de changer le sprite des tirs en fonction du nombre d'amélioration d'attaque
                 if temp['V1'][4]==0:
@@ -488,7 +490,8 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
             P1.cooldown = cooldown
         else:
             P1.cooldown += -1
-
+        
+        #tirs ennemis
         for entity in enemies:
             p = random.randint(0,200)
             if p < 1:
@@ -509,14 +512,14 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         for shoot in tirs:
             shoot.move()
             if shoot.trajectoire == 10:
-                shoot.suivre(P1)
-                menu.Animation(const.laserboss, shoot)
-            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):#pour l'ulti laser
-                tirs.remove(shoot)
+                shoot.suivre(P1)                               #permet au laser de suivre le vaisseau durant l'ulti
+                menu.Animation(const.laserboss, shoot)         #permet d'annimer le laser de l'ulti
+            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)): #permet d'éviter que le laser ne soit supprimé avant la fin de l'ulti
+                tirs.remove(shoot)                             #supprime les tirs qui sortent de l'écrant
     
-        AP3.move(3)#vitesse de déplacement des couches
-        AP2.move(2)
-        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
+        AP3.move(3)   #
+        AP2.move(2)   #défilement de l'arrière plan
+        AP.move(1)    #
 
         #Affichage des bonus
         for boost in boosts:
