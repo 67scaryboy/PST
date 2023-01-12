@@ -309,6 +309,10 @@ class Debrit(pygame.sprite.Sprite):
             self.direction = [4,0]
         elif traj == 4:# <-
             self.direction = [-4,0]
+        elif traj == 5:# <\
+            self.direction = [-2,-3]
+        elif traj == 6:# />
+            self.direction = [2,-3]
 
 
 def crash(debrits, joueur, p_alive):#fonction de colision avec les débrits

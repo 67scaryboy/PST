@@ -120,7 +120,7 @@ def LancerMission7():
         
         tempspasse = time.time() - tempsdemarrage
 
-        if tempspasse > 5 and numformation==0:
+        if tempspasse > 3 and numformation==0:
             personnages.poser_debrits(debrits, 1, 40, -40, 2, numformation)
             personnages.poser_debrits(debrits, 1, 120, -40, 45, numformation)
             personnages.poser_debrits(debrits, 1, 210, -40, -20, numformation)
@@ -139,14 +139,30 @@ def LancerMission7():
             personnages.poser_debrits(debrits, 1, 120, -250, 175, numformation)
             personnages.poser_debrits(debrits, 1, 30, -250, 2, numformation)
             numformation=1
-        elif tempspasse > 8 and numformation == 1:
+        elif tempspasse > 6 and numformation == 1:
             personnages.poser_debrits(debrits, 2, -30, -50, 10, numformation)
             debrits[-1].chgtTraj(1)
             personnages.poser_debrits(debrits, 2, 830, -80, -10, numformation)
             debrits[-1].chgtTraj(2)
+            personnages.poser_debrits(debrits, 2, 1000, 500, 90, numformation)
+            debrits[-1].chgtTraj(4)
+            personnages.poser_debrits(debrits, 2, -200, 300, 45, numformation)
+            debrits[-1].chgtTraj(3)
+            personnages.poser_debrits(debrits, 2, -30, 850, 75, numformation)
+            debrits[-1].chgtTraj(6)
+            personnages.poser_debrits(debrits, 2, 840, 870, 145, numformation)
+            debrits[-1].chgtTraj(5)
 
             numformation = 2
-        elif len(debrits) == 0 and numformation==2: #combat de boss
+        elif tempspasse > 10 and numformation == 2:
+            personnages.poser_debrits(debrits, 2, 760, -90, 50, numformation)
+            personnages.poser_debrits(debrits, 2, 660, -70, 47, numformation)
+            personnages.poser_debrits(debrits, 2, 560, -50, 60, numformation)
+            personnages.poser_debrits(debrits, 2, 460, -70, -30, numformation)
+            personnages.poser_debrits(debrits, 2, 360, -90, 130, numformation)
+
+            numformation = 3
+        elif len(debrits) == 0 and numformation==3: #combat de boss
             boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
             numformation=15
         elif numformation==15: #victoire
@@ -161,9 +177,16 @@ def LancerMission7():
             break
         
         for entity in debrits: #Déplacement des ennemis 
-           entity.move()
-           if entity.rect.top > const.SCREEN_HEIGHT:
+            entity.move()
+            if entity.rect.top > const.SCREEN_HEIGHT and entity.direction[1] > 0:
                 debrits.remove(entity)
+            elif entity.rect.bottom < 0 and entity.direction[1] < 0:
+                debrits.remove(entity)
+            elif entity.direction[1] == 0:
+                if entity.rect.right < 0 and entity.direction[0] < 0:
+                    debrits.remove(entity)
+                elif entity.rect.left > const.SCREEN_WIDTH and entity.direction[0] > 0:
+                    debrits.remove(entity)
                 
 
         alive = personnages.crash(debrits, P1, alive)
