@@ -1168,8 +1168,8 @@ def ChoixSauvegarde():
                     sauvegarde = {'V1': personnages.V1, #[Vie,Attaque,Cooldown]
                     'V2': personnages.V2,
                     'V3': personnages.V3,
-                    'Argent': 3000000,
-                    'Histoire':6} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
+                    'Argent': 0,
+                    'Histoire':0} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
                     with open('sauvegarde.pkl', 'wb') as f:
                         pickle.dump(sauvegarde, f)  
                     return 
