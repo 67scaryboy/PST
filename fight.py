@@ -398,8 +398,6 @@ def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):
     return (tempscore,p_alive)
     
 def Mort(p_tirs,p_P1,p_enemies):
-    for shoot in p_tirs:
-        p_tirs.remove(shoot)
-    for enemy in p_enemies:
-        p_enemies.remove(enemy)
+    p_tirs.clear()
+    p_enemies.clear()
     return False

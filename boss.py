@@ -301,7 +301,6 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
 
     MB = menu.Affichage("sprites/mb.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT+130)#menu bas
     P1 = joueur
-    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
 
     with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour récupérer le cooldown
         temp = pickle.load(f)
