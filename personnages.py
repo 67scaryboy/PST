@@ -249,6 +249,7 @@ class Debrit(pygame.sprite.Sprite):
             self.image =  pygame.image.load("sprites/débrit.png").convert_alpha()
         else:
             self.image =  pygame.image.load("sprites/débrit2.png").convert_alpha()
+        self.direction = [0,2]
         self.image = pygame.transform.rotate(self.image, angle)
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
@@ -257,9 +258,25 @@ class Debrit(pygame.sprite.Sprite):
         surface.blit(self.image, self.rect)
     
     def move(self):
-        self.rect.move_ip(0,2)
+        self.rect.move_ip(self.direction[0],self.direction[1])
         if (self.rect.top > const.SCREEN_HEIGHT):
             self.kill()
+    
+    def move(self,traj): #définit une trajectoire et avance
+        
+        if traj == 0:#base
+            self.direction = [0,2]
+        if traj == 1:#diagonale \
+            self.direction = [1,2]
+        elif traj == 2:#diagonale /
+            self.direction = [-1,2]
+        elif traj == 3:# ->
+            self.direction = [2,0]
+        elif traj == 4:# <-
+            self.direction = [-2,0]
+
+        self.rect.move_ip(self.direction[0],self.direction[1])
+
     
     def move(self,x,y):
         self.rect.move_ip(x,y)
