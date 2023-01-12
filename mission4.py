@@ -471,7 +471,7 @@ def LancerMission4():
 
         #Affichage des tirs
         for shoot in tirs:
-            if shoot.trajectoire == 3 and shoot.tireur_id == "e1":
+            if shoot.trajectoire == 3 and shoot.tireur_id == "e1" or shoot.tireur_id == "e5":
                 menu.Animation(const.boules,shoot)
             shoot.draw(personnages.DISPLAYSURF)
         

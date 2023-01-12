@@ -422,17 +422,18 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
             P1.cooldown += -1
 
         for entity in enemies:
-            if entity.active == 1:
-                #######################
-                #Faire les déplacements ici
-                ########################
-                pass
             p = random.randint(0,300)
             if p < 1:
-                if (entity.id == "s1"):
+                if (entity.id == "b2"):
                     pass
-                    #shoot = fight.Projectile(entity,3,"sprites_animation/boule1.png")
-                #tirs.append(shoot)
+                    shoot = fight.Projectile(entity,2,"sprites/tir3.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(entity,1,"sprites/tir3.png")
+                    tirs.append(shoot)
+                    shoot = fight.Projectile(entity,0,"sprites/tir3.png")
+                elif (entity.id == "s1"):
+                    shoot = fight.Projectile(entity,3,"sprites_animation/boule1.png")
+                tirs.append(shoot)
             if entity.rect.top > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
@@ -458,9 +459,9 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         if len(enemies)==1:
             if enemies[0].id=='b2':
                 MouvementFormation=True
-                Nbadversaire=random.randint(5,15) #Nombre d'adversaire qui apparait
+                Nbadversaire=random.randint(5,20) #Nombre d'adversaire qui apparait
                 for i in range (0,Nbadversaire,1):
-                    fight.SpawHistoire(enemies,-2,random.randint(0,const.SCREEN_WIDTH),random.randint(-200,-50))
+                    fight.SpawHistoire(enemies,-2,random.randint(0,const.SCREEN_WIDTH),random.randint(-400,-50))
                 pass
         if MouvementFormation==True:
             Coordbasse=-200
@@ -501,7 +502,10 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
         
-        for shoot in tirs:#ici pour les animations des tirs animées
+        #Affichage/Animation des tirs
+        for shoot in tirs:
+            if shoot.trajectoire == 3 and shoot.tireur_id == "e1" or shoot.tireur_id == "e5":
+                menu.Animation(const.boules,shoot)
             shoot.draw(personnages.DISPLAYSURF)
 
         MB.draw(personnages.DISPLAYSURF)#Affichage menu gauche
