@@ -408,8 +408,11 @@ def LancerMission1():
         #faire avance les tirs
         for shoot in tirs:
             shoot.move()
-            if shoot.rect.bottom > const.SCREEN_HEIGHT:
-                    tirs.remove(shoot)
+            if shoot.trajectoire == 10:
+                shoot.suivre(P1)
+                menu.Animation(const.laserboss, shoot)
+            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):#pour l'ulti laser
+                tirs.remove(shoot)
 
         ###Partie graphique###
         personnages.DISPLAYSURF.fill(const.WHITE)
@@ -446,7 +449,7 @@ def LancerMission1():
 
         if Ulti: #gestion des ultis
             if P1.DureeUlti == -1:
-                P1.ulti(enemies,tirs,explo)
+                P1.ulti(enemies,tirs,explo,score)
             elif P1.DureeUlti > 0:
                 P1.DureeUlti -= 1
                 cooldown = P1.cooldown

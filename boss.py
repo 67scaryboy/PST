@@ -263,7 +263,10 @@ def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         #faire avancer les tirs
         for shoot in tirs:
             shoot.move()
-            if ((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)):
+            if shoot.trajectoire == 10:
+                shoot.suivre(P1)
+                menu.Animation(const.laserboss, shoot)
+            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):#pour l'ulti laser
                 tirs.remove(shoot)
     
         AP3.move(3)#vitesse de déplacement des couches
@@ -504,7 +507,10 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         #faire avancer les tirs
         for shoot in tirs:
             shoot.move()
-            if ((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)):
+            if shoot.trajectoire == 10:
+                shoot.suivre(P1)
+                menu.Animation(const.laserboss, shoot)
+            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):#pour l'ulti laser
                 tirs.remove(shoot)
     
         AP3.move(3)#vitesse de déplacement des couches
@@ -571,8 +577,9 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
             Vaisseau.draw(personnages.DISPLAYSURF)
 
         #Affichage des barres stats du boss
-        enemies[0].draw_health(personnages.DISPLAYSURF)
-        menu.draw_health_bar(personnages.DISPLAYSURF, rect_capacite.bottomleft, rect_capacite.size, (0, 0, 0), (206, 206, 206), (0, 128, 255), Cooldowncharge/Cooldownchargemax)
+        if enemies:
+            enemies[0].draw_health(personnages.DISPLAYSURF)
+            menu.draw_health_bar(personnages.DISPLAYSURF, rect_capacite.bottomleft, rect_capacite.size, (0, 0, 0), (206, 206, 206), (0, 128, 255), Cooldowncharge/Cooldownchargemax)
 
         menu.aff_explo(explo)
         for boom in explo:
@@ -582,7 +589,7 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         P1.draw_health(personnages.DISPLAYSURF)
         if Ulti: #gestion des ultis
             if P1.DureeUlti == -1:
-                P1.ulti(enemies,tirs,explo)
+                P1.ulti(enemies,tirs,explo,ScoreBoss)
             elif P1.DureeUlti > 0:
                 P1.DureeUlti -= 1
                 cooldown = P1.cooldown
