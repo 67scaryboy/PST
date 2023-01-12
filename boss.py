@@ -312,12 +312,18 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
     elif VaisseauChoisis==3:
         cooldown = temp['V3'][5]
 
+    #Barre de cooldown pour la charge
+    rect_capacite = pygame.Rect(0, 0, 750, 5)
+    rect_capacite.midbottom = const.SCREEN_WIDTH//2, 15
+    
+    Cooldownchargemax=500
+    Cooldowncharge=Cooldownchargemax
     enemies = [] #Le boss sera toujours en position 0
     tirs = []
     explo = []
     boosts = []
     
-    fight.SpawHistoire(enemies,-1,const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2-100)
+    fight.SpawHistoire(enemies,-1,const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2-200)
 
     while alive:
         for event in pygame.event.get():
@@ -325,6 +331,10 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
                 pygame.quit()
                 sys.exit()
         
+        if Cooldowncharge>-1:
+            Cooldowncharge-=1
+        
+
         # Gestion collision tirs
         score,alive=fight.Colision(tirs,P1,enemies,explo,boosts,score,alive)
         
@@ -422,16 +432,9 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
             P1.cooldown += -1
 
         for entity in enemies:
-            p = random.randint(0,300)
+            p = random.randint(0,200)
             if p < 1:
-                if (entity.id == "b2"):
-                    pass
-                    shoot = fight.Projectile(entity,2,"sprites/tir3.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(entity,1,"sprites/tir3.png")
-                    tirs.append(shoot)
-                    shoot = fight.Projectile(entity,0,"sprites/tir3.png")
-                elif (entity.id == "s1"):
+                if (entity.id == "s1"):
                     shoot = fight.Projectile(entity,3,"sprites_animation/boule1.png")
                 tirs.append(shoot)
             if entity.rect.top > const.SCREEN_HEIGHT:
@@ -458,8 +461,9 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
 
         if len(enemies)==1:
             if enemies[0].id=='b2':
+                Cooldowncharge=Cooldownchargemax
                 MouvementFormation=True
-                Nbadversaire=random.randint(5,20) #Nombre d'adversaire qui apparait
+                Nbadversaire=random.randint(5,30) #Nombre d'adversaire qui apparait
                 for i in range (0,Nbadversaire,1):
                     fight.SpawHistoire(enemies,-2,random.randint(0,const.SCREEN_WIDTH),random.randint(-400,-50))
                 pass
@@ -485,6 +489,13 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
                     Vaisseau.moveVitesse(0,1)
             if Coordbasse>449:
                 MouvementFormation=False
+        if Cooldowncharge<0:
+            for Vaisseau in enemies:
+                if Vaisseau.id=='b2':
+                    pass
+                else:
+                    Vaisseau.moveVitesse(0,6)
+
 
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
@@ -494,6 +505,10 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         #Afficher les ennemis
         for Vaisseau in enemies:
             Vaisseau.draw(personnages.DISPLAYSURF)
+
+        #Affichage des barres stats du boss
+        enemies[0].draw_health(personnages.DISPLAYSURF)
+        menu.draw_health_bar(personnages.DISPLAYSURF, rect_capacite.bottomleft, rect_capacite.size, (0, 0, 0), (206, 206, 206), (0, 128, 255), Cooldowncharge/Cooldownchargemax)
 
         menu.aff_explo(explo)
         for boom in explo:
