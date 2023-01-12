@@ -283,7 +283,7 @@ class Compagon(pygame.sprite.Sprite):
         #self.rect.center= (perso.rect.right+self.deplacementX,perso.rect.top+ self.deplacementY)
         #if (random.randint(0,1)==1): #Léger déplacement aléatoire du compagnon, a modif pr eviter l'épilepsie
         self.deplacementX+=random.randint(-1,1)
-        if ((self.rect.right+self.deplacementX-perso.rect.right<20 or perso.rect.right-self.rect.right<20) and self.rect.right<const.SCREEN_WIDTH and self.rect.left >0):
+        if ((self.rect.right+self.deplacementX-perso.rect.right<10 or perso.rect.right-self.rect.right<10) and self.rect.right<const.SCREEN_WIDTH and self.rect.left >0):
             self.rect.right = self.rect.right+self.deplacementX
         #else:
         self.deplacementY+= random.randint(-1,1)
