@@ -283,7 +283,7 @@ class Debrit(pygame.sprite.Sprite):
             self.image =  pygame.image.load("sprites/débrit.png").convert_alpha()
         else:
             self.image =  pygame.image.load("sprites/débrit2.png").convert_alpha()
-        self.direction = [0,2]
+        self.direction = [0,4]
         self.image = pygame.transform.rotate(self.image, angle)
         self.idFormation = formation
         self.rect = self.image.get_rect()
@@ -300,15 +300,15 @@ class Debrit(pygame.sprite.Sprite):
     def chgtTraj(self,traj): #définit une trajectoire et avance
         
         if traj == 0:#base
-            self.direction = [0,2]
+            self.direction = [0,4]
         if traj == 1:#diagonale \
-            self.direction = [1,2]
+            self.direction = [2,3]
         elif traj == 2:#diagonale /
-            self.direction = [-1,2]
+            self.direction = [-2,3]
         elif traj == 3:# ->
-            self.direction = [2,0]
+            self.direction = [4,0]
         elif traj == 4:# <-
-            self.direction = [-2,0]
+            self.direction = [-4,0]
 
 
 def crash(debrits, joueur, p_alive):#fonction de colision avec les débrits

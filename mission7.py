@@ -121,12 +121,35 @@ def LancerMission7():
         tempspasse = time.time() - tempsdemarrage
 
         if tempspasse > 5 and numformation==0:
-            personnages.poser_debrits(debrits, 1, 40, -40, 0, numformation)
+            personnages.poser_debrits(debrits, 1, 40, -40, 2, numformation)
+            personnages.poser_debrits(debrits, 1, 120, -40, 45, numformation)
+            personnages.poser_debrits(debrits, 1, 210, -40, -20, numformation)
+            personnages.poser_debrits(debrits, 1, 300, -40, 75, numformation)
+            personnages.poser_debrits(debrits, 1, 390, -40, -86, numformation)
+            personnages.poser_debrits(debrits, 1, 480, -40, 25, numformation)
+            personnages.poser_debrits(debrits, 1, 570, -40, 12, numformation)
+            personnages.poser_debrits(debrits, 1, 660, -40, 12, numformation)
+
+            personnages.poser_debrits(debrits, 1, 760, -250, 22, numformation)
+            personnages.poser_debrits(debrits, 1, 670, -250, -35, numformation)
+            personnages.poser_debrits(debrits, 1, 580, -250, 70, numformation)
+            personnages.poser_debrits(debrits, 1, 390, -250, 65, numformation)
+            personnages.poser_debrits(debrits, 1, 300, -250, 120, numformation)
+            personnages.poser_debrits(debrits, 1, 210, -250, 219, numformation)
+            personnages.poser_debrits(debrits, 1, 120, -250, 175, numformation)
+            personnages.poser_debrits(debrits, 1, 30, -250, 2, numformation)
             numformation=1
-        elif tempspasse > 10 and numformation==1:
+        elif tempspasse > 8 and numformation == 1:
+            personnages.poser_debrits(debrits, 2, -30, -50, 10, numformation)
+            debrits[-1].chgtTraj(1)
+            personnages.poser_debrits(debrits, 2, 830, -80, -10, numformation)
+            debrits[-1].chgtTraj(2)
+
+            numformation = 2
+        elif len(debrits) == 0 and numformation==2: #combat de boss
             boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
             numformation=15
-        elif numformation==15:
+        elif numformation==15: #victoire
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
             if temp['Histoire']==6:
@@ -139,6 +162,8 @@ def LancerMission7():
         
         for entity in debrits: #Déplacement des ennemis 
            entity.move()
+           if entity.rect.top > const.SCREEN_HEIGHT:
+                debrits.remove(entity)
                 
 
         alive = personnages.crash(debrits, P1, alive)
