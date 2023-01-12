@@ -138,7 +138,7 @@ def MortBoss(P1,Body,AP,AP2,AP3):
     pygame.mouse.set_pos(P1.rect.center[0],P1.rect.center[1])
     return AP.rect.center, AP2.rect.center, AP3.rect.center
 
-def ArriveBoss(P1,AP,AP2,AP3):
+def ArriveBoss1(P1,AP,AP2,AP3):
     pygame.mouse.set_pos(P1.rect.center[0],P1.rect.center[1])
     FramePerSec = pygame.time.Clock()
     rec = True

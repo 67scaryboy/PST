@@ -18,7 +18,25 @@ class Enemy(pygame.sprite.Sprite):
       def __init__(self, id):
         super().__init__()
         self.active = 1
-        if id == 1:#Tir sinusoidaux
+
+        ##### Enemis spéciaux (boss, enemis uniques... A ne pas faire apparaitre traditionellement dans les combats) -> ID négatif
+        if id == -1: #Boss niveau 7
+            self.image = pygame.image.load("sprites_boss/boss2.png").convert_alpha()
+            self.PV = 20000 #PV de ce type d'adversaire
+            self.MAXPV = self.PV
+            self.ATK = 30 #Attaque de ce type d'adversaire
+            self.score = 1000 #Score crédité en cas de kill (a voir, le crédit de score se fera peut etre manuellement)
+            self.id = 'b2' #ID de ce type
+        elif id == -2:
+            self.image = pygame.image.load("sprites_boss/sbires.png").convert_alpha()
+            self.PV = 160
+            self.MAXPV = self.PV
+            self.ATK = 15
+            self.score = 30
+            self.id = 's1' #Sbire 1
+
+        ##### Enemis traditionnels -> ID positif
+        elif id == 1:#Tir sinusoidaux
             self.image = pygame.image.load("sprites/e1.png").convert_alpha()
             self.PV = 100 #PV de ce type d'adversaire
             self.MAXPV = self.PV
@@ -64,6 +82,9 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.center=(random.randint(50,const.SCREEN_WIDTH-50),0)
         self.width = self.image.get_width()
         self.mask = pygame.mask.from_surface(self.image)
+      
+
+      #Methodes de déplacement
 
       def move(self):
 
@@ -87,6 +108,14 @@ class Enemy(pygame.sprite.Sprite):
                 self.rect.move_ip(0,9)
             if (self.rect.top > const.SCREEN_HEIGHT):
                 self.kill()
+      
+      def moveVitesse(self,VitesseX, VitesseY):
+        if self.id=='e4':
+            pass
+        else:
+            self.rect.move_ip(VitesseX,VitesseY)
+        if (self.rect.bottom > const.SCREEN_HEIGHT):
+            self.kill()
 
 
       def draw(self, surface):
