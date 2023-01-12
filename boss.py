@@ -287,7 +287,8 @@ def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         P1.draw_health(personnages.DISPLAYSURF)
         if Ulti: #gestion des ultis
             if P1.DureeUlti == -1:
-                P1.ulti(enemies,tirs,explo)
+                #P1.ulti(enemies,tirs,explo)
+                pass #Pas d'ennemis, donc ulti P1 inutile
             elif P1.DureeUlti > 0:
                 P1.DureeUlti -= 1
                 cooldown = P1.cooldown
@@ -356,7 +357,23 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
     explo = []
     boosts = []
     
-    fight.SpawHistoire(enemies,-1,const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2-200)
+    fight.SpawHistoire(enemies,-1,const.SCREEN_WIDTH//2,-200)
+    while enemies[0].rect.bottom < const.SCREEN_HEIGHT//2-50:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        AP3.move(3)#vitesse de déplacement des couches
+        AP2.move(2)
+        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
+        AP.draw(personnages.DISPLAYSURF)
+        AP2.draw(personnages.DISPLAYSURF)
+        AP3.draw(personnages.DISPLAYSURF)
+        enemies[0].moveVitesse(0, 2)
+        enemies[0].draw(personnages.DISPLAYSURF)
+        P1.souris(personnages.DISPLAYSURF)
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
 
     while alive:
         for event in pygame.event.get():
