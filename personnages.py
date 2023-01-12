@@ -200,7 +200,7 @@ class Player(pygame.sprite.Sprite): #Si on
                         
                     self.Ulti = 0
                 elif self.id == 'p2': #Spam
-                    self.DureeUlti = 300
+                    self.DureeUlti = 120
                     self.cooldown = 30
                     self.Ulti = 0
                 elif self.id == 'p3': #Laser
