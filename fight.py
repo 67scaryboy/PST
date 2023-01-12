@@ -374,7 +374,7 @@ def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):
                         p_alive = Mort(p_tirs,p_P1,p_enemies)
         else:
             for enemy in p_enemies:
-                if pygame.sprite.collide_rect(shoot,enemy): #ajout pour voir si limite les lags  
+                if pygame.sprite.collide_rect(shoot,enemy) and enemy.id != 'b2': #ajout pour voir si limite les lags  
                     if pygame.sprite.collide_mask(shoot,enemy):
                         enemy.PV -=  shoot.damage
                         if shoot in p_tirs and shoot.trajectoire != 10:
@@ -385,7 +385,7 @@ def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):
                             bonus.dropBooster(boosts,enemy)
                             p_enemies.remove(enemy)
     for enemy in p_enemies:
-        if pygame.sprite.collide_rect(p_P1, enemy):#ajout pour voir si limite les lags
+        if pygame.sprite.collide_rect(p_P1, enemy) and enemy.id != 'b2':#ajout pour voir si limite les lags
             if pygame.sprite.collide_mask(p_P1,enemy): #colision ennemi joueur 
                 p_P1.PV -= enemy.ATK
                 tempscore+=enemy.score

@@ -315,7 +315,7 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
     enemies = [] #Le boss sera toujours en position 0
     tirs = []
     explo = []
-
+    boosts = []
     
     fight.SpawHistoire(enemies,-1,const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2-100)
 
@@ -324,7 +324,9 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-        #mouvements ennemis
+        
+        # Gestion collision tirs
+        score,alive=fight.Colision(tirs,P1,enemies,explo,boosts,score,alive)
         
         #tir automatique du joueur
         if P1.cooldown == 0:
@@ -444,6 +446,15 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         AP2.move(2)
         AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
 
+        #Affichage des bonus
+        for boost in boosts:
+            boost.draw(personnages.DISPLAYSURF)
+
+        #Affichage des explosions
+        menu.aff_explo(explo)
+        for boom in explo:
+            menu.Animation(const.explosions,boom)
+
         if len(enemies)==1:
             if enemies[0].id=='b2':
                 MouvementFormation=True
@@ -471,17 +482,9 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
                     Vaisseau.moveVitesse(0,2)
                 elif Coordbasse<450:
                     Vaisseau.moveVitesse(0,1)
-            if Coordbasse>450:
+            if Coordbasse>449:
                 MouvementFormation=False
 
-        """
-
-////////////////////////////////////////////////
-        #Colisions a gerer
-////////////////////////////////////////////////
-
-
-        """
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
         AP2.draw(personnages.DISPLAYSURF)
