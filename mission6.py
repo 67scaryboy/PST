@@ -29,10 +29,71 @@ def LancerMission6():
     boosts = []
     tempsdemarrage = time.time()
     gc.collect()  
+    while alive:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        if pygame.mouse.get_pressed()[0] and not appui: #Pour faire en sorte qui si on laisse le clic envoncé, ca ne skip pas le dialogue
+            dialogue+=1
+            appui = pygame.mouse.get_pressed()[0]
+        if not pygame.mouse.get_pressed()[0]:
+            appui = pygame.mouse.get_pressed()[0]
+        personnages.DISPLAYSURF.fill(const.WHITE)
+        AP3.move(3)#vitesse de déplacement des couches
+        AP2.move(2)
+        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
+        AP.draw(personnages.DISPLAYSURF)
+        AP2.draw(personnages.DISPLAYSURF)
+        AP3.draw(personnages.DISPLAYSURF)
+        P1.draw(personnages.DISPLAYSURF)
+        bulle.draw(personnages.DISPLAYSURF)
+        if dialogue==1:
+            font = pygame.font.SysFont("arial", 13)
+            texte=font.render("Bonne nouvelle soldat !", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(465,85)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render("Pendant que vous progressiez vers les lignes ennemies, nous ", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(465,100)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render("avons pu réparer un escadron de vaisseaux complet. Quelques ", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(465,115)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render("individus ont été désign- euh, se sont portés volontaires pour", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(465,130)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+        elif dialogue==2:
+            font = pygame.font.SysFont("arial", 13)
+            texte=font.render("vous rejoindre au front. ", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(465,85)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render("Ces jeunes prèts à tout pour protéger nos magnifiques bornes", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(465,100)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render("d'arcades rétro, ça fait plaisir à voir.", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(465,115)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+            texte=font.render("Je vous envoie leurs coordonées, rejoignez les au plus vite.", True, const.BLACK)
+            texterect=texte.get_rect()
+            texterect.center=(465,130)
+            personnages.DISPLAYSURF.blit(texte,texterect)
+        else:
+            tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
+            #pygame.mixer.music.load("sons/Mission6.mp3")
+            #pygame.mixer.music.set_volume(0.3)
+            #pygame.mixer.music.play()
+            break
+                
+        pygame.display.update()
+        FramePerSec.tick(const.FPS)
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
-    pygame.mixer.music.load("sons/Mission6.mp3")
-    pygame.mixer.music.set_volume(0.3)
-    pygame.mixer.music.play()
     while alive:
         for event in pygame.event.get():
             if event.type == QUIT:
