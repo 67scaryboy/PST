@@ -272,3 +272,8 @@ def crash(debrits, joueur, tempscore, p_alive):#fonction de colision avec les d√
                 joueur.PV = 0
                 p_alive = fight.Mort([],p_P1,debrits)
     return (tempscore, p_alive)
+
+def poser_debrits(debrits,id_debrit,posX,posY):
+    ferraille  = Debrit(id_debrit)
+    ferraille.rect.center=(posX,posY)
+    debrits.append(ferraille)
