@@ -72,7 +72,7 @@ def BossColision(p_tirs,p_P1,p_morceaux,p_explo,tempscore,p_alive):
                 
     return (tempscore,p_alive)
 
-def temp(joueur, score,AP3,AP2,AP,VaisseauChoisis):
+def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis):
     FramePerSec = pygame.time.Clock()
     ScoreBoss = score
     alive = True

@@ -314,7 +314,7 @@ def LancerMission4():
             pygame.mixer.music.load("sons/boss1.mp3")
             pygame.mixer.music.set_volume(0.1)
             pygame.mixer.music.play()
-            temp = boss.temp(P1,score,AP3,AP2,AP,VaisseauChoisis)
+            temp = boss.Boss1(P1,score,AP3,AP2,AP,VaisseauChoisis)
             pygame.mixer.music.fadeout(10000)
             if temp[0]==0:
                 menu.MenuFinPartie(score,False)
