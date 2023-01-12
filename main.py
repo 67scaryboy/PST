@@ -6,11 +6,11 @@ import constantes as const
 
 pygame.init()
 
-gc.enable()
+gc.enable()                              #on à essayé de forcer le garbage collector
 scoretotal = 0
-pygame.mouse.set_visible(False)
+pygame.mouse.set_visible(False)          #masque la souris
 menu.ChoixSauvegarde()
-with open('sauvegarde.pkl', 'rb') as f:
+with open('sauvegarde.pkl', 'rb') as f:  #charge les sauvegardes ou les écrase
     temp = pickle.load(f)
 const.Niveau=temp['Histoire']
 while True:
@@ -20,12 +20,11 @@ while True:
             sys.exit()
 
 
-    option = menu.ChoixMode()
+    option = menu.ChoixMode()       #retourne 1 ou 2 en fonction du bouton cliqué
 
     if option == 1:
         scoretotal += fight.Arcade()
     elif option == 2:
-        #scoretotal += boss.Bossfight()
         choix = menu.MenuHistoire() #Retourne le numero du niveau souhaité (1,2,...,9,10)
         if choix == 1:
             mission1.LancerMission1()
