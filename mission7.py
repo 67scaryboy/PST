@@ -25,7 +25,7 @@ def LancerMission7():
                 pygame.quit()
                 sys.exit()
         
-        alive = crash(debrits, P1, alive)
+        alive = personnages.crash(debrits, P1, alive)
 
         ###Partie graphique###
         personnages.DISPLAYSURF.fill(const.WHITE)

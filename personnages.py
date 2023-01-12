@@ -242,7 +242,7 @@ class Compagon(pygame.sprite.Sprite):
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-class Debrit(pygame.sprite.Spritre):
+class Debrit(pygame.sprite.Sprite):
     def __init__(self,id,angle):
         super().__init()
         if id == 1:
