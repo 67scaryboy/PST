@@ -391,6 +391,7 @@ def LancerMission5():
             shoot.move()
             if shoot.trajectoire == 10:
                 shoot.suivre(P1)
+                menu.Animation(const.laserboss, shoot)
             if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):#pour l'ulti laser
                 tirs.remove(shoot)
 

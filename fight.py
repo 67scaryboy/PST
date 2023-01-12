@@ -193,6 +193,7 @@ def Arcade():
                 shoot.move()
                 if shoot.trajectoire == 10:
                     shoot.suivre(P1)
+                    menu.Animation(const.laserboss, shoot)
             if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):#pour l'ulti
                     tirs.remove(shoot)
         
@@ -234,8 +235,6 @@ def Arcade():
             if shoot.trajectoire == 3 and shoot.tireur_id == "e1":
                 menu.Animation(const.boules,shoot)
             shoot.draw(personnages.DISPLAYSURF)
-            if shoot.trajectoire == 10:
-                menu.Animation(const.laserboss, shoot)
         
         for boost in boosts:
             boost.draw(personnages.DISPLAYSURF)
