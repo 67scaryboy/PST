@@ -193,7 +193,7 @@ def Arcade():
                 shoot.move()
                 if shoot.trajectoire == 10:
                     shoot.suivre(P1)
-            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):
+            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):#pour l'ulti
                     tirs.remove(shoot)
         
         for boost in boosts:

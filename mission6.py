@@ -555,8 +555,10 @@ def LancerMission6():
         #faire avance les tirs
         for shoot in tirs:
             shoot.move()
-            if shoot.rect.bottom > const.SCREEN_HEIGHT or shoot.rect.bottom<0:
-                    tirs.remove(shoot)
+            if shoot.trajectoire == 10:
+                shoot.suivre(P1)
+            if (((shoot.rect.bottom > const.SCREEN_HEIGHT) or (shoot.rect.top < 0)) and (shoot.trajectoire != 10)):#pour l'ulti laser
+                tirs.remove(shoot)
 
         ###Partie graphique###
         personnages.DISPLAYSURF.fill(const.WHITE)
