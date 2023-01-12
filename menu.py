@@ -765,7 +765,7 @@ def Shop():
         FramePerSec.tick(const.FPS)
 
 
-def MenuFinPartieArcade(score): # Uniquement à appeler dans la boucle arcade, car affiche les TOPS scores :)
+def MenuFinPartieArcade(score): #Affiche les top score à la fin d'une partie en mode arcade
     AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
     while True:
         for event in pygame.event.get():
@@ -815,7 +815,7 @@ def MenuFinPartieArcade(score): # Uniquement à appeler dans la boucle arcade, c
         pygame.display.update()
         FramePerSec.tick(const.FPS)
 
-def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Définit quel écran afficher
+def MenuFinPartie(score,victoire): #affiche le menu de victoire ou de défaite à la fin d'un niveau du mode histoire
     AP=Affichage("sprites_menu/fond_mort.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
     ### Ajoute le score comme argent dans la sauvegarde    
     with open('sauvegarde.pkl', 'rb') as f: #Ouvre le fichier sauvegarde en lecture
@@ -862,13 +862,7 @@ def MenuFinPartie(score,victoire): # Paramètre victoire True ou False / Défini
         FramePerSec.tick(const.FPS)
 
 
-def MenuHistoire():
-    """
-    while True:
-        personnages.DISPLAYSURF.fill(const.WHITE)
-        AP=Affichage("sprites/AP.png",const.SCREEN_WIDTH/2,const.SCREEN_HEIGHT/2)
-        AP.draw(personnages.DISPLAYSURF)
-        """
+def MenuHistoire(): #menu de selection de niveau dans le mode histoire
     #Choix du scenario
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
     FramePerSec.tick(const.FPS)
@@ -961,28 +955,11 @@ def MenuHistoire():
                 if pygame.mouse.get_pressed()[i]==True:
                     return 
         Joueur.souris(personnages.DISPLAYSURF)
-                    
-        """"
-        if pygame.sprite.collide_rect(Joueur,Barcade):
-            Barcade.modif("sprites/HArcade.png")
-            Barcade.draw(personnages.DISPLAYSURF)
-            Joueur.souris(personnages.DISPLAYSURF)
-            for i in pygame.mouse.get_pressed():
-                if pygame.mouse.get_pressed()[i]==True:
-                    return 1
-        elif pygame.sprite.collide_rect(Joueur,Bhistoire):
-            Bhistoire.modif("sprites/HHistoire.png")
-            Bhistoire.draw(personnages.DISPLAYSURF)
-            Joueur.souris(personnages.DISPLAYSURF)
-            for i in pygame.mouse.get_pressed():
-                if pygame.mouse.get_pressed()[i]==True:
-                    return 2
-        """
        
         pygame.display.update()
         FramePerSec.tick(const.FPS)
 
-def Animation(listeA, classe):  #Animation d'un objet liée a une classe
+def Animation(listeA, classe):  #Animation d'un objet liée a une classe, les listes sont dans "constantes.py"
                                 # ListeA: [a1,a2,a3,...,an,status animation en cours(int)]
     classe.image = pygame.image.load(listeA[listeA[len(listeA)-1]]).convert_alpha()
     classe.mask = pygame.mask.from_surface(classe.image)
@@ -992,7 +969,7 @@ def Animation(listeA, classe):  #Animation d'un objet liée a une classe
         listeA[len(listeA)-1]=0
 
 
-def draw_health_bar(surf, pos, size, borderC, backC, healthC, progress):
+def draw_health_bar(surf, pos, size, borderC, backC, healthC, progress): #sert à dessiner des barres de vie ou de chargement
     pygame.draw.rect(surf, backC, (*pos, *size))
     pygame.draw.rect(surf, borderC, (*pos, *size), 1)
     innerPos  = (pos[0]+1, pos[1]+1)
@@ -1000,7 +977,7 @@ def draw_health_bar(surf, pos, size, borderC, backC, healthC, progress):
     rect = (round(innerPos[0]), round(innerPos[1]), round(innerSize[0]), round(innerSize[1]))
     pygame.draw.rect(surf, healthC, rect)
 
-class Affichage(pygame.sprite.Sprite): #Permet l'affichage d'un simple sprite
+class Affichage(pygame.sprite.Sprite): #Permet l'affichage d'un simple sprite (pour les cinématiques par example)
     def __init__(self, chemin, posX, posY): #chemin=chemin d'accès a l'image a draw
         super().__init__()
         self.image = pygame.image.load(chemin).convert_alpha()
@@ -1016,10 +993,10 @@ class Affichage(pygame.sprite.Sprite): #Permet l'affichage d'un simple sprite
     def mouvement(self,x,y):
         self.rect.move_ip(x,y)
 
-    def modif(self,chemin): #Permet de modifier sa texture
+    def modif(self,chemin): #Permet de modifier son image
         self.image = pygame.image.load(chemin).convert_alpha()
 
-class Arrièreplan(pygame.sprite.Sprite): 
+class Arrièreplan(pygame.sprite.Sprite): #les arrière plan
     def __init__(self,n):
         super().__init__()
         if (n==1):
@@ -1225,7 +1202,7 @@ def ChoixMode():
         pygame.display.update()
         FramePerSec.tick(const.FPS)
 
-class explosion():
+class explosion():   #les explosions animés qui sont à but visuel uniquement
     def __init__(self, origine):
         super().__init__()
         self.image = pygame.image.load("sprites_animation/explosion1.png").convert_alpha()#à  modifier
@@ -1241,5 +1218,5 @@ def aff_explo(liste_explo):
         boom.draw(personnages.DISPLAYSURF)
         boom.time +=1
         if boom.time >= 10:
-            liste_explo.remove(boom)
+            liste_explo.remove(boom) #l'explosion disparait au bout de 10 tours de boucle
         
