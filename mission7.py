@@ -241,10 +241,7 @@ def LancerMission7():
 
 
             numformation = 8
-        elif len(debrits) == 0 and numformation==7: #combat de boss
-            """pygame.mixer.music.load("sons/boss1.mp3")
-            pygame.mixer.music.set_volume(0.1)
-            pygame.mixer.music.play()"""
+        elif len(debrits) == 0 and numformation==8: #combat de boss
             alive,score = boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
             numformation=15
         elif numformation==15: #victoire
