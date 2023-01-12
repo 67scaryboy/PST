@@ -337,8 +337,7 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
 
         # Gestion collision tirs
         temp = len(enemies)
-        ScoreBoss,alive=fight.Colision(tirs,P1,enemies,explo,boosts,score,alive)
-
+        ScoreBoss,alive=fight.Colision(tirs,P1,enemies,explo,boosts,ScoreBoss,alive)
         enemies[0].PV -= (temp-len(enemies))*50
 
 
@@ -541,5 +540,6 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
-    
-    return 
+        if enemies[0].PV <0:
+            return alive,ScoreBoss
+    return alive,ScoreBoss
