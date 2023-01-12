@@ -26,6 +26,16 @@ def LancerMission1():
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
     P1.souris(personnages.DISPLAYSURF)
     cooldown = P1.cooldown
+    
+    backup = cooldown #sert à la gestion des ultis 
+    with open('sauvegarde.pkl', 'rb') as f:
+        temp = pickle.load(f)
+    if VaisseauChoisis == 1:
+        Ulti = temp['V1'][7]
+    elif VaisseauChoisis == 2:
+        Ulti = temp['V2'][7]
+    elif VaisseauChoisis == 3:
+        Ulti = temp['V3'][7]
 
     enemies = [] 
     tirs = []
@@ -173,9 +183,9 @@ def LancerMission1():
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
-            pygame.mixer.music.load("sons/Mission1.mp3")
-            pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play()
+            #pygame.mixer.music.load("sons/Mission1.mp3")
+            #pygame.mixer.music.set_volume(0.3)
+            #pygame.mixer.music.play()
             break
                 
         pygame.display.update()
@@ -433,6 +443,21 @@ def LancerMission1():
                 entity.draw(personnages.DISPLAYSURF)
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
+
+        if Ulti: #gestion des ultis
+            if P1.DureeUlti == -1:
+                P1.ulti(enemies,tirs,explo)
+            elif P1.DureeUlti > 0:
+                P1.DureeUlti -= 1
+                cooldown = P1.cooldown
+            elif P1.DureeUlti == 0:
+                for shoot in tirs:
+                    if shoot.trajectoire == 10:
+                        tirs.remove(shoot)
+                cooldown = backup
+                P1.DureeUlti -= 1
+            P1.draw_ulti(personnages.DISPLAYSURF)
+
         CP.update(P1)
         CP.draw(personnages.DISPLAYSURF)#Affichage Compagnon
         MB.draw(personnages.DISPLAYSURF)#Affichage menu bas
