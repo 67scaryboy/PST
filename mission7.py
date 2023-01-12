@@ -104,9 +104,9 @@ def LancerMission7():
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
-            pygame.mixer.music.load("sons/Mission7.mp3")
+            """pygame.mixer.music.load("sons/Mission7.mp3")
             pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play()
+            pygame.mixer.music.play()"""
             break
                 
         pygame.display.update()
@@ -227,21 +227,65 @@ def LancerMission7():
         elif tempspasse > 26 and numformation == 7:
             personnages.poser_debrits(debrits, 2, -30, -50, 30, numformation)
             debrits[-1].chgtTraj(1)
-            personnages.poser_debrits(debrits, 2, -30, -90, 50, numformation)
+            personnages.poser_debrits(debrits, 2, -30, -170, 50, numformation)
             debrits[-1].chgtTraj(1)
-            personnages.poser_debrits(debrits, 2, -30, -130, 40, numformation)
+            personnages.poser_debrits(debrits, 2, -30, -290, 40, numformation)
             debrits[-1].chgtTraj(1)
-            personnages.poser_debrits(debrits, 2, -30, -170, 185, numformation)
+            personnages.poser_debrits(debrits, 2, -30, -410, 185, numformation)
             debrits[-1].chgtTraj(1)
-            personnages.poser_debrits(debrits, 2, -30, -210, 70, numformation)
+            personnages.poser_debrits(debrits, 2, -30, -530, 70, numformation)
             debrits[-1].chgtTraj(1)
-            personnages.poser_debrits(debrits, 3, 1000, 50, 75, numformation)
-            personnages.poser_debrits(debrits, 3, 1000, 200, 70, numformation)
-            personnages.poser_debrits(debrits, 3, 1000, 350, 106, numformation)
+            personnages.poser_debrits(debrits, 3, 1000, 750, 75, numformation)
+            debrits[-1].chgtTraj(4)
+            personnages.poser_debrits(debrits, 3, 1000, 600, 70, numformation)
+            debrits[-1].chgtTraj(4)
+            personnages.poser_debrits(debrits, 3, 1000, 450, 106, numformation)
+            debrits[-1].chgtTraj(4)
 
 
             numformation = 8
-        elif len(debrits) == 0 and numformation==8: #combat de boss
+        elif tempspasse > 30 and numformation == 8:
+            personnages.poser_debrits(debrits, 3, -50, 50, 7, numformation)
+            debrits[-1].chgtTraj(3)
+            personnages.poser_debrits(debrits, 3, -50, 200, 170, numformation)
+            debrits[-1].chgtTraj(3)
+            personnages.poser_debrits(debrits, 3, -50, 350, -106, numformation)
+            debrits[-1].chgtTraj(3)
+            personnages.poser_debrits(debrits, 3, -50, 550, 35, numformation)
+            debrits[-1].chgtTraj(3)
+            personnages.poser_debrits(debrits, 3, -50, 700, 60, numformation)
+            debrits[-1].chgtTraj(3)
+            personnages.poser_debrits(debrits, 2, 850, -50, 10, numformation)
+            debrits[-1].chgtTraj(2)
+
+
+            numformation = 9
+        elif tempspasse > 32 and numformation == 9:
+            personnages.poser_debrits(debrits, 2, 50, -50, 170, numformation)
+            personnages.poser_debrits(debrits, 2, 200, -50, 17, numformation)
+            personnages.poser_debrits(debrits, 2, 350, -50, 6, numformation)
+            personnages.poser_debrits(debrits, 2, 500, -50, -52, numformation)
+            personnages.poser_debrits(debrits, 2, 650, -50, -60, numformation)
+            personnages.poser_debrits(debrits, 2, 750, -350, -56, numformation)
+            personnages.poser_debrits(debrits, 2, 600, -350, 42, numformation)
+            personnages.poser_debrits(debrits, 2, 450, -350, 132, numformation)
+            personnages.poser_debrits(debrits, 2, 300, -350, 250, numformation)
+            personnages.poser_debrits(debrits, 2, 150, -350, -6, numformation)
+            personnages.poser_debrits(debrits, 1, -190, 850, 80, numformation)
+            debrits[-1].chgtTraj(6)
+            personnages.poser_debrits(debrits, 1, -120, 920, 128, numformation)
+            debrits[-1].chgtTraj(6)
+            personnages.poser_debrits(debrits, 1, -50, 990, 147, numformation)
+            debrits[-1].chgtTraj(6)
+           
+            
+
+
+            numformation = 10
+        elif len(debrits) == 0 and numformation==10: #combat de boss
+            """pygame.mixer.music.load("sons/boss1.mp3")
+            pygame.mixer.music.set_volume(0.1)
+            pygame.mixer.music.play()"""
             alive,score = boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
             numformation=15
         elif numformation==15: #victoire
