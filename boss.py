@@ -438,13 +438,14 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
             if p < 1:
                 if (entity.id == "s1"):
                     shoot = fight.Projectile(entity,3,"sprites_animation/boule1.png")
+                    tirs.append(shoot)
                 elif (entity.id == "s2"):
                     shoot = fight.Projectile(entity,2,"sprites/tir3.png")
                     tirs.append(shoot)
                     shoot = fight.Projectile(entity,1,"sprites/tir3.png")
                     tirs.append(shoot)
                     shoot = fight.Projectile(entity,0,"sprites/tir3.png")
-                tirs.append(shoot)
+                    tirs.append(shoot)
             if entity.rect.top > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
