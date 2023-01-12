@@ -34,6 +34,13 @@ class Enemy(pygame.sprite.Sprite):
             self.ATK = 15
             self.score = 30
             self.id = 's1' #Sbire 1
+        elif id == -3:
+            self.image = pygame.image.load("sprites_boss/sbire2.png").convert_alpha()
+            self.PV = 160
+            self.MAXPV = self.PV
+            self.ATK = 15
+            self.score = 30
+            self.id = 's2'
 
         ##### Enemis traditionnels -> ID positif
         elif id == 1:#Tir sinusoidaux

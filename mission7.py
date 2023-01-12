@@ -163,7 +163,7 @@ def LancerMission7():
 
             numformation = 3
         elif len(debrits) == 0 and numformation==3: #combat de boss
-            boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
+            alive,score = boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
             numformation=15
         elif numformation==15: #victoire
             with open('sauvegarde.pkl', 'rb') as f:
