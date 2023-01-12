@@ -106,7 +106,7 @@ def LancerMission7():
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
             pygame.mixer.music.load("sons/Mission7.mp3")
             pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play(1)
+            pygame.mixer.music.play(2)
             break
                 
         pygame.display.update()
