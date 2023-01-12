@@ -160,6 +160,11 @@ def LancerMission7():
             personnages.poser_debrits(debrits, 2, 560, -50, 60, numformation)
             personnages.poser_debrits(debrits, 2, 460, -70, -30, numformation)
             personnages.poser_debrits(debrits, 2, 360, -90, 130, numformation)
+            personnages.poser_debrits(debrits, 2, 40, -390, 150, numformation)
+            personnages.poser_debrits(debrits, 2, 140, -370, 27, numformation)
+            personnages.poser_debrits(debrits, 2, 240, -350, -50, numformation)
+            personnages.poser_debrits(debrits, 2, 340, -370, 320, numformation)
+            personnages.poser_debrits(debrits, 2, 440, -390, 120, numformation)
 
             numformation = 3
         elif len(debrits) == 0 and numformation==3: #combat de boss
