@@ -560,8 +560,9 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
             Vaisseau.draw(personnages.DISPLAYSURF)
 
         #Affichage des barres stats du boss
-        enemies[0].draw_health(personnages.DISPLAYSURF)
-        menu.draw_health_bar(personnages.DISPLAYSURF, rect_capacite.bottomleft, rect_capacite.size, (0, 0, 0), (206, 206, 206), (0, 128, 255), Cooldowncharge/Cooldownchargemax)
+        if enemies:
+            enemies[0].draw_health(personnages.DISPLAYSURF)
+            menu.draw_health_bar(personnages.DISPLAYSURF, rect_capacite.bottomleft, rect_capacite.size, (0, 0, 0), (206, 206, 206), (0, 128, 255), Cooldowncharge/Cooldownchargemax)
 
         menu.aff_explo(explo)
         for boom in explo:
