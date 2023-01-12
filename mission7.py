@@ -104,8 +104,8 @@ def LancerMission7():
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
-            pygame.mixer.music.load("sons/Mission5.mp3")
-            pygame.mixer.music.set_volume(0.3)
+            #pygame.mixer.music.load("sons/Mission5.mp3")
+            #pygame.mixer.music.set_volume(0.3)
             #pygame.mixer.music.play()
             break
                 
@@ -123,7 +123,10 @@ def LancerMission7():
         if tempspasse > 5 and numformation==0:
             personnages.poser_debrits(debrits, 1, 5, 5, 0)
             numformation=1
-        elif numformation==15: #ne la faire passer à 15 qu'après le combat de boss
+        elif tempspasse > 10 and numformation==1:
+            boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
+            numformation=15
+        elif numformation==15:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f)
             if temp['Histoire']==6:
