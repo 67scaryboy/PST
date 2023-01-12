@@ -211,7 +211,37 @@ def LancerMission7():
             personnages.poser_debrits(debrits, 3, 600, -40, 9, numformation)
 
             numformation = 6
-        elif len(debrits) == 0 and numformation==6: #combat de boss
+
+        elif tempspasse > 24 and numformation == 6:
+            personnages.poser_debrits(debrits, 3, 400, -40, 50, numformation)
+            personnages.poser_debrits(debrits, 3, 310, -60, 150, numformation)
+            personnages.poser_debrits(debrits, 3, 220, -80, 0, numformation)
+            personnages.poser_debrits(debrits, 3, 130, -100, 65, numformation)
+            personnages.poser_debrits(debrits, 3, 40, -120, 120, numformation)
+            personnages.poser_debrits(debrits, 3, 490, -60, 85, numformation)
+            personnages.poser_debrits(debrits, 3, 580, -80, 170, numformation)
+            personnages.poser_debrits(debrits, 3, 760, -120, 10, numformation)
+
+
+            numformation = 7
+        elif tempspasse > 26 and numformation == 7:
+            personnages.poser_debrits(debrits, 2, -30, -50, 30, numformation)
+            debrits[-1].chgtTraj(1)
+            personnages.poser_debrits(debrits, 2, -30, -90, 50, numformation)
+            debrits[-1].chgtTraj(1)
+            personnages.poser_debrits(debrits, 2, -30, -130, 40, numformation)
+            debrits[-1].chgtTraj(1)
+            personnages.poser_debrits(debrits, 2, -30, -170, 185, numformation)
+            debrits[-1].chgtTraj(1)
+            personnages.poser_debrits(debrits, 2, -30, -210, 70, numformation)
+            debrits[-1].chgtTraj(1)
+            personnages.poser_debrits(debrits, 3, 1000, 50, 75, numformation)
+            personnages.poser_debrits(debrits, 3, 1000, 200, 70, numformation)
+            personnages.poser_debrits(debrits, 3, 1000, 350, 106, numformation)
+
+
+            numformation = 8
+        elif len(debrits) == 0 and numformation==7: #combat de boss
             """pygame.mixer.music.load("sons/boss1.mp3")
             pygame.mixer.music.set_volume(0.1)
             pygame.mixer.music.play()"""

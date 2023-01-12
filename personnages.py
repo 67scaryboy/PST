@@ -233,13 +233,20 @@ class Player(pygame.sprite.Sprite): #Si on
 
                 if self.id == 'p1' and score >= 200: #IEM
                     liste = []
+                    """
                     for i in range(0,len(enemies)):
                         if enemies[i].id in ['e1','e2','e3']:
                             liste.append(i)
                             explo.append(menu.explosion(enemies[i]))
                     while liste:
                         del enemies[liste.pop()]
-                        
+                   """
+                    for i in range(0,len(tirs)):
+                        if tirs[i].tireur_id not in ['p1','p2','p3','c1']:
+                            liste.append(i)
+                            explo.append(menu.explosion(tirs[i]))
+                    while liste:
+                        del tirs[liste.pop()] 
                     self.Ulti = 0
                     score -= 200
                 elif self.id == 'p2' and score >= 200: #Spam
