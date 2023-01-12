@@ -92,7 +92,7 @@ class Enemy(pygame.sprite.Sprite):
             pass
         else:
             self.rect.move_ip(0,2)
-        if (self.rect.bottom > const.SCREEN_HEIGHT):
+        if (self.rect.top > const.SCREEN_HEIGHT):
             self.kill()
     
       def moveKamikaze(self, joueur):
@@ -106,7 +106,7 @@ class Enemy(pygame.sprite.Sprite):
                     self.rect.move_ip(-8,6)
             else:
                 self.rect.move_ip(0,9)
-            if (self.rect.bottom > const.SCREEN_HEIGHT):
+            if (self.rect.top > const.SCREEN_HEIGHT):
                 self.kill()
       
       def moveVitesse(self,VitesseX, VitesseY):
@@ -270,3 +270,57 @@ class Compagon(pygame.sprite.Sprite):
         
     def draw(self, surface):
         surface.blit(self.image, self.rect)
+
+class Debrit(pygame.sprite.Sprite):
+    def __init__(self,id,angle):
+        super().__init()
+        if id == 1:
+            self.image =  pygame.image.load("sprites/débrit.png").convert_alpha()
+        else:
+            self.image =  pygame.image.load("sprites/débrit2.png").convert_alpha()
+        self.direction = [0,2]
+        self.image = pygame.transform.rotate(self.image, angle)
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+    
+    def move(self):
+        self.rect.move_ip(self.direction[0],self.direction[1])
+        if (self.rect.top > const.SCREEN_HEIGHT):
+            self.kill()
+    
+    def move(self,traj): #définit une trajectoire et avance
+        
+        if traj == 0:#base
+            self.direction = [0,2]
+        if traj == 1:#diagonale \
+            self.direction = [1,2]
+        elif traj == 2:#diagonale /
+            self.direction = [-1,2]
+        elif traj == 3:# ->
+            self.direction = [2,0]
+        elif traj == 4:# <-
+            self.direction = [-2,0]
+
+        self.rect.move_ip(self.direction[0],self.direction[1])
+
+    
+    def move(self,x,y):
+        self.rect.move_ip(x,y)
+        if (self.rect.top > const.SCREEN_HEIGHT):
+            self.kill()
+
+def crash(debrits, joueur, p_alive):#fonction de colision avec les débrits
+    for ferraille in debrits:
+        if pygame.sprite.collide_rect(ferraille,joueur): #ajout pour voir si limite les lags
+            if pygame.sprite.collide_mask(ferraille,joueur): #colision tirs joueur
+                joueur.PV = 0
+                p_alive = fight.Mort([],p_P1,debrits)
+    return p_alive
+
+def poser_debrits(debrits, id_debrit, posX, posY, angle):
+    ferraille  = Debrit(id_debrit, angle)
+    ferraille.rect.center=(posX,posY)
+    debrits.append(ferraille)

@@ -23,6 +23,7 @@ def LancerMission7():
     P1.souris(personnages.DISPLAYSURF)
     cooldown = P1.cooldown
 
+    debrits = []
     enemies = [] 
     tirs = []
     explo = []
@@ -313,25 +314,10 @@ def LancerMission7():
         AP2.draw(personnages.DISPLAYSURF)
         AP3.draw(personnages.DISPLAYSURF)
 
-        #Affichage des tirs
-        for shoot in tirs:
-            if shoot.trajectoire == 3 and shoot.tireur_id == "e1":
-                menu.Animation(const.boules,shoot)
-            shoot.draw(personnages.DISPLAYSURF)
+        #Affichage des obstacles restants
+        for entity in debrits:
+            entity.draw(personnages.DISPLAYSURF)
         
-        #Affichage des bonus
-        for boost in boosts:
-            boost.draw(personnages.DISPLAYSURF)
-
-        #Affichage des explosions
-        menu.aff_explo(explo)
-        for boom in explo:
-            menu.Animation(const.explosions,boom)
-
-        #Affichage des adversaires restants
-        for entity in enemies:
-            if entity.active == 1:
-                entity.draw(personnages.DISPLAYSURF)
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
         CP.update(P1)

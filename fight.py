@@ -356,7 +356,7 @@ class Projectile(pygame.sprite.Sprite):
             self.direction = [+temp,math.sqrt(9-temp)-12]
 
         self.time += 1
-        if ((self.rect.bottom > const.SCREEN_HEIGHT) or (self.rect.top < 0)):
+        if ((self.rect.top > const.SCREEN_HEIGHT) or (self.rect.top < 0)):
             self.kill()
 
       def draw(self, surface):
