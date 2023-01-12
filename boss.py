@@ -371,7 +371,8 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         # Gestion collision tirs
         temp = len(enemies)
         ScoreBoss,alive=fight.Colision(tirs,P1,enemies,explo,boosts,ScoreBoss,alive)
-        enemies[0].PV -= (temp-len(enemies))*50
+        if enemies:
+            enemies[0].PV -= (temp-len(enemies))*50
 
 
         #tir automatique du joueur
