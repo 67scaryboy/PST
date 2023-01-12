@@ -194,7 +194,7 @@ class Player(pygame.sprite.Sprite): #Si on
         health_rect = pygame.Rect(0, 0, self.image.get_width(), 7)
         health_rect.midbottom = self.rect.centerx, self.rect.bottom + 10
         menu.draw_health_bar(surf, health_rect.bottomleft, health_rect.size, 
-                (0, 0, 0), (75, 75, 75), (0, 255, 255), 1-self.Ulti/self.MAXUlti)
+                (0, 0, 0), (75, 75, 75), (255, 255, 0), self.Ulti/self.MAXUlti)
 
     def update(self):
         pressed_keys = pygame.key.get_pressed()
