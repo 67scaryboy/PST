@@ -301,11 +301,13 @@ class Debrit(pygame.sprite.Sprite):
             self.image =  pygame.image.load("sprites/débrit.png").convert_alpha()
         elif id == 2:
             self.image =  pygame.image.load("sprites/débrit2.png").convert_alpha()
-        else:
+        elif id == 3:
             self.image =  pygame.image.load("sprites/débrit3.png").convert_alpha()
+        else:
+            self.image =  pygame.image.load("sprites_boss/boss_damaged.png").convert_alpha()
         self.direction = [0,4]
         self.image = pygame.transform.rotate(self.image, angle)
-        self.idFormation = formation
+        self.idFormation = formation                               
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -337,13 +339,13 @@ class Debrit(pygame.sprite.Sprite):
 
 def crash(debrits, joueur, p_alive):#fonction de colision avec les débrits
     for ferraille in debrits:
-        if pygame.sprite.collide_rect(ferraille,joueur): #ajout pour voir si limite les lags
-            if pygame.sprite.collide_mask(ferraille,joueur): #colision tirs joueur
+        if pygame.sprite.collide_rect(ferraille,joueur):      #si un morceau de ferraille est proche du joueur
+            if pygame.sprite.collide_mask(ferraille,joueur):  #au point de le toucher
                 joueur.PV = 0
-                p_alive = fight.Mort([],joueur,debrits)
+                p_alive = fight.Mort([],joueur,debrits)       #le joueur meurt
     return p_alive
 
-def poser_debrits(debrits, id_debrit, posX, posY, angle, formation):
+def poser_debrits(debrits, id_debrit, posX, posY, angle, formation): #fonction pour placer des débrits pour le mode histoire
     ferraille  = Debrit(id_debrit, angle, formation)
     ferraille.rect.center=(posX,posY)
     debrits.append(ferraille)

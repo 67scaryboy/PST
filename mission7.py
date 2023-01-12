@@ -277,12 +277,15 @@ def LancerMission7():
             debrits[-1].chgtTraj(6)
             personnages.poser_debrits(debrits, 1, -50, 990, 147, numformation)
             debrits[-1].chgtTraj(6)
-           
-            
-
 
             numformation = 10
-        elif len(debrits) == 0 and numformation==10: #combat de boss
+
+        elif tempspasse > 35 and numformation == 10:
+            personnages.poser_debrits(debrits, 4, 50, -50, 170, numformation)
+            personnages.poser_debrits(debrits, 4, 750, -50, 47, numformation)
+
+            numformation = 11
+        elif len(debrits) == 0 and numformation==11: #combat de boss
             alive,score = boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
             numformation=15
         elif numformation==15: #victoire
@@ -309,7 +312,7 @@ def LancerMission7():
                     debrits.remove(entity)
                 
 
-        alive = personnages.crash(debrits, P1, alive)
+        alive = personnages.crash(debrits, P1, alive) #détection de colision
 
         ###Partie graphique###
         personnages.DISPLAYSURF.fill(const.WHITE)
