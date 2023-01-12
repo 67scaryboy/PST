@@ -40,6 +40,14 @@ def Arcade(): #Mode Arcade
 
     cooldown = P1.cooldown  #sert à réinitialiser le cooldown après chaque tir
     backup = cooldown       #sert à réinitialiser le cooldown après utilisation de l'ulti
+    with open('sauvegarde.pkl', 'rb') as f: #verification des ultis débloqués 
+        temp = pickle.load(f)
+    if VaisseauChoisis == 1:
+        Ulti = temp['V1'][7]
+    elif VaisseauChoisis == 2:
+        Ulti = temp['V2'][7]
+    elif VaisseauChoisis == 3:
+        Ulti = temp['V3'][7]
 
     enemies = [] 
     enemies.append(E1)
@@ -172,21 +180,6 @@ def Arcade(): #Mode Arcade
             P1.cooldown = cooldown
         else:
             P1.cooldown += -1
-        
-        #gestion des ultis
-        if P1.DureeUlti == -1:                      #si l'ulti n'est pas en cours
-            P1.ulti(enemies,tirs,explo,scoreArcade)     #chargement de l'ulti
-        elif P1.DureeUlti > 0:                      #si l'ulti est en cours
-            P1.DureeUlti -= 1                           #reduit son temps d'utilisation
-            cooldown = P1.cooldown                      #change le cooldown de tir
-        elif P1.DureeUlti == 0:                     #si l'ulti se termine
-            for shoot in tirs:                          #supprime un écentuel laser
-                if shoot.trajectoire == 10:
-                    tirs.remove(shoot)
-            cooldown = backup                           #réinitialise le cooldown de tir
-            P1.DureeUlti -= 1                           #termine l'ulti
-
-
 
         #faire avancer les tirs
         for shoot in tirs:
@@ -250,7 +243,21 @@ def Arcade(): #Mode Arcade
                 entity.draw(personnages.DISPLAYSURF)
         P1.souris(personnages.DISPLAYSURF) #Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
-        P1.draw_ulti(personnages.DISPLAYSURF)
+
+        if Ulti: #gestion des ultis
+            if P1.DureeUlti == -1:                    #si l'ulti n'est pas en cours
+                P1.ulti(enemies,tirs,explo,score)       #chargement de l'ulti
+            elif P1.DureeUlti > 0:                    #si l'ulti est en cours
+                P1.DureeUlti -= 1                       #reduit son temps d'utilisation
+                cooldown = P1.cooldown                  #change le cooldown de tir
+            elif P1.DureeUlti == 0:                   #si l'ulti se termine
+                for shoot in tirs:                    #supprime un éventuel laser
+                    if shoot.trajectoire == 10:
+                        tirs.remove(shoot)            
+                cooldown = backup                     #réinitialise le cooldown de tir
+                P1.DureeUlti -= 1                     #termine l'ulti
+            P1.draw_ulti(personnages.DISPLAYSURF)                        
+
         CP.draw(personnages.DISPLAYSURF) #Affichage Compagnon
         MB.draw(personnages.DISPLAYSURF) #Affichage menu gauche
         menu.AfficheScore(scoreArcade)   #Affichage score
