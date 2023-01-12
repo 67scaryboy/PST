@@ -183,6 +183,17 @@ def LancerMission7():
             personnages.poser_debrits(debrits, 1, 580, -580, -220, numformation)
 
             numformation = 4
+        elif tempspasse > 18 and numformation == 5:
+            personnages.poser_debrits(debrits, 1, 860, -40, -120, numformation)
+            personnages.poser_debrits(debrits, 1, 680, -120, 0, numformation)
+            personnages.poser_debrits(debrits, 1, 600, -200, 180, numformation)
+            personnages.poser_debrits(debrits, 1, 520, -280, 60, numformation)
+            personnages.poser_debrits(debrits, 1, 440, -360, 47, numformation)
+            personnages.poser_debrits(debrits, 1, 360, -440, 20, numformation)
+            personnages.poser_debrits(debrits, 1, 290, -510, -12, numformation)
+            personnages.poser_debrits(debrits, 1, 220, -580, -220, numformation)
+
+            numformation = 5
         elif len(debrits) == 0 and numformation==4: #combat de boss
             alive,score = boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
             numformation=15

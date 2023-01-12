@@ -595,6 +595,7 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
-        if enemies[0].PV <0:
-            return alive,ScoreBoss
+        if enemies:
+            if enemies[0].PV <0:
+                return alive,ScoreBoss
     return alive,ScoreBoss
