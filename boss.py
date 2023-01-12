@@ -103,6 +103,16 @@ def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         cooldown = temp['V3'][5]
     cooldown_boss = Body.cooldown
 
+    backup = cooldown #sert à la gestion des ultis 
+    with open('sauvegarde.pkl', 'rb') as f:
+        temp = pickle.load(f)
+    if VaisseauChoisis == 1:
+        Ulti = temp['V1'][7]
+    elif VaisseauChoisis == 2:
+        Ulti = temp['V2'][7]
+    elif VaisseauChoisis == 3:
+        Ulti = temp['V3'][7]
+
     MorceauxBoss = [Piece_g,Piece_d,Piece_a_g,Piece_a_d] 
     tirs = []
     explo = []
@@ -275,6 +285,19 @@ def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
+        if Ulti: #gestion des ultis
+            if P1.DureeUlti == -1:
+                P1.ulti(enemies,tirs,explo)
+            elif P1.DureeUlti > 0:
+                P1.DureeUlti -= 1
+                cooldown = P1.cooldown
+            elif P1.DureeUlti == 0:
+                for shoot in tirs:
+                    if shoot.trajectoire == 10:
+                        tirs.remove(shoot)
+                cooldown = backup
+                P1.DureeUlti -= 1
+            P1.draw_ulti(personnages.DISPLAYSURF)
         
         for shoot in tirs:#ici pour les animations des tirs animées
             shoot.draw(personnages.DISPLAYSURF)
@@ -317,6 +340,17 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
     
     Cooldownchargemax=500
     Cooldowncharge=Cooldownchargemax
+
+    backup = cooldown #sert à la gestion des ultis 
+    with open('sauvegarde.pkl', 'rb') as f:
+        temp = pickle.load(f)
+    if VaisseauChoisis == 1:
+        Ulti = temp['V1'][7]
+    elif VaisseauChoisis == 2:
+        Ulti = temp['V2'][7]
+    elif VaisseauChoisis == 3:
+        Ulti = temp['V3'][7]
+
     enemies = [] #Le boss sera toujours en position 0
     tirs = []
     explo = []
@@ -527,6 +561,19 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):
         
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
+        if Ulti: #gestion des ultis
+            if P1.DureeUlti == -1:
+                P1.ulti(enemies,tirs,explo)
+            elif P1.DureeUlti > 0:
+                P1.DureeUlti -= 1
+                cooldown = P1.cooldown
+            elif P1.DureeUlti == 0:
+                for shoot in tirs:
+                    if shoot.trajectoire == 10:
+                        tirs.remove(shoot)
+                cooldown = backup
+                P1.DureeUlti -= 1
+            P1.draw_ulti(personnages.DISPLAYSURF)
         
         #Affichage/Animation des tirs
         for shoot in tirs:
