@@ -290,6 +290,7 @@ def LancerMission7():
                 temp = pickle.load(f)
             if temp['Histoire']==6:
                 temp['Histoire']=7
+                temp['V3'][0]=True
             with open('sauvegarde.pkl', 'wb') as f:
                     pickle.dump(temp, f)
             pygame.mixer.music.fadeout(10000)
