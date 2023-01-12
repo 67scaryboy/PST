@@ -227,10 +227,11 @@ class Player(pygame.sprite.Sprite): #Si on
         self.rect.center = pygame.mouse.get_pos()
         self.draw(surface)
 
-    def ulti(self,enemies,tirs,explo):
+    def ulti(self,enemies,tirs,explo,score):
         if self.Ulti == self.MAXUlti: 
             if pygame.mouse.get_pressed()[0]:
-                if self.id == 'p1': #IEM
+
+                if self.id == 'p1' and score >= 200: #IEM
                     liste = []
                     for i in range(0,len(enemies)):
                         if enemies[i].id in ['e1','e2','e3']:
@@ -240,15 +241,18 @@ class Player(pygame.sprite.Sprite): #Si on
                         del enemies[liste.pop()]
                         
                     self.Ulti = 0
-                elif self.id == 'p2': #Spam
+                    score -= 200
+                elif self.id == 'p2' and score >= 200: #Spam
                     self.DureeUlti = 120
                     self.cooldown = 30
                     self.Ulti = 0
-                elif self.id == 'p3': #Laser
+                    score -= 200
+                elif self.id == 'p3' and score >= 200: #Laser
                     self.DureeUlti = 300
                     tirs.append(fight.Projectile(self,10,"sprites_animation/laser1.png"))
                     self.cooldown = 300 # pour éviter qu'il tire pendant l'ulti
                     self.Ulti = 0
+                    score -= 200
                 else:
                     pass
         else:

@@ -450,7 +450,7 @@ def LancerMission2():
 
         if Ulti: #gestion des ultis
             if P1.DureeUlti == -1:
-                P1.ulti(enemies,tirs,explo)
+                P1.ulti(enemies,tirs,explo,score)
             elif P1.DureeUlti > 0:
                 P1.DureeUlti -= 1
                 cooldown = P1.cooldown
