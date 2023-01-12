@@ -163,7 +163,7 @@ class Player(pygame.sprite.Sprite): #Si on
             self.ATK = temp['V1'][3]
             self.cooldown = temp['V1'][5]
             self.Ulti = 0
-            self.MAXUlti = 100
+            self.MAXUlti = 120
         elif id == 2:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f) # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
@@ -174,7 +174,7 @@ class Player(pygame.sprite.Sprite): #Si on
             self.ATK = temp['V2'][3]
             self.cooldown = temp['V2'][5]
             self.Ulti = 0
-            self.MAXUlti = 100
+            self.MAXUlti = 300
         elif id == 3:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f) # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
@@ -185,7 +185,7 @@ class Player(pygame.sprite.Sprite): #Si on
             self.ATK = temp['V3'][3]
             self.cooldown = temp['V3'][5]
             self.Ulti = 0
-            self.MAXUlti = 100
+            self.MAXUlti = 600
         self.DureeUlti = -1
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT - 50))
@@ -233,7 +233,7 @@ class Player(pygame.sprite.Sprite): #Si on
 
                 if self.id == 'p1' and score >= 200: #IEM
                     liste = []
-                    """
+                    """ #Anciens ulti: Détruit tout les e1, e2, e3
                     for i in range(0,len(enemies)):
                         if enemies[i].id in ['e1','e2','e3']:
                             liste.append(i)
