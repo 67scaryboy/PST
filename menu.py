@@ -69,6 +69,7 @@ def Shop():
             Bcontinuer.draw(personnages.DISPLAYSURF)
             Joueur.souris(personnages.DISPLAYSURF)
             if pygame.mouse.get_pressed() == (1, 0, 0):
+                time.sleep(0.3)
                 return 
         if pygame.sprite.collide_rect(Joueur,V1):
             for i in pygame.mouse.get_pressed():
