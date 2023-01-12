@@ -123,10 +123,15 @@ class Enemy(pygame.sprite.Sprite):
         self.draw_health(DISPLAYSURF)
 
       def draw_health(self, surf):
-        if self.PV != self.MAXPV:
-            health_rect = pygame.Rect(0, 0, self.width, 7)
-            health_rect.midbottom = self.rect.centerx, self.rect.bottom
+        if self.id == 'b2':
+            health_rect = pygame.Rect(0, 0, 750, 7)
+            health_rect.midbottom = const.SCREEN_WIDTH//2, 10
             menu.draw_health_bar(surf, health_rect.bottomleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0), self.PV/self.MAXPV)
+        else:
+            if self.PV != self.MAXPV:
+                health_rect = pygame.Rect(0, 0, self.width, 7)
+                health_rect.midbottom = self.rect.centerx, self.rect.bottom
+                menu.draw_health_bar(surf, health_rect.bottomleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0), self.PV/self.MAXPV)
 
 
 class Player(pygame.sprite.Sprite): #Si on
