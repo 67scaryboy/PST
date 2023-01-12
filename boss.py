@@ -530,25 +530,27 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):    #Boss Essaim
         for boom in explo:
             menu.Animation(const.explosions,boom)
 
-        if len(enemies)==1 and Bossenvie:
+    ########## Partie de gestion de l'apparition de l'essaim ##########
+
+        if len(enemies)==1 and Bossenvie: #Dès qu'il ne reste plus que le boss et qu'il est en vie
             if enemies[0].id=='b2':
-                Cooldowncharge=Cooldownchargemax
-                MouvementFormation=True
+                Cooldowncharge=Cooldownchargemax #On remet la jauge du boss à fond
+                MouvementFormation=True #On active le mouvement d'entrée de la formation
                 Nbadversaire=random.randint(5,30) #Nombre d'adversaire qui apparait
-                if enemies[0].PV > enemies[0].MAXPV//2:
+                if enemies[0].PV > enemies[0].MAXPV//2: 
                     for i in range (0,Nbadversaire,1):
-                        fight.SpawHistoire(enemies,-2,random.randint(0,const.SCREEN_WIDTH),random.randint(-400,-50))
+                        fight.SpawHistoire(enemies,-2,random.randint(0,const.SCREEN_WIDTH),random.randint(-400,-50)) #Appartition du sbire 1 a des coordonnées aléatoire
                 else:
                     for i in range (0,Nbadversaire,1):
-                        fight.SpawHistoire(enemies,random.randint(-3,-2),random.randint(0,const.SCREEN_WIDTH),random.randint(-400,-50))
-        if MouvementFormation==True:
+                        fight.SpawHistoire(enemies,random.randint(-3,-2),random.randint(0,const.SCREEN_WIDTH),random.randint(-400,-50)) #Appartition du sbire 1 ou 2 a des coordonnées aléatoir
+        if MouvementFormation==True: 
             Coordbasse=-200
-            for Vaisseau in enemies:
+            for Vaisseau in enemies: #Cherche le vaisseau le plus bas comme référence pour l'avancée de la formation
                 if Vaisseau.id == 'b2':
                     pass
                 elif Vaisseau.rect.bottom > Coordbasse:
                     Coordbasse=Vaisseau.rect.bottom
-            for Vaisseau in enemies:
+            for Vaisseau in enemies: #Fait avancer la formation a un certaine vitesse en fonction de la position du vaisseau le plus bas
                 if Vaisseau.id=='b2':
                     pass
                 elif Coordbasse<250:
@@ -562,9 +564,9 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):    #Boss Essaim
                 elif Coordbasse<450:
                     Vaisseau.moveVitesse(0,1)
             if Coordbasse>449:
-                MouvementFormation=False
-        if Cooldowncharge<0:
-            for Vaisseau in enemies:
+                MouvementFormation=False #Une fois sur le terrain et en place, désactive le mouvement d'entrée de la formation
+        if Cooldowncharge<0: #Si la jauge du boss se vide
+            for Vaisseau in enemies: #Fait charger tous les adversaires, sauf le boss
                 if Vaisseau.id=='b2':
                     pass
                 else:
@@ -620,6 +622,6 @@ def Boss2(joueur, score,AP3,AP2,AP,VaisseauChoisis):    #Boss Essaim
             if enemies[0].PV <0:
                 enemies[0].moveVitesse(0, -2)
                 Bossenvie = False
-        if len(enemies)==1 and Bossenvie==False:
+        if len(enemies)==1 and Bossenvie==False: #Si le boss est le seul dans la liste et qu'il est mort, termine le combat
             return alive,ScoreBoss
     return alive,ScoreBoss

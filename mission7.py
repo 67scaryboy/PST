@@ -104,9 +104,9 @@ def LancerMission7():
             personnages.DISPLAYSURF.blit(texte,texterect)
         else:
             tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
-            """pygame.mixer.music.load("sons/Mission7.mp3")
+            pygame.mixer.music.load("sons/Mission7.mp3")
             pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play()"""
+            pygame.mixer.music.play(2)
             break
                 
         pygame.display.update()
@@ -283,9 +283,6 @@ def LancerMission7():
 
             numformation = 10
         elif len(debrits) == 0 and numformation==10: #combat de boss
-            """pygame.mixer.music.load("sons/boss1.mp3")
-            pygame.mixer.music.set_volume(0.1)
-            pygame.mixer.music.play()"""
             alive,score = boss.Boss2(P1, score,AP3,AP2,AP,VaisseauChoisis)
             numformation=15
         elif numformation==15: #victoire

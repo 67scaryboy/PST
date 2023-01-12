@@ -123,15 +123,15 @@ def Shop():
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+125)
                 personnages.DISPLAYSURF.blit(texte,texterect)
                 font = pygame.font.SysFont("impact", 15)
-                texte=font.render("Effet: Elimination des petits vaisseaux", True, const.WHITE)
+                texte=font.render("Effet: Destruction des projectile", True, const.WHITE)
                 texterect=texte.get_rect()
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+150)
                 personnages.DISPLAYSURF.blit(texte,texterect)
-                texte=font.render("Délais: bip bop coucou", True, const.WHITE)
+                texte=font.render("Délais: 2s", True, const.WHITE)
                 texterect=texte.get_rect()
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+170)
                 personnages.DISPLAYSURF.blit(texte,texterect)
-                texte=font.render("Prix: Tabernakl la", True, const.WHITE)
+                texte=font.render("Prix: 1000 de score", True, const.WHITE)
                 texterect=texte.get_rect()
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+190)
                 personnages.DISPLAYSURF.blit(texte,texterect)
@@ -346,11 +346,11 @@ def Shop():
                 texterect=texte.get_rect()
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+150)
                 personnages.DISPLAYSURF.blit(texte,texterect)
-                texte=font.render("Délais: bip bop coucou", True, const.WHITE)
+                texte=font.render("Délais: 5s", True, const.WHITE)
                 texterect=texte.get_rect()
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+170)
                 personnages.DISPLAYSURF.blit(texte,texterect)
-                texte=font.render("Prix: Tabernakl la", True, const.WHITE)
+                texte=font.render("Prix: 2000 de score", True, const.WHITE)
                 texterect=texte.get_rect()
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+190)
                 personnages.DISPLAYSURF.blit(texte,texterect)
@@ -559,15 +559,15 @@ def Shop():
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+125)
                 personnages.DISPLAYSURF.blit(texte,texterect)
                 font = pygame.font.SysFont("impact", 15)
-                texte=font.render("Effet: Tir un laser", True, const.WHITE)
+                texte=font.render("Effet: Tir un laser destructeur", True, const.WHITE)
                 texterect=texte.get_rect()
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+150)
                 personnages.DISPLAYSURF.blit(texte,texterect)
-                texte=font.render("Délais: bip bop coucou", True, const.WHITE)
+                texte=font.render("Délais: 10s", True, const.WHITE)
                 texterect=texte.get_rect()
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+170)
                 personnages.DISPLAYSURF.blit(texte,texterect)
-                texte=font.render("Prix: Tabernakl la", True, const.WHITE)
+                texte=font.render("Prix: 3000 de score", True, const.WHITE)
                 texterect=texte.get_rect()
                 texterect.center=(const.SCREEN_WIDTH/2+200,const.SCREEN_HEIGHT/2+190)
                 personnages.DISPLAYSURF.blit(texte,texterect)
@@ -1168,8 +1168,8 @@ def ChoixSauvegarde():
                     sauvegarde = {'V1': personnages.V1, #[Vie,Attaque,Cooldown]
                     'V2': personnages.V2,
                     'V3': personnages.V3,
-                    'Argent': 3000000,
-                    'Histoire':6} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
+                    'Argent': 0,
+                    'Histoire':0} #Attention, cela indique le nombre de niveaux que le joueur a fini (entre 0 min et 10 max).
                     with open('sauvegarde.pkl', 'wb') as f:
                         pickle.dump(sauvegarde, f)  
                     return 

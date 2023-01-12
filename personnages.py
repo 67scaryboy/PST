@@ -9,9 +9,9 @@ DISPLAYSURF.fill(const.WHITE)
 pygame.display.set_caption("Game")
 
 ###Stats de bases des vaisseaux joueurs###
-V1 = [True,100,0,70,0,10,0, False] # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown, Ulti ?]
-V2 = [True,130,0,70,0,20,0, False] 
-V3 = [True,150,0,150,0,30,0, False]
+V1 = [False,100,0,70,0,10,0, False] # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown, Ulti ?]
+V2 = [False,130,0,70,0,20,0, False] 
+V3 = [False,150,0,150,0,30,0, False]
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -163,7 +163,7 @@ class Player(pygame.sprite.Sprite): #Si on
             self.ATK = temp['V1'][3]
             self.cooldown = temp['V1'][5]
             self.Ulti = 0
-            self.MAXUlti = 100
+            self.MAXUlti = 120
         elif id == 2:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f) # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
@@ -174,7 +174,7 @@ class Player(pygame.sprite.Sprite): #Si on
             self.ATK = temp['V2'][3]
             self.cooldown = temp['V2'][5]
             self.Ulti = 0
-            self.MAXUlti = 100
+            self.MAXUlti = 300
         elif id == 3:
             with open('sauvegarde.pkl', 'rb') as f:
                 temp = pickle.load(f) # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown]
@@ -185,7 +185,7 @@ class Player(pygame.sprite.Sprite): #Si on
             self.ATK = temp['V3'][3]
             self.cooldown = temp['V3'][5]
             self.Ulti = 0
-            self.MAXUlti = 100
+            self.MAXUlti = 600
         self.DureeUlti = -1
         self.rect = self.image.get_rect()
         self.rect.center = (const.SCREEN_WIDTH//2, (const.SCREEN_HEIGHT - 50))
@@ -231,9 +231,9 @@ class Player(pygame.sprite.Sprite): #Si on
         if self.Ulti == self.MAXUlti: 
             if pygame.mouse.get_pressed()[0]:
 
-                if self.id == 'p1' and score >= 200: #IEM
+                if self.id == 'p1' and score >= 1000: #IEM
                     liste = []
-                    """
+                    """ #Anciens ulti: Détruit tout les e1, e2, e3
                     for i in range(0,len(enemies)):
                         if enemies[i].id in ['e1','e2','e3']:
                             liste.append(i)
@@ -248,18 +248,18 @@ class Player(pygame.sprite.Sprite): #Si on
                     while liste:
                         del tirs[liste.pop()] 
                     self.Ulti = 0
-                    score -= 200
-                elif self.id == 'p2' and score >= 200: #Spam
+                    score -= 1000
+                elif self.id == 'p2' and score >= 2000: #Spam
                     self.DureeUlti = 120
                     self.cooldown = 30
                     self.Ulti = 0
-                    score -= 200
-                elif self.id == 'p3' and score >= 200: #Laser
+                    score -= 2000
+                elif self.id == 'p3' and score >= 3000: #Laser
                     self.DureeUlti = 300
                     tirs.append(fight.Projectile(self,10,"sprites_animation/laser1.png"))
                     self.cooldown = 300 # pour éviter qu'il tire pendant l'ulti
                     self.Ulti = 0
-                    score -= 200
+                    score -= 3000
                 else:
                     pass
         else:
@@ -283,7 +283,7 @@ class Compagon(pygame.sprite.Sprite):
         #self.rect.center= (perso.rect.right+self.deplacementX,perso.rect.top+ self.deplacementY)
         #if (random.randint(0,1)==1): #Léger déplacement aléatoire du compagnon, a modif pr eviter l'épilepsie
         self.deplacementX+=random.randint(-1,1)
-        if ((self.rect.right+self.deplacementX-perso.rect.right<20 or perso.rect.right-self.rect.right<20) and self.rect.right<const.SCREEN_WIDTH and self.rect.left >0):
+        if ((self.rect.right+self.deplacementX-perso.rect.right<10 or perso.rect.right-self.rect.right<10) and self.rect.right<const.SCREEN_WIDTH and self.rect.left >0):
             self.rect.right = self.rect.right+self.deplacementX
         #else:
         self.deplacementY+= random.randint(-1,1)
