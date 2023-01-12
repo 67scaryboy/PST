@@ -266,13 +266,13 @@ class Debrit(pygame.sprite.Spritre):
         if (self.rect.top > const.SCREEN_HEIGHT):
             self.kill()
 
-def crash(debrits, joueur, tempscore, p_alive):#fonction de colision avec les débrits
+def crash(debrits, joueur, p_alive):#fonction de colision avec les débrits
     for ferraille in debrits:
         if pygame.sprite.collide_rect(ferraille,joueur): #ajout pour voir si limite les lags
             if pygame.sprite.collide_mask(ferraille,joueur): #colision tirs joueur
                 joueur.PV = 0
                 p_alive = fight.Mort([],p_P1,debrits)
-    return (tempscore, p_alive)
+    return p_alive
 
 def poser_debrits(debrits, id_debrit, posX, posY, angle):
     ferraille  = Debrit(id_debrit, angle)

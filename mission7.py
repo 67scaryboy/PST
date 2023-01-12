@@ -5,7 +5,7 @@ import constantes as const
 
 def LancerMission7():
     FramePerSec = pygame.time.Clock()
-    scoreArcade = 0
+    score = 0
     alive = True
 
     AP = menu.Arrièreplan(3)# 1 a 3 pour le fond
@@ -17,12 +17,7 @@ def LancerMission7():
     pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200)
     P1.souris(personnages.DISPLAYSURF)
 
-    cooldown = P1.cooldown
-
-    enemies = [] 
-    tirs = []
-    explo = []
-    boosts = []
+    debrits = []
 
     while alive:
         for event in pygame.event.get():
@@ -30,21 +25,7 @@ def LancerMission7():
                 pygame.quit()
                 sys.exit()
         
-        #tir automatique
-        if P1.cooldown == 0:
-            shoot = fight.Projectile(P1,0,"sprites/tira.png")
-            shootf= fight.Projectile(CP,0,"sprites/tira.png")
-            tirs.append(shoot)
-            tirs.append(shootf)
-            P1.cooldown = cooldown
-        else:
-            P1.cooldown += -1
-
-        #faire avance les tirs
-        for shoot in tirs:
-            shoot.move()
-            if shoot.rect.bottom > const.SCREEN_HEIGHT:
-                    tirs.remove(shoot)
+        alive = crash(debrits, P1, alive)
 
         ###Partie graphique###
         personnages.DISPLAYSURF.fill(const.WHITE)
@@ -57,31 +38,16 @@ def LancerMission7():
         AP2.draw(personnages.DISPLAYSURF)
         AP3.draw(personnages.DISPLAYSURF)
 
-        #Affichage des tirs
-        for shoot in tirs:
-            if shoot.trajectoire == 3 and shoot.tireur_id == "e1":
-                menu.Animation(const.boules,shoot)
-            shoot.draw(personnages.DISPLAYSURF)
+        #Affichage des obstacles restants
+        for entity in debrits:
+            entity.draw(personnages.DISPLAYSURF)
         
-        #Affichage des bonus
-        for boost in boosts:
-            boost.draw(personnages.DISPLAYSURF)
-
-        #Affichage des explosions
-        menu.aff_explo(explo)
-        for boom in explo:
-            menu.Animation(const.explosions,boom)
-
-        #Affichage des adversaires restants
-        for entity in enemies:
-            if entity.active == 1:
-                entity.draw(personnages.DISPLAYSURF)
         P1.souris(personnages.DISPLAYSURF)#Affichage joueur
         P1.draw_health(personnages.DISPLAYSURF)
         CP.update(P1)
         CP.draw(personnages.DISPLAYSURF)#Affichage Compagnon
         MB.draw(personnages.DISPLAYSURF)#Affichage menu bas
-        menu.AfficheScore(scoreArcade) #Affichage score
+        menu.AfficheScore(score) #Affichage score
 
 
         pygame.display.update()
