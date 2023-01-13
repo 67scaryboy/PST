@@ -290,7 +290,7 @@ def Boss1(joueur, score,AP3,AP2,AP,VaisseauChoisis): #Boss Modulaire
         P1.draw_health(personnages.DISPLAYSURF)    #Affichage de la barre de vie
         if Ulti:                             #gestion des ultis:
             if P1.DureeUlti == -1:           #si l'ulti n'est pas en cours
-                P1.ulti(enemies,tirs,explo)  #charge l'ulti
+                #P1.ulti(enemies,tirs,explo)  #charge l'ulti
                 pass 
             elif P1.DureeUlti > 0:           #si l'ulti est en cours
                 P1.DureeUlti -= 1            #réduit son temps d'utilisation
