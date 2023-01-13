@@ -403,6 +403,5 @@ def Colision(p_tirs,p_P1,p_enemies,p_explo,boosts,tempscore,p_alive):  #Detectio
     return (tempscore,p_alive)                                                 #le nouveau score et la situation du joueur est communiquée
     
 def Mort(p_tirs,p_P1,p_enemies): #Lorsque le joueur est mort
-    p_tirs.clear()    #on vide les fonctions
-    p_enemies.clear()
+    p_tirs.clear()    #on vide les fonctions 
     return False #fin de la boucle while alive
