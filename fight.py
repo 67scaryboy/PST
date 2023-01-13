@@ -246,7 +246,7 @@ def Arcade(): #Mode Arcade
 
         if Ulti: #gestion des ultis
             if P1.DureeUlti == -1:                    #si l'ulti n'est pas en cours
-                P1.ulti(enemies,tirs,explo,score)       #chargement de l'ulti
+                P1.ulti(enemies,tirs,explo,scoreArcade)       #chargement de l'ulti
             elif P1.DureeUlti > 0:                    #si l'ulti est en cours
                 P1.DureeUlti -= 1                       #reduit son temps d'utilisation
                 cooldown = P1.cooldown                  #change le cooldown de tir
