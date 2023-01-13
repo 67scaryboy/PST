@@ -4,9 +4,9 @@ import random, menu, pickle, fight
 import constantes as const
 
 
-DISPLAYSURF = pygame.display.set_mode((const.SCREEN_WIDTH,const.SCREEN_HEIGHT), pygame.FULLSCREEN)
+DISPLAYSURF = pygame.display.set_mode((const.SCREEN_WIDTH,const.SCREEN_HEIGHT))
 DISPLAYSURF.fill(const.WHITE)
-pygame.display.set_caption("Votez pas ici")
+pygame.display.set_caption("Space Crusader")
 
 ###Stats de bases des vaisseaux joueurs###
 V1 = [False,100,0,70,0,10,0, False] # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown, Ulti ?]
