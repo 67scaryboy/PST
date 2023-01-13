@@ -9,7 +9,7 @@ DISPLAYSURF.fill(const.WHITE)
 pygame.display.set_caption("Space Crusader")
 
 ###Stats de bases des vaisseaux joueurs###
-V1 = [False,100,0,70,0,10,0, False] # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown, Ulti ?]
+V1 = [True,100,0,70,0,10,0, False] # [Débloqué ?, Vie, Nb amélioration vie, Attaque, Nb amélioration attaque, Cooldown, Nb amélioration cooldown, Ulti ?]
 V2 = [False,130,0,70,0,20,0, False] 
 V3 = [False,150,0,150,0,30,0, False]
 
