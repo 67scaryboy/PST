@@ -33,6 +33,11 @@ def MissionEditeur():
     elif VaisseauChoisis == 3:
         Ulti = temp['V3'][7]
 
+    #Valeur de base définie. En cas d'oubli dans l'editeur, le jeu se lancera quand même
+    AP = menu.Arrièreplan(3)
+    AP2= menu.Arrièreplan(5)
+    AP3= menu.Arrièreplan(6)
+
     enemies = [] 
     tirs = []
     explo = []
@@ -40,6 +45,7 @@ def MissionEditeur():
     gc.collect()
     tempsdemarrage = time.time()
 
+    #Actions effectués à chaque images---------------------------------------------
     def ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown):
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -236,8 +242,9 @@ def MissionEditeur():
         if alive != True: #En cas de victoire, on sort de la boucle avec alive=True
             pygame.mixer.music.fadeout(10000)
             menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent
-            return        
+            return False
 
+    #Interpretation de chaque ligne dans le fichier de l'editeur--------------------
     for ligne in lignes:
         if ligne[0:1]=='#': #Permet l'ajout de commentaire au début d'une ligne dans l'éditeur
             pass
@@ -245,38 +252,75 @@ def MissionEditeur():
             #Si dessous, tests pour vérifier que la ligne correspond bien à une commande:
 
             #Commande de préparation du jeu
-            if re.match("ParalaxProfond\((\d+)\)",ligne):
-                if re.match("ParalaxProfond\((\d+)\)",ligne).group(1) in ["1","2","3"]: #Important de mettre la liste en string. Sinon pas de match
+            if re.match("ParalaxProfond\((.*)\)",ligne):
+                if re.match("ParalaxProfond\((.*)\)",ligne).group(1) in ["1","2","3"]: #Important de mettre la liste en string. Sinon pas de match
                     AP = menu.Arrièreplan(int(re.match("ParalaxProfond\((\d+)\)",ligne).group(1)))
                 else:
                     print("Erreur lors de l'appel de la fonction "+ str(ligne) + 
-                          ". Les paramètres possibles sont 1, 2 ou 3. Actuellement " + str(re.match("ParalaxProfond\((\d+)\)",ligne).group(1)))
-            elif re.match("ParalaxIntermediaire\((\d+)\)",ligne):
-                if re.match("ParalaxIntermediaire\((\d+)\)",ligne).group(1) in ["4","5"]:
+                          "Les paramètres possibles sont 1, 2 ou 3. Actuellement " + str(re.match("ParalaxProfond\((.*)\)",ligne).group(1)))
+                    return
+            elif re.match("ParalaxIntermediaire\((.*)\)",ligne):
+                if re.match("ParalaxIntermediaire\((.*)\)",ligne).group(1) in ["4","5"]:
                     AP2 = menu.Arrièreplan(int(re.match("ParalaxIntermediaire\((\d+)\)",ligne).group(1)))
                 else:
                     print("Erreur lors de l'appel de la fonction "+ str(ligne) + 
-                          ". Les paramètres possibles sont 4 ou 5. Actuellement " + str(re.match("ParalaxIntermediaire\((\d+)\)",ligne).group(1)))
-            elif re.match("ParalaxProche\((\d+)\)",ligne):
-                if re.match("ParalaxProche\((\d+)\)",ligne).group(1) in ["6","7"]:
+                          "Les paramètres possibles sont 4 ou 5. Actuellement " + str(re.match("ParalaxIntermediaire\((.*)\)",ligne).group(1)))
+                    return
+            elif re.match("ParalaxProche\((.*)\)",ligne):
+                if re.match("ParalaxProche\((.*)\)",ligne).group(1) in ["6","7"]:
                     AP3 = menu.Arrièreplan(int(re.match("ParalaxProche\((\d+)\)",ligne).group(1)))
                 else:
-                    print("Erreur lors de l'appel de la fonction "+ str(ligne) + 
-                          ". Les paramètres possibles sont 6 ou 7. Actuellement " + str(re.match("ParalaxProche\((\d+)\)",ligne).group(1)))
+                    print("Erreur lors de l'appel de la commande "+ str(ligne) + 
+                          "Les paramètres possibles sont 6 ou 7. Actuellement " + str(re.match("ParalaxProche\((.*)\)",ligne).group(1)))
+                    return
            
             #Commandes de création de jeu
-            
-            elif re.match("Attendre\((\d+)\)",ligne):
+            elif re.match("Attendre\((.*)\)",ligne):
+                try:
+                    if type(int(re.match("Attendre\((\d+)\)",ligne).group(1)))==type(1):
+                        pass
+                except:
+                    print ("Erreur lors de l'execution de la commande " + str(ligne) + "Vous devez entrer un chiffre entre les parentheses")
+                    return
                 while time.time() - tempsdemarrage<int(re.match("Attendre\((\d+)\)",ligne).group(1)):
-                    ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)
+                    if ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)==False:
+                        return
             
-            elif re.match(r"Test\(\d+,\d+\)", ligne):
-                match = re.match(r"Test\((\d+),(\d+)\)", ligne)
-                parametre1 = match.group(1)
-                parametre2 = match.group(2)
-                print("C'est un match, la commande est un test de premier paramètre " + parametre1 + " et de 2e paramètre " + parametre2)
+            elif re.match(r"Ennemi\((.*),(.*),(.*)\)", ligne):
+                match = re.match(r"Ennemi\((.*),(.*),(.*)\)", ligne)
+                try:
+                    if match.group(1) in ["1","2","3","4","5","6"]:
+                        typeAdversaire = int(match.group(1))
+                    else:
+                        print("Erreur lors de l'appel de la commande " + str(ligne) + 
+                          "Le premier nombre doit etre un chiffre compris entre 1 et 6. Actuellement " + match.group(1))
+                        return
+                except:
+                    print("Erreur lors de l'appel de la commande " + str(ligne) + 
+                          "Le premier nombre doit etre un chiffre compris entre 1 et 6. Actuellement " + match.group(1))
+                    return
+                try:
+                    positionHorizontale = int(match.group(2))
+                except:
+                    print("Erreur lors de l'appel de la commande " + str(ligne) + 
+                          "Le second nombre doit etre un chiffre compris entre 0 et 800 (tu peut faire plus ou moins, mais on ne verra pas le vaisseau). Actuellement " + match.group(1))
+                    return
+                try:
+                    positionVerticale = int(match.group(3))
+                except:
+                    print("Erreur lors de l'appel de la commande " + str(ligne) + 
+                          "Le dernier nombre doit etre un chiffre (possible qu'il soit négatif si tu le souhaite). Actuellement " + match.group(1))
+                    return
+
+                fight.SpawHistoire(enemies,typeAdversaire,positionHorizontale,positionVerticale)
+                if ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)==False:
+                    return
             else:
-                print("Ca match pas")
+                print("Erreur lors de la commande " + str (ligne) + "Commande inconnue")
+                return
+    
+    while len(enemies)>0:
+        ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)
     return
 
     while alive:
