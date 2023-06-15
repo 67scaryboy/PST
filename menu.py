@@ -1,4 +1,4 @@
-import pygame, sys, personnages, pickle, os, time
+import pygame, sys, personnages, pickle, os, time, editeur
 from pygame.locals import *
 import constantes as const
 
@@ -1164,6 +1164,7 @@ def ChoixMode():
     AP=Affichage("sprites_menu/AP_mp.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) 
     Barcade=Affichage("sprites/NArcade.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2+80) #Bouton arcade
     Bhistoire=Affichage("sprites/NHistoire.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2) #Bouton historie
+    Bediteur=Affichage("sprites/NEditeur.png",const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT//2+160) #Bouton editeur de niveau. Texture à changer
     logo=Affichage("sprites/logo.png",const.SCREEN_WIDTH//2,150) #logo Space Crusade
     
     while True:
@@ -1174,10 +1175,12 @@ def ChoixMode():
         personnages.DISPLAYSURF.fill(const.WHITE)
         AP.draw(personnages.DISPLAYSURF)
         logo.draw(personnages.DISPLAYSURF)
-        Barcade.modif("sprites/NArcade.png")
+        Barcade.modif("sprites/NArcade.png") #On remet la texture de base pour le cas ou la souris n'est plus dessus
         Barcade.draw(personnages.DISPLAYSURF)
         Bhistoire.modif("sprites/NHistoire.png")
         Bhistoire.draw(personnages.DISPLAYSURF)
+        Bediteur.modif("sprites/NEditeur.png")
+        Bediteur.draw(personnages.DISPLAYSURF)
         Joueur.souris(personnages.DISPLAYSURF)
 
         if pygame.mouse.get_pressed()[0]==False and not relache:
@@ -1199,6 +1202,14 @@ def ChoixMode():
             if pygame.mouse.get_pressed()[0]==True and relache:
                 return 2
        
+        elif pygame.sprite.collide_rect(Joueur,Bediteur):
+                Bediteur.modif("sprites/HEditeur.png")
+                Bediteur.draw(personnages.DISPLAYSURF)
+                Joueur.souris(personnages.DISPLAYSURF)
+                
+                if pygame.mouse.get_pressed()[0]==True and relache:
+                    return 3
+
         pygame.display.update()
         FramePerSec.tick(const.FPS)
 
