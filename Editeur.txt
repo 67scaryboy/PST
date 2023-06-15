@@ -7,19 +7,27 @@
 #                                                                                                                                                                                
 #
 #
-#		 ______|INFORMATIONS|____________________________________________________________
-#		/L'éditeur de niveaux étant fait main, il y à certaines règles à suivre pour	  \
-#		|que le programme puisse lire correctement votre niveau:			  |
-#		|	* Vérifiez bien la sytaxe de vos commandes				  |
+#		  _____|INFORMATIONS|____________________________________________________________
+#		 /L'éditeur de niveaux étant fait main, il y à certaines règles à suivre pour	 \
+#		|que le programme puisse lire correctement votre niveau. Vous trouverez également |
+#		|ci dessous quelques informations à propos du jeu:				  |
+#		|	* Vérifiez bien la sytaxe de vos commandes (pas d'espace avant ou après   |
+# 		|	  les virgules par exemple !)						  |
 #		|	* Certaines commandes doivent être entrée dans un ordre précis. Respectez |
 #		|	  le, sans quoi le jeu fera n'importe quoi				  |
 #		|	* Vous pouvez mettre des lignes de commentaire dans le code (Qui ne soient|
 #		|	  pas utilisés pour créer votre niveau) en commancant la ligne par #	  |	
 #		|	* Les adversaires apparaissent grâce à un système de vagues: C'est à dire |
-#               |	  que vous allez préparer des positions d'apparition par vagues et qu'au  |
-#		| 	  commencement de celle ci, les adversaires apparaitrons. Regardez le  	  |
-#		|  	  niveau exemple qui est fournis, vous comprendrez surement		  |
-#		\________________________________________________________________________________/
+#               |	  que vous allez préparer des positions d'apparition par vagues et que	  |
+#		| 	  tous les adversaires apparaitrons en même temps. Pour mettre un délais  |
+#		|  	  entre les apparitions, utilisez la commande 'Attendre'		  |
+#		|	* Le jeu se fini soit quand vous êtes morts, soit quand tous les vaisseaux|
+#		|	  prévus ont été détruits						  |
+#		|	* Les tirs des vaisseaux ennemis sont aléatoires: Vous ne pouvez pas 	  |
+#		|	  choisir quand ils vont tirer						  |
+#		|	* En jeu, vous n'avez pas besoin de détruire tous les vaisseaux. Les	  |
+#		|	  laisser passer n'a aucune incidence					  |
+#		 \_______________________________________________________________________________/
 #
 #
 #	Liste des commandes disponibles:
@@ -28,46 +36,55 @@
 #
 #		- ParalaxProfond([1-3]), ParalaxIntermediaire([4-5]), ParalaxProche([6-7])
 #		Sert à définir les couches de paralax en jeu. Chaque commande ne doit être utilisée qu'une seule fois et dès le lancement du programme
+#		1, 2 et 3 correspondent à la couleur de fond (respectivement noir-bleu, noir-rouge, noir-mauve)
+#		4, 5, 6 et 7 correspondent à diverses constellations qui viendrons décorer le fond
+#
 #		- Attendre([*])
 #		Sert à attedendre jusqu'a un certain moment après le début du jeu. Cela sert à faire arriver les vagues d'ennemis. Le temps d'attente ne
-#		doit jamais être inferieur au précédent (sinon, le jeu ne s'arrêtera jamais)
+#		doit jamais être inferieur au précédent (sinon, le jeu ne s'arrêtera jamais). La valeur est choisie est le temps en seconde depuis le
+#		début de la partie
+#
+#		- Ennemi(Type:[1-6], Position Horizontale:[0-800], Position Verticale[0-800])
+#		Sert à faire apparaitre un adversaire. Pour la position horizontale 0 correspond à la gauche de l'écran. Pour la position verticale 0
+#		correspond à la droite de l'écran. Il s'agit de la seule valeur pour laquelle vous pouvez dépasser les valeurs proposés (pour les positions).
+#		Cela peut être utiliser pour faire apparaitre des adversaires au dela de l'écran pour qu'ils descendent plus tard par exemple.
+#		Types d'adversaires:
+#			1: Adversaire faible avec des tirs sinusoidaux
+#			2: Adversaire moyen avec des triples tirs
+#			3: Adversaire avec vie standard et des tirs simples
+#			4: Adversaire faible, rapide, ne tirant pas mais foncant sur le joueur (kamikaze)
+#			5: Adversaire ayant une santé accrue et tirant en diagonale
+#			6: Adversaires ayant beaucoup de vie mais ne tirant pas (tanks)
 #		-
 #		-
 #		-
 #		-
-#		-
-#		-
-#		-
-#		-
-#		-
-#		-
-#		-
-#		-
-#
-#
-###########################################################################################
-#				COMMANDES A ENTRER EN PRIORITE
-# 
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-###########################################################################################
 #
 #
 #
 #
 #---===[CREATION DU JEU]===---
-# Commencez par la définition du paralax de fond
+#
+# Commencez par la définition du paralax de fond. Si vous passez cette partie, des valeurs par défaut seront utilisée.
+#
 ParalaxProfond(2)
 ParalaxIntermediaire(4)
-ParalaxProche(6)
-Attendre(10)
+ParalaxProche(7)
 #
+# Continuez ensuite avec les adversaires que vous souhaitez faire apparaitre !
+#
+Ennemi(6,200,-10)
+Ennemi(6,600,-10)
+Ennemi(3,300,-50)
+Ennemi(3,400,-50)
+Ennemi(3,500,-50)
+Ennemi(1,600,-30)
+Ennemi(1,200,-30)
+Ennemi(3,00,-10)
+Ennemi(3,800,-10)
+Ennemi(3,0,-40)
+Ennemi(3,800,-40)
+Attendre(1)
