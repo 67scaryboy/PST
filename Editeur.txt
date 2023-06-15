@@ -1,0 +1,60 @@
+#		    ______    ___ __                         __              _                            
+#		   / ____/___/ (_) /____  __  _______   ____/ /__     ____  (_)   _____  ____ ___  ___  __
+#		  / __/ / __  / / __/ _ \/ / / / ___/  / __  / _ \   / __ \/ / | / / _ \/ __ `/ / / / |/_/
+#                / /___/ /_/ / / /_/  __/ /_/ / /     / /_/ /  __/  / / / / /| |/ /  __/ /_/ / /_/ />  <  
+#		/_____/\__,_/_/\__/\___/\__,_/_/      \__,_/\___/  /_/ /_/_/ |___/\___/\__,_/\__,_/_/|_|  
+#                                                                                          
+#                                                                                                                                                                                
+#
+#
+#		 ______|INFORMATIONS|____________________________________________________________
+#		/L'éditeur de niveaux étant fait main, il y à certaines règles à suivre pour	  \
+#		|que le programme puisse lire correctement votre niveau:			  |
+#		|	* Vérifiez bien la sytaxe de vos commandes				  |
+#		|	* Certaines commandes doivent être entrée dans un ordre précis. Respectez |
+#		|	  le, sans quoi le jeu fera n'importe quoi				  |
+#		|	* Vous pouvez mettre des lignes de commentaire dans le code (Qui ne soient|
+#		|	  pas utilisés pour créer votre niveau) en commancant la ligne par #	  |	
+#		|	*
+#		\________________________________________________________________________________/
+#
+#
+#	Liste des commandes disponibles:
+#	Remarque: lorsque quelque chose est entre crochet, cela veut dire que vous avez le choix de la valeur (incluse)
+#	Exemple: Pour la première commande, vous pouvez choisir ParalaxProfond(1) OU ParalaxProfond(2) OU ParalaxProfond(3)
+#		- ParalaxProfond([1-3]), ParalaxIntermediaire([1-2]), ParalaxProche([1-2])
+#		Sert à définir les couches de paralax en jeu. Chaque commande ne doit être utilisée qu'une seule fois et dès le lancement du programme
+#		-
+#		-
+#		-
+#		-
+#		-
+#		-
+#		-
+#		-
+#		-
+#		-
+#		-
+#		-
+#		-
+#		-
+#
+#
+###########################################################################################
+#				COMMANDES A ENTRER EN PRIORITE
+# 
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+###########################################################################################
+ParalaxProfond(1)
+ParalaxIntermediaire(1)
+ParalaxProche(2)
