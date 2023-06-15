@@ -1,7 +1,7 @@
 import pygame, sys
 import mission1, mission2, mission3, mission4, mission5, mission6, mission7, mission8, mission9, mission10
 from pygame.locals import *
-import random, personnages, menu, fight, bonus, boss, pickle, gc
+import editeur, menu, fight, pickle, gc
 import constantes as const
 
 pygame.init()
@@ -47,4 +47,4 @@ while True:
         elif choix== 10:
             mission10.LancerMission10()
     elif option == 3: #Mode éditeur
-        pass
+        editeur.MissionEditeur()
