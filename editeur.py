@@ -38,68 +38,9 @@ def MissionEditeur():
     explo = []
     boosts = []
     gc.collect()
+    tempsdemarrage = time.time()
 
-    for ligne in lignes:
-        if ligne[0:1]=='#': #Permet l'ajout de commentaire au début d'une ligne dans l'éditeur
-            pass
-        else: #Tout ce qui doit être fait si la ligne n'est pas un commentaire
-            #Si dessous, tests pour vérifier que la ligne correspond bien à une commande:
-
-            #Set de l'arrière plan
-            if re.match("ParalaxProfond\((\d+)\)",ligne):
-                if re.match("ParalaxProfond\((\d+)\)",ligne).group(1) in ["1","2","3"]: #Important de mettre la liste en string. Sinon pas de match
-                    AP = menu.Arrièreplan(int(re.match("ParalaxProfond\((\d+)\)",ligne).group(1)))
-                else:
-                    print("Erreur lors de l'appel de la fonction "+ str(ligne) + 
-                          ". Les paramètres possibles sont 1, 2 ou 3. Actuellement " + str(re.match("ParalaxProfond\((\d+)\)",ligne).group(1)))
-            elif re.match("ParalaxIntermediaire\((\d+)\)",ligne):
-                if re.match("ParalaxIntermediaire\((\d+)\)",ligne).group(1) in ["1","2"]:
-                    AP = menu.Arrièreplan(int(re.match("ParalaxIntermediaire\((\d+)\)",ligne).group(1)))
-                else:
-                    print("Erreur lors de l'appel de la fonction "+ str(ligne) + 
-                          ". Les paramètres possibles sont 1 ou 2. Actuellement " + str(re.match("ParalaxIntermediaire\((\d+)\)",ligne).group(1)))
-            elif re.match("ParalaxProche\((\d+)\)",ligne):
-                if re.match("ParalaxProche\((\d+)\)",ligne).group(1) in ["1","2"]:
-                    AP = menu.Arrièreplan(int(re.match("ParalaxProche\((\d+)\)",ligne).group(1)))
-                else:
-                    print("Erreur lors de l'appel de la fonction "+ str(ligne) + 
-                          ". Les paramètres possibles sont 1 ou 2. Actuellement " + str(re.match("ParalaxProche\((\d+)\)",ligne).group(1)))
-            
-            elif re.match(r"Test\(\d+,\d+\)", ligne):
-                match = re.match(r"Test\((\d+),(\d+)\)", ligne)
-                parametre1 = match.group(1)
-                parametre2 = match.group(2)
-                print("C'est un match, la commande est un test de premier paramètre " + parametre1 + " et de 2e paramètre " + parametre2)
-            else:
-                print("Ca match pas")
-    return
-
-    while alive:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-
-        personnages.DISPLAYSURF.fill(const.WHITE)
-        AP3.move(3)#vitesse de déplacement des couches
-        AP2.move(2)
-        AP.move(1)#laisser 1 pour le fond, sinon ca file la gerbe
-        AP.draw(personnages.DISPLAYSURF)
-        AP2.draw(personnages.DISPLAYSURF)
-        AP3.draw(personnages.DISPLAYSURF)
-        P1.draw(personnages.DISPLAYSURF)
-
-        tempsdemarrage = time.time() #A mettre ici, sinon les adversaires risquent de spawn pendant le dialogue.
-        pygame.mixer.music.load("sons/Mission1.mp3")
-        pygame.mixer.music.set_volume(0.3)
-        pygame.mixer.music.play()
-            
-                
-        pygame.display.update()
-        FramePerSec.tick(const.FPS)
-    pygame.mouse.set_pos(const.SCREEN_WIDTH//2,const.SCREEN_HEIGHT-200) #Spawn de départ
-
-    while alive:
+    def ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown):
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -112,29 +53,6 @@ def MissionEditeur():
                     boost.move()
                     if boost.rect.bottom > const.SCREEN_HEIGHT:
                             boosts.remove(boost)
-
-        #Boucle de spawn après timer
-        """ Exemple, à changer avec lecture dynamique
-        tempspasse = time.time() - tempsdemarrage
-        if tempspasse > 5 and numformation==0: # Temps en secondes
-            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-20,-20)
-            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2,0)
-            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+20,-20)
-            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+40,-40)
-            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-40,-40)
-            numformation=1
-        elif tempspasse > 7 and numformation==1: #Création d'une formation rectangle
-            for c in range (0,4,1): #Nombre de colonne
-                for l in range (0,7,1): #Nombre de lignes
-                    fight.SpawHistoire(enemies,1,l*40,c*(-30))
-            numformation=2
-        elif tempspasse > 15 and numformation==2:
-            pygame.mixer.music.fadeout(10000)
-            menu.MenuFinPartie(score,True)
-            break"""
-
-
-
         #tir automatique
         if P1.cooldown == 0:
             with open('sauvegarde.pkl', 'rb') as f: #Chargement de la sauvegarde pour voir si on à débloqué ou pas les vaisseaux
@@ -315,6 +233,75 @@ def MissionEditeur():
 
         pygame.display.update()
         FramePerSec.tick(const.FPS)
-    if alive != True: #En cas de victoire, on sort de la boucle avec alive=True
-        pygame.mixer.music.fadeout(10000)
-        menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent        
+        if alive != True: #En cas de victoire, on sort de la boucle avec alive=True
+            pygame.mixer.music.fadeout(10000)
+            menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent
+            return        
+
+    for ligne in lignes:
+        if ligne[0:1]=='#': #Permet l'ajout de commentaire au début d'une ligne dans l'éditeur
+            pass
+        else: #Tout ce qui doit être fait si la ligne n'est pas un commentaire
+            #Si dessous, tests pour vérifier que la ligne correspond bien à une commande:
+
+            #Commande de préparation du jeu
+            if re.match("ParalaxProfond\((\d+)\)",ligne):
+                if re.match("ParalaxProfond\((\d+)\)",ligne).group(1) in ["1","2","3"]: #Important de mettre la liste en string. Sinon pas de match
+                    AP = menu.Arrièreplan(int(re.match("ParalaxProfond\((\d+)\)",ligne).group(1)))
+                else:
+                    print("Erreur lors de l'appel de la fonction "+ str(ligne) + 
+                          ". Les paramètres possibles sont 1, 2 ou 3. Actuellement " + str(re.match("ParalaxProfond\((\d+)\)",ligne).group(1)))
+            elif re.match("ParalaxIntermediaire\((\d+)\)",ligne):
+                if re.match("ParalaxIntermediaire\((\d+)\)",ligne).group(1) in ["4","5"]:
+                    AP2 = menu.Arrièreplan(int(re.match("ParalaxIntermediaire\((\d+)\)",ligne).group(1)))
+                else:
+                    print("Erreur lors de l'appel de la fonction "+ str(ligne) + 
+                          ". Les paramètres possibles sont 4 ou 5. Actuellement " + str(re.match("ParalaxIntermediaire\((\d+)\)",ligne).group(1)))
+            elif re.match("ParalaxProche\((\d+)\)",ligne):
+                if re.match("ParalaxProche\((\d+)\)",ligne).group(1) in ["6","7"]:
+                    AP3 = menu.Arrièreplan(int(re.match("ParalaxProche\((\d+)\)",ligne).group(1)))
+                else:
+                    print("Erreur lors de l'appel de la fonction "+ str(ligne) + 
+                          ". Les paramètres possibles sont 6 ou 7. Actuellement " + str(re.match("ParalaxProche\((\d+)\)",ligne).group(1)))
+           
+            #Commandes de création de jeu
+            
+            elif re.match("Attendre\((\d+)\)",ligne):
+                while time.time() - tempsdemarrage<int(re.match("Attendre\((\d+)\)",ligne).group(1)):
+                    ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)
+            
+            elif re.match(r"Test\(\d+,\d+\)", ligne):
+                match = re.match(r"Test\((\d+),(\d+)\)", ligne)
+                parametre1 = match.group(1)
+                parametre2 = match.group(2)
+                print("C'est un match, la commande est un test de premier paramètre " + parametre1 + " et de 2e paramètre " + parametre2)
+            else:
+                print("Ca match pas")
+    return
+
+    while alive:
+        
+
+        #Boucle de spawn après timer
+        """ Exemple, à changer avec lecture dynamique
+        tempspasse = time.time() - tempsdemarrage
+        if tempspasse > 5 and numformation==0: # Temps en secondes
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-20,-20)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2,0)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+20,-20)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+40,-40)
+            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-40,-40)
+            numformation=1
+        elif tempspasse > 7 and numformation==1: #Création d'une formation rectangle
+            for c in range (0,4,1): #Nombre de colonne
+                for l in range (0,7,1): #Nombre de lignes
+                    fight.SpawHistoire(enemies,1,l*40,c*(-30))
+            numformation=2
+        elif tempspasse > 15 and numformation==2:
+            pygame.mixer.music.fadeout(10000)
+            menu.MenuFinPartie(score,True)
+            break"""
+
+
+
+        
