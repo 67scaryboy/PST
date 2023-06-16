@@ -14,8 +14,7 @@ def MissionEditeur():
     FramePerSec = pygame.time.Clock()
     score = 0
     alive = True
-    numformation=0
-    appui = False
+    probaTir=300
     VaisseauChoisis = menu.ChoixPerso()
     P1 = personnages.Player(VaisseauChoisis)
     CP = personnages.Compagon(P1)
@@ -158,19 +157,27 @@ def MissionEditeur():
             if entity.active == 1:
                 entity.move()
                 entity.moveKamikaze(P1)
-                p = random.randint(0,500)
+                p = random.randint(0,probaTir)
                 if p < 1:
                     if (entity.id == "e1"):
                         shoot = fight.Projectile(entity,3,"sprites_animation/boule1.png")
+                        tirs.append(shoot)
                     elif (entity.id == "e2"):
                         shoot = fight.Projectile(entity,2,"sprites/tir3.png")
                         tirs.append(shoot)
                         shoot = fight.Projectile(entity,1,"sprites/tir3.png")
                         tirs.append(shoot)
                         shoot = fight.Projectile(entity,0,"sprites/tir3.png")
+                        tirs.append(shoot)
                     elif (entity.id == "e3"):
                         shoot = fight.Projectile(entity,0,"sprites/tir.png")
-                    tirs.append(shoot)
+                        tirs.append(shoot)
+                    elif (entity.id == "e5"):
+                        shoot = fight.Projectile(entity,4,"sprites_animation/boule1.png")
+                        tirs.append(shoot)
+                        shoot = fight.Projectile(entity,5,"sprites_animation/boule1.png")
+                        tirs.append(shoot)
+                    
             if entity.rect.top > const.SCREEN_HEIGHT:
                     enemies.remove(entity)
 
@@ -242,7 +249,8 @@ def MissionEditeur():
         if alive != True: #En cas de victoire, on sort de la boucle avec alive=True
             pygame.mixer.music.fadeout(10000)
             menu.MenuFinPartie(score,False)#Dans le menu, le score est ajouté comme argent
-            return False
+            return tirs,P1,enemies,explo,boosts,score,alive,cooldown,False
+        return tirs,P1,enemies,explo,boosts,score,alive,cooldown,True
 
     #Interpretation de chaque ligne dans le fichier de l'editeur--------------------
     for ligne in lignes:
@@ -273,7 +281,17 @@ def MissionEditeur():
                     print("Erreur lors de l'appel de la commande "+ str(ligne) + 
                           "Les paramètres possibles sont 6 ou 7. Actuellement " + str(re.match("ParalaxProche\((.*)\)",ligne).group(1)))
                     return
-           
+            elif re.match("ProbabiliteTir\((.*)\)",ligne):
+                try:
+                    if int(re.match("ProbabiliteTir\((.*)\)",ligne).group(1)) > 0:
+                        probaTir = int(re.match("ProbabiliteTir\((.*)\)",ligne).group(1))
+                    else:
+                        print("La probabilité de tir ne peut être inférieur à 1. Utilisation de la valeur par défaut (300)")
+                except:
+                    print("Erreur lors de l'appel de la commande "+ str(ligne) + 
+                          "Le paramètre doit être un entier supérieur ou égal à 1. Actuellement " + str(re.match("ProbabiliteTir\((.*)\)",ligne).group(1)))
+                    return
+
             #Commandes de création de jeu
             elif re.match("Attendre\((.*)\)",ligne):
                 try:
@@ -283,7 +301,8 @@ def MissionEditeur():
                     print ("Erreur lors de l'execution de la commande " + str(ligne) + "Vous devez entrer un chiffre entre les parentheses")
                     return
                 while time.time() - tempsdemarrage<int(re.match("Attendre\((\d+)\)",ligne).group(1)):
-                    if ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)==False:
+                    tirs,P1,enemies,explo,boosts,score,alive,cooldown,alive=ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)
+                    if alive==False:
                         return
             
             elif re.match(r"Ennemi\((.*),(.*),(.*)\)", ligne):
@@ -313,39 +332,16 @@ def MissionEditeur():
                     return
 
                 fight.SpawHistoire(enemies,typeAdversaire,positionHorizontale,positionVerticale)
-                if ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)==False:
+                tirs,P1,enemies,explo,boosts,score,alive,cooldown,alive=ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)
+                if alive==False:
                     return
             else:
                 print("Erreur lors de la commande " + str (ligne) + "Commande inconnue")
                 return
     
     while len(enemies)>0:
-        ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)
+        tirs,P1,enemies,explo,boosts,score,alive,cooldown,alive=ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)
+        if alive==False:
+            return
+    menu.MenuFinPartie(score,True)#Dans le menu, le score est ajouté comme argent
     return
-
-    while alive:
-        
-
-        #Boucle de spawn après timer
-        """ Exemple, à changer avec lecture dynamique
-        tempspasse = time.time() - tempsdemarrage
-        if tempspasse > 5 and numformation==0: # Temps en secondes
-            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-20,-20)
-            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2,0)
-            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+20,-20)
-            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2+40,-40)
-            fight.SpawHistoire(enemies,1,const.SCREEN_WIDTH//2-40,-40)
-            numformation=1
-        elif tempspasse > 7 and numformation==1: #Création d'une formation rectangle
-            for c in range (0,4,1): #Nombre de colonne
-                for l in range (0,7,1): #Nombre de lignes
-                    fight.SpawHistoire(enemies,1,l*40,c*(-30))
-            numformation=2
-        elif tempspasse > 15 and numformation==2:
-            pygame.mixer.music.fadeout(10000)
-            menu.MenuFinPartie(score,True)
-            break"""
-
-
-
-        
