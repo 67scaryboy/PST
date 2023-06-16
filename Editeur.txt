@@ -8,37 +8,37 @@
 #
 #
 #		  _____|INFORMATIONS|____________________________________________________________
-#		 /L'éditeur de niveaux étant fait main, il y à certaines règles à suivre pour	 \
+#		 /L'éditeur de niveaux étant fait main, il y a certaines règles à suivre pour	 \
 #		|que le programme puisse lire correctement votre niveau. Vous trouverez également |
 #		|ci dessous quelques informations à propos du jeu:				  |
-#		|	* Vérifiez bien la sytaxe de vos commandes (pas d'espace avant ou après   |
+#		|	* Vérifiez bien la syntaxe de vos commandes (pas d'espace avant ou après  |
 # 		|	  les virgules par exemple !)						  |
-#		|	* Certaines commandes doivent être entrée dans un ordre précis. Respectez |
+#		|	* Certaines commandes doivent être entrées dans un ordre précis. Respectez|
 #		|	  le, sans quoi le jeu fera n'importe quoi				  |
 #		|	* Vous pouvez mettre des lignes de commentaire dans le code (Qui ne sont  |
-#		|	  pas utilisés pour créer votre niveau) en commancant la ligne par #	  |
+#		|	  pas utilisés pour créer votre niveau) en commencant la ligne par #	  |
 #		|	* Ne commencez pas une ligne par un espace: le jeu ne comprendra pas ce	  |
 #		|	  que cela veut dire							  |
 #		|	* L'éditeur de niveau est sensible à la casse: écrire probabilitetir(200) |
 #		|	  à la place de ProbabiliteTir(200) ne fonctionnera pas ! 		  |
 #		|	* Les adversaires apparaissent grâce à un système de vagues: C'est à dire |
 #               |	  que vous allez préparer des positions d'apparition par vagues et que	  |
-#		| 	  tous les adversaires apparaitrons en même temps. Pour mettre un délais  |
+#		| 	  tous les adversaires apparaitront en même temps. Pour mettre un délais  |
 #		|  	  entre les apparitions, utilisez la commande 'Attendre' ou faites les    |
-#		|	  apparaitre en desous de 0 en position verticale
-#		|	* Le jeu se fini soit quand vous êtes morts, soit quand tous les vaisseaux|
+#		|	  apparaitre en desous de 0 en position verticale			  |
+#		|	* Le jeu se fini soit quand vous êtes mort, soit quand tous les vaisseaux |
 #		|	  prévus ont été détruits						  |
 #		|	* Les tirs des vaisseaux ennemis sont aléatoires: Vous ne pouvez pas 	  |
 #		|	  choisir quand ils vont tirer (vous pouvez régler la probabilité)	  |
 #		|	* En jeu, vous n'avez pas besoin de détruire tous les vaisseaux. Les	  |
 #		|	  laisser passer n'a aucune incidence					  |
-#		|	* Jouer en étideur de niveau vous fait gagner de l'argent pour la	  |
+#		|	* Jouer en éditeur de niveau vous fait gagner de l'argent pour la	  |
 #		|	  boutique du jeu principal !						  |
 #		 \_______________________________________________________________________________/
 #
 #
 #	Liste des commandes disponibles:
-#	Remarque: lorsque quelque chose est entre crochet, cela veut dire que vous avez le choix de la valeur (incluse)
+#	Remarque: Lorsque quelque chose est entre crochet, cela veut dire que vous avez le choix de la valeur (incluse)
 #	Exemple: Pour la première commande, vous pouvez choisir ParalaxProfond(1) OU ParalaxProfond(2) OU ParalaxProfond(3)
 #
 #		- ParalaxProfond([1-3]), ParalaxIntermediaire([4-5]), ParalaxProche([6-7])
@@ -47,30 +47,31 @@
 #		4, 5, 6 et 7 correspondent à diverses constellations qui viendrons décorer le fond
 #		Ne pas utiliser cette commande revient à utiliser les valeurs par défaut
 #
-#		- ProbabiliteTir([*>0])
+#		- ProbabiliteTir([*≥1])
 #		Cette commande sert à définir la chance à chaque cycle qu'un vaisseau tir. Le paramètre doit être supérieur à 0
 #		Ne pas utiliser cette commande revient à utiliser la valeur de base (300, ce qui signifie qu'à chaque cycle, chaque vaisseau
 #		à 1 chance sur 300 de tirer)
 #		Il est recommandé de ne pas changer cette cadence en jeu, mais il est tout de même possible de le faire
-#		Note: Les valeurs entre 50 et 30. rendent le jeu très compliqué. Celles inférieur à 30 peuvent faire ramer le jeu en fonction du
+#		Note: Les valeurs entre 50 et 30 rendent le jeu très compliqué. Celles inférieur à 30 peuvent faire ramer le jeu en fonction du
 #		nombre de vaisseaux à l'écran
 #
 #		- Attendre([*])
-#		Sert à attendre jusqu'a un certain moment après le début du jeu. Cela sert à faire arriver les vagues d'ennemis. Le temps d'attente ne
+#		Sert à attendre jusqu'à un certain moment après le début du jeu. Cela sert à faire arriver les vagues d'ennemis. Le temps d'attente ne
 #		doit jamais être inferieur au précédent (sinon, le jeu ne s'arrêtera jamais). La valeur est choisie est le temps en seconde depuis le
 #		début de la partie
 #
 #		- Ennemi(Type:[1-6], Position Horizontale:[0-800], Position Verticale[0-800])
 #		Sert à faire apparaitre un adversaire. Pour la position horizontale 0 correspond à la gauche de l'écran. Pour la position verticale 0
 #		correspond au haut de l'écran. Ces valeurs sont les seules pour lesquelles vous pouvez dépasser les valeurs proposés (pour les positions)
-#		Cela peut être utiliser pour faire apparaitre des adversaires au dela de l'écran pour qu'ils descendent plus tard par exemple
-#		Types d'adversaires:
+#		Cela peut être utiliser pour faire apparaitre des adversaires au-delà de l'écran pour qu'ils descendent plus tard par exemple
+#		
+#			Types d'adversaires:
 #			1: Adversaire faible avec des tirs sinusoidaux
 #			2: Adversaire moyen avec des triples tirs
 #			3: Adversaire avec vie standard et des tirs simples
 #			4: Adversaire faible, rapide, ne tirant pas mais foncant sur le joueur (kamikaze)
 #			5: Adversaire ayant une santé accrue et tirant en diagonale
-#			6: Adversaires ayant beaucoup de vie mais ne tirant pas (tank)
+#			6: Adversaire ayant beaucoup de vie mais ne tirant pas (tank)
 #
 #
 #	  _____             __  _                __         _         
@@ -80,7 +81,7 @@
 #	                                              |___/           
 #
 #
-# Commencez par la définition dse valeurs de base du jeu. Si vous passez cette partie, des valeurs par défaut seront utilisée.
+# Commencez par la définition des valeurs de base du jeu. Si vous passez cette partie, des valeurs par défaut seront utilisées.
 #
 ParalaxProfond(2)
 ParalaxIntermediaire(4)
@@ -101,11 +102,11 @@ Ennemi(2,800,-10)
 Ennemi(2,0,-40)
 Ennemi(2,800,-40)
 Attendre(10)
-#Vague de kamikaze
+# Vague de kamikazes
 Ennemi(4,800,-40)
 Ennemi(4,00,-100)
 Ennemi(4,400,-120)
-#Ligne de vaisseau simple
+# Ligne de vaisseaus simples
 Ennemi(3,000,-150)
 Ennemi(3,300,-150)
 Ennemi(3,500,-150)
@@ -115,16 +116,16 @@ Ennemi(3,800,-150)
 Ennemi(3,200,-150)
 Ennemi(3,100,-150)
 Attendre(14)
-#Vaisseaux à tir diagonaux couverts par kamikazes
+# Vaisseaux à tir diagonaux couverts par kamikazes
 Ennemi(5,200,-180)
 Ennemi(5,400,-180)
 Ennemi(5,600,-180)
 Ennemi(4,0,-150)
 Ennemi(4,0,-150)
 Attendre(20)
-#Ne pas oublier que la commande ci dessus siginfie que les commandes ci dessous sont
-#utilisés seulement après 20 secondes de jeu, et non 20 secondes après les précédantes
-#Vaisseaux à tir sinusoidaux éparpillés
+# Ne pas oublier que la commande ci dessus signifie que les commandes ci dessous sont
+# utilisées seulement après 20 secondes de jeu, et non 20 secondes après les précédentes
+# Vaisseaux à tir sinusoidaux éparpillés
 Ennemi(1,170,-10)
 Ennemi(1,130,-10)
 Ennemi(1,200,-30)
