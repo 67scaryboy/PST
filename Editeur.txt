@@ -78,7 +78,7 @@
 #	                                              |___/           
 #
 #
-# Commencez par la définition du paralax de fond. Si vous passez cette partie, des valeurs par défaut seront utilisée.
+# Commencez par la définition dse valeurs de base du jeu. Si vous passez cette partie, des valeurs par défaut seront utilisée.
 #
 ParalaxProfond(2)
 ParalaxIntermediaire(4)
