@@ -298,7 +298,8 @@ def MissionEditeur():
                     if type(int(re.match("Attendre\((\d+)\)",ligne).group(1)))==type(1):
                         pass
                 except:
-                    print ("Erreur lors de l'execution de la commande " + str(ligne) + "Vous devez entrer un chiffre entre les parentheses")
+                    print ("Erreur lors de l'execution de la commande " + str(ligne) + "Vous devez entrer un chiffre entre les parentheses. Actuellement "+
+                          str(re.match("Attendre\((\d+)\)",ligne).group(1)))
                     return
                 while time.time() - tempsdemarrage<int(re.match("Attendre\((\d+)\)",ligne).group(1)):
                     tirs,P1,enemies,explo,boosts,score,alive,cooldown,alive=ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)
@@ -336,7 +337,7 @@ def MissionEditeur():
                 if alive==False:
                     return
             else:
-                print("Erreur lors de la commande " + str (ligne) + "Commande inconnue")
+                print("Erreur lors de la commande " + str (ligne) + "Commande inconnue. Vérifiez la syntaxe.")
                 return
     
     while len(enemies)>0:

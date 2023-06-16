@@ -18,7 +18,9 @@
 #		|	* Vous pouvez mettre des lignes de commentaire dans le code (Qui ne sont  |
 #		|	  pas utilisés pour créer votre niveau) en commancant la ligne par #	  |
 #		|	* Ne commencez pas une ligne par un espace: le jeu ne comprendra pas ce	  |
-#		|	  que cela veut dire	
+#		|	  que cela veut dire							  |
+#		|	* L'éditeur de niveau est sensible à la casse: écrire probabilitetir(200) |
+#		|	  à la place de ProbabiliteTir(200) ne fonctionnera pas ! 		  |
 #		|	* Les adversaires apparaissent grâce à un système de vagues: C'est à dire |
 #               |	  que vous allez préparer des positions d'apparition par vagues et que	  |
 #		| 	  tous les adversaires apparaitrons en même temps. Pour mettre un délais  |
