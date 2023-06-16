@@ -299,7 +299,7 @@ def MissionEditeur():
                         pass
                 except:
                     print ("Erreur lors de l'execution de la commande " + str(ligne) + "Vous devez entrer un chiffre entre les parentheses. Actuellement "+
-                          str(re.match("Attendre\((\d+)\)",ligne).group(1)))
+                          str(re.match("Attendre\((.*)\)",ligne).group(1)))
                     return
                 while time.time() - tempsdemarrage<int(re.match("Attendre\((\d+)\)",ligne).group(1)):
                     tirs,P1,enemies,explo,boosts,score,alive,cooldown,alive=ActionsDeChaqueTours(tirs,P1,enemies,explo,boosts,score,alive,cooldown)
