@@ -1,7 +1,7 @@
 import pygame, sys
 import mission1, mission2, mission3, mission4, mission5, mission6, mission7, mission8, mission9, mission10
 from pygame.locals import *
-import random, personnages, menu, fight, bonus, boss, pickle, gc
+import editeur, menu, fight, pickle, gc
 import constantes as const
 
 pygame.init()
@@ -22,9 +22,9 @@ while True:
 
     option = menu.ChoixMode()       #retourne 1 ou 2 en fonction du bouton cliqué
 
-    if option == 1:
+    if option == 1: #Mode arcade
         scoretotal += fight.Arcade()
-    elif option == 2:
+    elif option == 2: #Mode histoire
         choix = menu.MenuHistoire() #Retourne le numero du niveau souhaité (1,2,...,9,10)
         if choix == 1:
             mission1.LancerMission1()
@@ -46,3 +46,5 @@ while True:
             mission9.LancerMission9()
         elif choix== 10:
             mission10.LancerMission10()
+    elif option == 3: #Mode éditeur
+        editeur.MissionEditeur()
