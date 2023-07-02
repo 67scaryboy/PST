@@ -14,7 +14,7 @@ options = {
 
 # Création de l'exécutable
 executables = [
-    Executable('main.py', base=None, icon="SpaceCrusade.ico", targetName='SpaceCrusade')
+    Executable('main.py', base=None, icon="SpaceCrusade.ico", target_name='SpaceCrusade')
     
     
 ]
