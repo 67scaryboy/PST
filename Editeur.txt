@@ -90,7 +90,7 @@ ProbabiliteTir(200)
 #
 # Continuez ensuite avec les adversaires que vous souhaitez faire apparaitre !
 #
-Ennemi(6,200,-10)
+Ennemi(6otuhwdorthu,200,-10)
 Ennemi(6,600,-10)
 Ennemi(2,300,-50)
 Ennemi(2,400,-50)
